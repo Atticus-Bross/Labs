@@ -10,7 +10,7 @@ def seq_comb(seq:Sequence, f)->tuple:
     f: a function that takes two parameters"""
     return_values:tuple=()
     #dictionaries require special handling
-    if type(seq)=='dict':
+    if type(seq)==dict:
         seq=seq.values()
     #exclusions needs to use list methods
     exclusions:list=list(seq)
