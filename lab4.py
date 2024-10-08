@@ -62,21 +62,19 @@ def median(numbers: Sequence) -> Number | None:
 
 
 def mode(numbers: Sequence) -> Number | None:
-    mode2: Number | None = None
-    potential_mode: Number = 0
-    mode_count: int = 0
-    potential_mode_count: int = 0
-    sorted_numbers = sorted(numbers)
-    for number in sorted_numbers:
-        if number != potential_mode:
-            potential_mode = number
-            potential_mode_count = 1
+    counts:dict={}
+    #create a dictionary mapping every number to how often it occurs
+    for number in numbers:
+        if number in counts.keys()
+            counts[number]=counts[number]+1
         else:
-            potential_mode_count = potential_mode_count + 1
-        if potential_mode_count > mode_count:
-            mode2 = potential_mode
-            mode_count = potential_mode_count
+            counts[number]=1
+    mode2:number|None=None
+    for number in counts.keys():
+        if mode2 is None or counts[mode2]<counts[number]:
+            mode2 = number
     return mode2
+
 
 
 def roll_dice(number: int, faces: int) -> tuple[int, ...]:
