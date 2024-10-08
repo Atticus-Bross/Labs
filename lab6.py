@@ -9,6 +9,9 @@ def seq_comb(seq:Sequence, f)->tuple:
     seq: the sequence the operation is to be preformed on
     f: a function that takes two parameters"""
     return_values:tuple=()
+    #dictionaries require special handling
+    if type(seq)=='dict':
+        seq=seq.values()
     #exclusions needs to use list methods
     exclusions:list=list(seq)
     for index_outer, value_outer in enumerate(seq):
