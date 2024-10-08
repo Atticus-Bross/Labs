@@ -12,15 +12,14 @@ def seq_comb(seq:Sequence, f)->tuple:
     #exclusions needs to use list methods
     exclusions:list=list(seq)
     for index_outer, value_outer in enumerate(seq):
+        # the identity not the order of elements matters
+        # all the remaining combinations with value_outer in them will be tried in the next inner loop
+        exclusions.remove(value_outer)
         for index_inner, value_inner in enumerate(exclusions):
             return_values=return_values+(f(value_outer,value_inner),)
-        #the identity not the order of elements matters
-        #all the combinations with value_outer in them have been tried
-        exclusions.remove(value_outer)
     return return_values
 def temp_variances(county_index:int)->tuple[Number,...]:
     """temp_variances(county_index) Gives the temperature differences between every possible set of months
 
     county_index: the index where the county is located"""
     pass
-print(data[0]['noaa']['temp-jan'])
