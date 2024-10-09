@@ -8,6 +8,8 @@ def seq_comb(seq:Sequence, f)->tuple:
 
     seq: the sequence the operation is to be preformed on
     f: a function that takes two parameters"""
+    if len(seq)<2:
+        raise ValueError('seq should be at least two length')
     return_values:tuple=()
     #dictionaries require special handling
     if type(seq)==dict:
