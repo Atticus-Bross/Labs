@@ -16,9 +16,15 @@ def test_temp_variance()->None:
     assert temp_variance(data[0])==365.9050000000001
     assert temp_variance(data[1])==348.186875
     assert temp_variance(data[2])==332.0118749999999
+def test_growth()->None:
+    """test_growth() Tests the variance function"""
+    assert growth(data[3])==-323
+    assert growth(data[4])==-149
+    assert growth(data[5])==-322
 # test_fetch()
 # test_variance()
-test_temp_variance()
+# test_temp_variance()
+test_growth()
 #test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #     header('test',1,mdfile)

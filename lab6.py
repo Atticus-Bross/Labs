@@ -2,6 +2,7 @@ from json import load
 from lab4 import average
 Number=int|float
 Sequence=str|list|tuple|dict
+#indexable sequences that can contain numbers
 NumList=list|tuple
 with open('datasets/counties.json', 'r') as jsonfile:
     data = load(jsonfile)
@@ -28,6 +29,12 @@ def temp_variance(county:dict)->Number:
     county: the county for which the variance is to be found"""
     temps:tuple=fetch(county['noaa'],'temp-jan','temp-apr','temp-jul','temp-oct')
     return variance(temps)
+def growth(county:dict)->Number:
+    """growth(county) Finds how much a county has grown in population from the start to the end of the data
+
+    county: the county for which the growth is to be found"""
+    pops:tuple=fetch(county['population'],'2010','2019')
+    return pops[1]-pops[0]
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 
