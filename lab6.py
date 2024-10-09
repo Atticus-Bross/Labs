@@ -27,7 +27,7 @@ def fetch(seq:Sequence,*indexes)->tuple:
     """fetch(seq, *indexes) retrieves specific elements from a sequence
 
     seq: the sequence to be retrieved from
-    *indexes: the indexes to be retrieved"""
+    *indexes: the indexes or keys of the items to be retrieved"""
     return_tuple:tuple=()
     for index in indexes:
         return_tuple=return_tuple+(seq[index],)
