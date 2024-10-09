@@ -6,7 +6,7 @@ Sequence=str|list|tuple|dict
 NumList=list|tuple
 with open('datasets/counties.json', 'r') as jsonfile:
     data = load(jsonfile)
-def fetch(seq:Sequence,*indexes)->tuple:
+def fetch(seq:Sequence,*indexes:object)->tuple:
     """fetch(seq, *indexes) retrieves specific elements from a sequence
 
     seq: the sequence to be retrieved from
@@ -23,6 +23,18 @@ def variance(numbers:NumList)->Number:
     #the iterable map returns does not work well with other functions
     difs:list=list(map(lambda x:(avg-x)**2,numbers))
     return average(difs)
+def query_county(county:dict,f,directory:object,*keys:object)->object:
+    """query_county(county, f, directory, *keys) Gets information from a county
+
+    county: the county to be queried
+    f: the function to be preformed on the data
+    directory: the key of the sub dictionary, if None then the function looks in the whole county
+    *keys: the keys in the sub dictionary to be used"""
+    if directory is None:
+        county_data:tuple=fetch(county,*keys)
+    else:
+        county_data:tuple=fetch(county[directory],*keys)
+    return f(county_data)
 def temp_variance(county:dict)->Number:
     """temp_variance(county) Finds the temperature variance for a county
 
@@ -35,6 +47,11 @@ def growth(county:dict)->Number:
     county: the county for which the growth is to be found"""
     pops:tuple=fetch(county['population'],'2010','2019')
     return pops[1]-pops[0]
+def deadlyness(county:dict)->Number:
+    """deadlyness(county) Finds the deadlyness of a county
+
+    county: the county for which the deadlyness is to be found"""
+    pass
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 
