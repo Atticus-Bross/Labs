@@ -2,8 +2,8 @@ from json import load, loads
 from lab4 import *
 Number=int|float
 Sequence=str|list|tuple|dict
-with open('datasets/counties.json', 'r') as file:
-    county_data = load(file)
+with open('datasets/counties.json', 'r') as jsonfile:
+    data = load(jsonfile)
 def seq_comb(seq:Sequence, f)->tuple:
     """seq_comb(seq, f) Evaluates a function on every unique combination of two elements in seq
 
@@ -34,12 +34,16 @@ def fetch(seq:Sequence,*indexes)->tuple:
         return_tuple=return_tuple+(seq[index],)
     return return_tuple
 def temp_variance(county_index:int)->Number:
-    """temp_variance(county_index) Gives the average temperature variance over a year
+    """temp_variance(county_index) Gives the average temperature variance of a county over a year
 
     county_index: the index where the county is located in counties.json"""
-    temps:tuple =fetch(county_data[county_index]['noaa'],'temp-jan','temp-apr','temp-jul','temp-oct')
+    temps:tuple =fetch(data[county_index]['noaa'],'temp-jan','temp-apr','temp-jul','temp-oct')
     temps_variance:tuple=seq_comb(temps,lambda x,y:abs(x-y))
     return average(temps_variance)
-with open('files for writing/report.md','w') as file:
-    file.write('# test<br>')
-    file.write('## test')
+def header(text:str,level:int, file)->None:
+    """header(text, level, file) Adds a header to a markdown file
+
+    text: the text of the header
+    level: 1-6, 1 is the largest
+    file: the markdown file"""
+    file.write('\n'+'#'*level+' '+text+'\n')
