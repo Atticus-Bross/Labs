@@ -2,6 +2,7 @@ from json import load, loads
 from lab4 import *
 Number=int|float
 Sequence=str|list|tuple|dict
+NumList=list|tuple
 with open('datasets/counties.json', 'r') as jsonfile:
     data = load(jsonfile)
 def fetch(seq:Sequence,*indexes)->tuple:
@@ -13,6 +14,13 @@ def fetch(seq:Sequence,*indexes)->tuple:
     for index in indexes:
         return_tuple=return_tuple+(seq[index],)
     return return_tuple
+def variance(numbers:NumList)->Number:
+    """variance(numbers) Finds the variance of a list of numbers
+
+    numbers: the list of numbers"""
+    avg:Number=average(numbers)
+    difs=list(map(lambda x:(avg-x)**2,numbers))
+    return average(difs)
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 
