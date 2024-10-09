@@ -29,13 +29,20 @@ def test_growth()->None:
     assert growth(data[3])==-323
     assert growth(data[4])==-149
     assert growth(data[5])==-322
+def test_deadlyness()->None:
+    """test_deadlyness() Tests the deadlyness function"""
+    assert isclose(deadlyness(data[6]),5.095238095238095)
+    assert isclose(deadlyness(data[7]),0.47619047619047616)
+    assert isclose(deadlyness(data[8]),0.5238095238095238)
 # test_fetch()
 # test_variance()
 # test_query_county()
-test_temp_variance()
-test_growth()
+# test_temp_variance()
+# test_growth()
+test_deadlyness()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
+#test header
 #     header('test',1,mdfile)
 #     header('test', 3, mdfile)
 #     header('test', 6, mdfile)
