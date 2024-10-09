@@ -3,7 +3,7 @@ from lab4 import *
 Number=int|float
 Sequence=str|list|tuple|dict
 with open('datasets/counties.json', 'r') as file:
-    data = load(file)
+    county_data = load(file)
 def seq_comb(seq:Sequence, f)->tuple:
     """seq_comb(seq, f) Evaluates a function on every unique combination of two elements in seq
 
@@ -37,6 +37,6 @@ def temp_variance(county_index:int)->Number:
     """temp_variance(county_index) Gives the average temperature variance over a year
 
     county_index: the index where the county is located in counties.json"""
-    temps:tuple =fetch(data[county_index]['noaa'],'temp-jan','temp-apr','temp-jul','temp-oct')
+    temps:tuple =fetch(county_data[county_index]['noaa'],'temp-jan','temp-apr','temp-jul','temp-oct')
     temps_variance:tuple=seq_comb(temps,lambda x,y:abs(x-y))
     return average(temps_variance)
