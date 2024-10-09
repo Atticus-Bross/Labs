@@ -14,11 +14,11 @@ def seq_comb(seq:Sequence, f)->tuple:
         seq=seq.values()
     #exclusions needs to use list methods
     exclusions:list=list(seq)
-    for index_outer, value_outer in enumerate(seq):
+    for value_outer in seq:
         # the identity not the order of elements matters
         # all the remaining combinations with value_outer in them will be tried in the next inner loop
         exclusions.remove(value_outer)
-        for index_inner, value_inner in enumerate(exclusions):
+        for value_inner in exclusions:
             return_values=return_values+(f(value_outer,value_inner),)
     return return_values
 def temp_variances(county_index:int)->tuple[Number,...]:
