@@ -23,6 +23,15 @@ def seq_comb(seq:Sequence, f)->tuple:
         for value_inner in exclusions:
             return_values=return_values+(f(value_outer,value_inner),)
     return return_values
+def fetch(seq:Sequence,*indexes)->tuple:
+    """fetch(seq, *indexes) retrieves specific elements from a sequence
+
+    seq: the sequence to be retrieved from
+    *indexes: the indexes to be retrieved"""
+    return_tuple:tuple=()
+    for index in indexes:
+        return_tuple=return_tuple+(seq[index],)
+    return return_tuple
 def temp_variances(county_index:int)->tuple[Number,...]:
     """temp_variances(county_index) Gives the temperature differences between every possible set of months
 
