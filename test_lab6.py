@@ -22,5 +22,5 @@ def test_fetch()->None:
     assert fetch({1:2,3:4,5:6},3,5)==(4,6)
     assert fetch([1,2,3,4,5],0,2,4)==(1,3,5)
     assert fetch((1,2,3,4,5),1,3)==(2,4)
-test_seq_comb()
-test_fetch()
+# test_seq_comb()
+# test_fetch()

@@ -1,4 +1,5 @@
 from json import load, loads
+from lab4 import *
 Number=int|float
 Sequence=str|list|tuple|dict
 with open('datasets/counties.json', 'r') as file:
@@ -32,8 +33,10 @@ def fetch(seq:Sequence,*indexes)->tuple:
     for index in indexes:
         return_tuple=return_tuple+(seq[index],)
     return return_tuple
-def temp_variances(county_index:int)->tuple[Number,...]:
-    """temp_variances(county_index) Gives the temperature differences between every possible set of months
+def temp_variance(county_index:int)->Number:
+    """temp_variance(county_index) Gives the average temperature variance over a year
 
-    county_index: the index where the county is located"""
-    pass
+    county_index: the index where the county is located in counties.json"""
+    temps:tuple =fetch(data[county_index]['noaa'],'temp-jan','temp-apr','temp-jul','temp-oct')
+    temps_variance:tuple=seq_comb(temps,lambda x,y:abs(x-y))
+    return average(temps_variance)
