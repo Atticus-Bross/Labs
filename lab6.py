@@ -40,3 +40,6 @@ def temp_variance(county_index:int)->Number:
     temps:tuple =fetch(county_data[county_index]['noaa'],'temp-jan','temp-apr','temp-jul','temp-oct')
     temps_variance:tuple=seq_comb(temps,lambda x,y:abs(x-y))
     return average(temps_variance)
+with open('files for writing/report.md','w') as file:
+    file.write('# test<br>')
+    file.write('## test')
