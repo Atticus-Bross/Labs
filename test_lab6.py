@@ -2,6 +2,7 @@ from lab6 import *
 from math import isclose
 def test_seq_comb()->None:
     """test_seq_com() Tests the seq_comb function"""
+    #if the function manages to execute an assertion error will be raised
     try:
         seq_comb((),lambda x:x)
         assert False
@@ -30,4 +31,9 @@ def test_temp_variance()->None:
     assert isclose(temp_variance(2),26.05)
 # test_seq_comb()
 # test_fetch()
-test_temp_variance()
+# test_temp_variance()
+#test file writing functions
+with open('files for writing/test.md','w') as mdfile:
+    header('test',1,mdfile)
+    header('test', 3, mdfile)
+    header('test', 6, mdfile)
