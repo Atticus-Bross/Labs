@@ -31,9 +31,9 @@ def test_growth()->None:
     assert growth(data[5])==-322
 # test_fetch()
 # test_variance()
-test_query_county()
-# test_temp_variance()
-# test_growth()
+# test_query_county()
+test_temp_variance()
+test_growth()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #     header('test',1,mdfile)
