@@ -66,6 +66,11 @@ def deadlyness(county:dict)->Number:
 
     county: the county for which the deadlyness is to be found"""
     return query_county(county,sum,'deaths','suicides','homicides','vehicle')
+def education(county:dict)->Number:
+    """education(county) Finds the education of a county
+
+    county: the county for which the education is to be found"""
+    return query_county(county,lambda x:x[0],'edu','bachelors+')
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 

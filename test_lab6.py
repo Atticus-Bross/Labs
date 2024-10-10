@@ -48,13 +48,19 @@ def test_deadlyness()->None:
     assert isclose(deadlyness(data[6]),5.095238095238095)
     assert isclose(deadlyness(data[7]),0.47619047619047616)
     assert isclose(deadlyness(data[8]),0.5238095238095238)
+def test_education()->None:
+    """test_education() Tests the education function"""
+    assert education(data[9])==22.4
+    assert education(data[10]) == 20.7
+    assert education(data[11]) == 25.0
 # test_fetch()
 # test_variance()
 # test_replace()
-test_query_county()
-test_temp_variance()
-test_growth()
-test_deadlyness()
+# test_query_county()
+# test_temp_variance()
+# test_growth()
+# test_deadlyness()
+test_education()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header
