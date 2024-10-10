@@ -139,12 +139,11 @@ def full_name(county:dict)->str:
 
     county: the county for which the name is to be given"""
     return capitalize(county['name'])+', '+county['state']
-def criteria_winner(f,reverse:bool)->tuple[str,...]:
+def criteria_winner(sort:list)->tuple[str,...]:
     """criteria_winner(f, mode) Finds the winning county(s) for a given criteria
 
     f: the criteria function
-    reverse: True or False, True sorts from greatest to least and False sorts from least to greatest"""
-    sort:list=sorted(data,key=f,reverse=reverse)
+    sort: sorted list of the canidates"""
     first:dict=sort[0]
     counties:tuple=()
     for county in sort:

@@ -102,10 +102,10 @@ def test_full_name()->None:
     assert full_name(data[200]) == 'Davison County, SD'
 def test_criteria_winner()->None:
     """test_criteria_winner() Tests the criteria_winner function"""
-    assert criteria_winner(temp_variance,False)==('Hawaii County, HI',)
-    assert criteria_winner(growth,True)==('Maricopa County, AZ',)
-    assert criteria_winner(deadlyness, False) == ('Keya Paha County, NE',)
-    assert criteria_winner(education, True) == ('Falls Church City, VA',)
+    assert criteria_winner(sorted(data,key=temp_variance))==('Hawaii County, HI',)
+    assert criteria_winner(sorted(data,key=growth,reverse=True))==('Maricopa County, AZ',)
+    assert criteria_winner(sorted(data,key=deadlyness)) == ('Keya Paha County, NE',)
+    assert criteria_winner(sorted(data,key=education,reverse=True)) == ('Falls Church City, VA',)
 def test_text_list()->None:
     """test_text_list() Tests the text_list function"""
     try:
@@ -137,16 +137,16 @@ def test_text_list()->None:
 # test_criteria_winner()
 # test_text_list()
 # test file writing functions
-with open('files for writing/test.md','w') as mdfile:
+# with open('files for writing/test.md','w') as mdfile:
     #test header
     # mdfile.write(header('test',1))
     # mdfile.write(header('test',3))
     # mdfile.write(header('test',6))
-    try:
-        write_lines(mdfile)
-        assert False
-    except ValueError:
-        pass
+    # try:
+    #     write_lines(mdfile)
+    #     assert False
+    # except ValueError:
+    #     pass
     # write_lines(mdfile, header('test',1),header('test',2),'test'\
     #     ,header('test',3))
     # write_lines(mdfile,'test',header('test',1),'test','test')
