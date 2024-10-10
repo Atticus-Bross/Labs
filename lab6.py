@@ -23,24 +23,29 @@ def variance(numbers:NumList)->Number:
     #the iterable map returns does not work well with other functions
     difs:list=list(map(lambda x:(avg-x)**2,numbers))
     return average(difs)
-def query_county(county:dict,f,directory,*keys,if_none=None):
+def replace(start_list:list,original,replacement)->list:
+    """replace(start_list, original, replacement) Replaces a value in a list with another value wherever it occurs
+
+    start_list: the list the operation is to be preformed on
+    original: the original value
+    replacement: the value to replace the original with"""
+    occurrences:int=start_list.count(original)
+    for i in range(occurrences):
+        index:int=start_list.index(original)
+        start_list.insert(index,replacement)
+        start_list.remove(original)
+def query_county(county:dict,f,directory,*keys):
     """query_county(county, f, directory, *keys, if_none) Gets information from a county
 
     county: the county to be queried
     f: the function to be preformed on the data
     directory: the key of the sub dictionary, if None then the function looks in the whole county
-    *keys: the keys in the sub dictionary to be used
-    if_none: the value to be assigned if a data point is None, if it is None then the value is removed"""
+    *keys: the keys in the sub dictionary to be used"""
     if directory is None:
         county_data:tuple|list=fetch(county,*keys)
     else:
         county_data:tuple|list=fetch(county[directory],*keys)
     county_data=list(county_data)
-    for element in county_data:
-        if if_none is None:
-            county_data.remove(element)
-        else:
-            element=if_none
     return f(county_data)
 def temp_variance(county:dict)->Number:
     """temp_variance(county) Finds the temperature variance for a county
