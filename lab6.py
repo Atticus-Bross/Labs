@@ -134,6 +134,11 @@ def capitalize(string:str)->str:
         else:
             cap_next=False
     return  return_string
+def full_name(county:dict)->str:
+    """full_name(county) Gives the full name of a county
+
+    county: the county for which the name is to be given"""
+    return capitalize(county['name'])+', '+county['state']
 def header(text:str,level:int)->str:
     """header(text, level, file) Gives header text for a markdown file
 

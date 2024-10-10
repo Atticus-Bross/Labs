@@ -95,6 +95,11 @@ def test_capitalize()->None:
     assert capitalize('')==''
     assert capitalize('Abc F&d #2$')=='Abc F&d #2$'
     assert capitalize('test square Cube %f4')=='Test Square Cube %f4'
+def test_full_name()->None:
+    """test_full_name() Tests the full_name function"""
+    assert full_name(data[27])== 'Dawes County, NE'
+    assert full_name(data[100]) == 'Okanogan County, WA'
+    assert full_name(data[200]) == 'Davison County, SD'
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -110,7 +115,8 @@ def test_capitalize()->None:
 # test_employees()
 # test_raw_employment()
 # test_employment()
-test_capitalize()
+# test_capitalize()
+test_full_name()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
     #test header
