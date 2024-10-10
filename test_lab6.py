@@ -74,6 +74,13 @@ def test_age_variance()->None:
     assert isclose(age_variance(data[21]),0.0001782786942683424)
     assert isclose(age_variance(data[22]), 0.00011766529826546195)
     assert isclose(age_variance(data[23]), 0.00020695619312116284)
+def test_employees()->None:
+    """test_employees() Tests the age_variance function"""
+    assert employees(fetch(data[24]['industry'],'Utilities','Construction','Manufacturing'))==(4,206,652)
+    assert employees(fetch(data[25]['industry'], 'Agriculture, forestry, fishing and hunting',\
+        'Mining, quarrying, and oil and gas extraction', 'Utilities')) == (22,254,7)
+    assert employees(fetch(data[26]['industry'], 'Construction', 'Manufacturing', 'Wholesale trade')) \
+        == (58,42,137)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -85,7 +92,8 @@ def test_age_variance()->None:
 # test_portion_female()
 # test_oldness()
 # test_youngness()
-test_age_variance()
+# test_age_variance()
+test_employees()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header
