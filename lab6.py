@@ -71,6 +71,11 @@ def education(county:dict)->Number:
 
     county: the county for which the education is to be found"""
     return query_county(county,lambda x:x[0],'edu','bachelors+')
+def portion_female(county:dict)->Number:
+    """portion_female(county) Finds the portion of a county that is female
+
+    county: the county for which the female portion is to be found"""
+    return query_county(county,lambda x:x[1]/(x[0]+x[1]),None,'male','female')
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 

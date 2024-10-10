@@ -53,6 +53,11 @@ def test_education()->None:
     assert education(data[9])==22.4
     assert education(data[10]) == 20.7
     assert education(data[11]) == 25.0
+def test_portion_female()->None:
+    """test_portion_female() Tests the portion_female function"""
+    assert isclose(portion_female(data[12]),0.5154362416107383)
+    assert isclose(portion_female(data[13]), 0.5059422750424448)
+    assert isclose(portion_female(data[14]), 0.5105024127164348)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -60,7 +65,8 @@ def test_education()->None:
 # test_temp_variance()
 # test_growth()
 # test_deadlyness()
-test_education()
+# test_education()
+test_portion_female()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header
