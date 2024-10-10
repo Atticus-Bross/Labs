@@ -111,9 +111,9 @@ def raw_employment(raw_data:tuple[dict[str:Number,...],dict[str:dict[str:Number,
     employee_num=sum(employees(raw_data[1]))
     return employee_num/raw_data[0]['2019']
 def employment(county:dict)->Number:
-    """age_variance(county) Finds the age variation for a county
+    """employment(county) Finds the employment rate for a county
 
-    county: the county for which the age variation is to be found"""
+    county: the county for which the employment is to be found"""
     return query_county(county,raw_employment,None,'population','industry')
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
