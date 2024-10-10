@@ -2,8 +2,8 @@ from json import load
 from lab4 import average
 Number=int|float
 Sequence=str|list|tuple|dict
-#indexable sequences that can contain numbers
-NumList=list|tuple
+#sequences that can contain numbers
+NumList=list|tuple|dict
 with open('datasets/counties.json', 'r') as jsonfile:
     data = load(jsonfile)
 def fetch(seq:Sequence,*indexes)->tuple:
@@ -19,6 +19,9 @@ def variance(numbers:NumList)->Number:
     """variance(numbers) Finds the variance of a list of numbers
 
     numbers: the list of numbers"""
+    #handle dictionaries
+    if type(numbers)==dict:
+        numbers=list(numbers.values())
     avg:Number=average(numbers)
     #the iterable map returns does not work well with other functions
     difs:list=list(map(lambda x:(avg-x)**2,numbers))
@@ -81,6 +84,11 @@ def oldness(county:dict)->Number:
 
     county: the county for which the oldness is to be found"""
     return query_county(county,sum,'age','65-69','70-74','75-79','80-84','85+')
+def youngness(county:dict)->Number:
+    """youngness(county) Finds the portion of a county that is under 20
+
+    county: the county for which the youngness is to be found"""
+    return query_county(county,sum,'age','0-4','5-9','10-14','15-19')
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 

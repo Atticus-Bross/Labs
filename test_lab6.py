@@ -11,6 +11,7 @@ def test_variance()->None:
     assert variance((1,1,1,1))==0
     assert variance((1,2,3,4,5))==2
     assert variance((7,9,5,3,11))==8
+    assert variance({'a':7,'b':9,'c':5,'d':3,'e':11})==8
 def test_replace()->None:
     """test_replace() Tests the replace function"""
     test_list:list=[0,2,2,0,2,0]
@@ -63,6 +64,11 @@ def test_oldness()->None:
     assert isclose(oldness(data[15]),0.15382452193475815)
     assert isclose(oldness(data[16]), 0.26166568222090963)
     assert isclose(oldness(data[17]), 0.19619293615587624)
+def test_youngness()->None:
+    """test_youngness() Tests the youngness function"""
+    assert isclose(youngness(data[18]),0.26888371648120396)
+    assert isclose(youngness(data[19]), 0.26092930302273293)
+    assert isclose(youngness(data[20]), 0.2657428791377983)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -72,7 +78,8 @@ def test_oldness()->None:
 # test_deadlyness()
 # test_education()
 # test_portion_female()
-test_oldness()
+# test_oldness()
+# test_youngness()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header
