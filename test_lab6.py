@@ -80,6 +80,11 @@ def test_employees()->None:
     assert employees(data[25]['industry']) == (22, 254, 7, 265, 418, 174, 921, 379, 208, 44, 165, 27, 272, 9, 424\
         , 118, 365, 325, 4)
     assert employees(data[26]['industry']) == (58, 42, 137, 134, 67, 50, 18, 14, 249, 58, 59)
+def test_raw_employment()->None:
+    """test_raw_employment() Tests the raw_employment function"""
+    assert isclose(raw_employment(fetch(data[24],'population','industry')),0.2881135752064582)
+    assert isclose(raw_employment(fetch(data[25], 'population', 'industry')), 0.16766991770801584)
+    assert isclose(raw_employment(fetch(data[26], 'population', 'industry')), 0.16995971609437943)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -92,7 +97,8 @@ def test_employees()->None:
 # test_oldness()
 # test_youngness()
 # test_age_variance()
-test_employees()
+# test_employees()
+test_raw_employment()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header
