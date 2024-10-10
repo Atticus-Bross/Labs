@@ -85,6 +85,11 @@ def test_raw_employment()->None:
     assert isclose(raw_employment(fetch(data[24],'population','industry')),0.2881135752064582)
     assert isclose(raw_employment(fetch(data[25], 'population', 'industry')), 0.16766991770801584)
     assert isclose(raw_employment(fetch(data[26], 'population', 'industry')), 0.16995971609437943)
+def test_employment()->None:
+    """test_employment() Tests the employment function"""
+    assert isclose(employment(data[24]), 0.2881135752064582)
+    assert isclose(employment(data[25]), 0.16766991770801584)
+    assert isclose(employment(data[26]), 0.16995971609437943)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -98,7 +103,8 @@ def test_raw_employment()->None:
 # test_youngness()
 # test_age_variance()
 # test_employees()
-test_raw_employment()
+# test_raw_employment()
+test_employment()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header
