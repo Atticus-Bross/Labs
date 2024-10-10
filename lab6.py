@@ -115,6 +115,25 @@ def employment(county:dict)->Number:
 
     county: the county for which the employment is to be found"""
     return query_county(county,raw_employment,None,'population','industry')
+def capitalize(string:str)->str:
+    """capitalize(string) Capitalizes the words of a string
+
+    string: the string to be capitalized"""
+    letter_equivalents: dict = {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D', 'e': 'E', 'f': 'F', 'g': 'G', 'h': 'H',\
+        'i': 'I', 'j': 'J', 'k': 'K', 'l': 'L', 'm': 'M', 'n': 'N', 'o': 'O', 'p': 'P', 'q': 'Q', 'r': 'R', 's': 'S'\
+        , 't': 'T','u': 'U', 'v': 'V', 'w': 'W', 'x': 'X', 'y': 'Y', 'z': 'Z'}
+    cap_next:bool=True
+    return_string:str=''
+    for character in string:
+        if cap_next and character in letter_equivalents.keys():
+            return_string=return_string+letter_equivalents[character]
+        else:
+            return_string=return_string+character
+        if character==' ':
+            cap_next=True
+        else:
+            cap_next=False
+    return  return_string
 def header(text:str,level:int)->str:
     """header(text, level, file) Gives header text for a markdown file
 

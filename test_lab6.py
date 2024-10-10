@@ -90,6 +90,11 @@ def test_employment()->None:
     assert isclose(employment(data[24]), 0.2881135752064582)
     assert isclose(employment(data[25]), 0.16766991770801584)
     assert isclose(employment(data[26]), 0.16995971609437943)
+def test_capitalize()->None:
+    """test_capitalize() Tests the employment function"""
+    assert capitalize('')==''
+    assert capitalize('Abc F&d #2$')=='Abc F&d #2$'
+    assert capitalize('test square Cube %f4')=='Test Square Cube %f4'
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -105,12 +110,13 @@ def test_employment()->None:
 # test_employees()
 # test_raw_employment()
 # test_employment()
+test_capitalize()
 # test file writing functions
-with open('files for writing/test.md','w') as mdfile:
+# with open('files for writing/test.md','w') as mdfile:
     #test header
     # mdfile.write(header('test',1))
     # mdfile.write(header('test',3))
     # mdfile.write(header('test',6))
     # write_lines(mdfile, header('test',1),header('test',2),'test'\
     #     ,header('test',3))
-    write_lines(mdfile,'test',header('test',1),'test','test')
+    # write_lines(mdfile,'test',header('test',1),'test','test')
