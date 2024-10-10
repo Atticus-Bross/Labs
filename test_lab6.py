@@ -100,6 +100,23 @@ def test_full_name()->None:
     assert full_name(data[27])== 'Dawes County, NE'
     assert full_name(data[100]) == 'Okanogan County, WA'
     assert full_name(data[200]) == 'Davison County, SD'
+def test_criteria_winner()->None:
+    """test_criteria_winner() Tests the criteria_winner function"""
+    assert criteria_winner(temp_variance,False)==('Hawaii County, HI',)
+    assert criteria_winner(growth,True)==('Maricopa County, AZ',)
+    assert criteria_winner(deadlyness, False) == ('Keya Paha County, NE',)
+    assert criteria_winner(education, True) == ('Falls Church City, VA',)
+def test_text_list()->None:
+    """test_text_list() Tests the text_list function"""
+    try:
+        assert text_list()
+        assert False
+    except ValueError:
+        pass
+    assert text_list('a')=='a'
+    assert text_list('a','b')=='a and b'
+    assert text_list('a','b','c')=='a, b, and c'
+    assert text_list('a','b','c','d')=='a, b, c, and d'
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -116,7 +133,9 @@ def test_full_name()->None:
 # test_raw_employment()
 # test_employment()
 # test_capitalize()
-test_full_name()
+# test_full_name()
+# test_criteria_winner()
+test_text_list()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
     #test header

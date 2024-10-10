@@ -139,6 +139,39 @@ def full_name(county:dict)->str:
 
     county: the county for which the name is to be given"""
     return capitalize(county['name'])+', '+county['state']
+def criteria_winner(f,reverse:bool)->tuple[str,...]:
+    """criteria_winner(f, mode) Finds the winning county(s) for a given criteria
+
+    f: the criteria function
+    reverse: True or False, True sorts from greatest to least and False sorts from least to greatest"""
+    sort:list=sorted(data,key=f,reverse=reverse)
+    first:dict=sort[0]
+    counties:tuple=()
+    for county in sort:
+        if county==first:
+            counties=counties+(full_name(county),)
+        else:
+            break
+    return counties
+def text_list(*items:str)->str:
+    """text_list(*items) Gives a grammatically correct list
+
+    *items: the items in the list"""
+    if len(items)<1:
+        raise ValueError('there must be at least one item')
+    elif len(items)==1:
+        return items[0]
+    elif len(items)==2:
+        return items[0]+' and '+items[1]
+    else:
+        return_string:str=''
+        for index, item in enumerate(items):
+            #not the last item
+            if index!=len(items)-1:
+                return_string=return_string+item+', '
+            else:
+                return_string=return_string+'and '+item
+        return return_string
 def header(text:str,level:int)->str:
     """header(text, level, file) Gives header text for a markdown file
 
