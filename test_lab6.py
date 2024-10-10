@@ -135,13 +135,18 @@ def test_text_list()->None:
 # test_capitalize()
 # test_full_name()
 # test_criteria_winner()
-test_text_list()
+# test_text_list()
 # test file writing functions
-# with open('files for writing/test.md','w') as mdfile:
+with open('files for writing/test.md','w') as mdfile:
     #test header
     # mdfile.write(header('test',1))
     # mdfile.write(header('test',3))
     # mdfile.write(header('test',6))
+    try:
+        write_lines(mdfile)
+        assert False
+    except ValueError:
+        pass
     # write_lines(mdfile, header('test',1),header('test',2),'test'\
     #     ,header('test',3))
     # write_lines(mdfile,'test',header('test',1),'test','test')

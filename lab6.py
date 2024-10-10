@@ -183,6 +183,8 @@ def write_lines(file,*lines:str)->None:
 
     file: the markdown file
     *lines: the lines to be written"""
+    if len(lines)<1:
+        raise ValueError('there must be at least one line to write')
     to_write:str=''
     last_line:str=''
     for line in lines:
