@@ -30,6 +30,8 @@ def replace(start_list:list,original,replacement)->list:
     original: the original value
     replacement: the value to replace the original with"""
     occurrences:int=start_list.count(original)
+    #the nature of for loops handles cases where original is not in start_list automatically
+    #in this case the list remains unchanged
     for i in range(occurrences):
         index:int=start_list.index(original)
         start_list.insert(index,replacement)
@@ -46,6 +48,8 @@ def query_county(county:dict,f,directory,*keys):
     else:
         county_data:tuple|list=fetch(county[directory],*keys)
     county_data=list(county_data)
+    #None in this database means zero
+    replace(county_data,None,0)
     return f(county_data)
 def temp_variance(county:dict)->Number:
     """temp_variance(county) Finds the temperature variance for a county

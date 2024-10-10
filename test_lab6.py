@@ -22,6 +22,9 @@ def test_replace()->None:
     test_list = [0,0,0,(1,2),(1,2)]
     replace(test_list, (1,2), 12)
     assert test_list == [0,0,0,12,12]
+    test_list = [0, 0, 0]
+    replace(test_list, (1, 2), 12)
+    assert test_list == [0, 0, 0]
 def test_query_county()->None:
     """test_query_county() Tests the query_county function"""
     #unpack the one string in the tuple before sending it to int
@@ -40,18 +43,18 @@ def test_growth()->None:
     assert growth(data[3])==-323
     assert growth(data[4])==-149
     assert growth(data[5])==-322
-# def test_deadlyness()->None:
-#     """test_deadlyness() Tests the deadlyness function"""
-#     assert isclose(deadlyness(data[6]),5.095238095238095)
-#     assert isclose(deadlyness(data[7]),0.47619047619047616)
-#     assert isclose(deadlyness(data[8]),0.5238095238095238)
+def test_deadlyness()->None:
+    """test_deadlyness() Tests the deadlyness function"""
+    assert isclose(deadlyness(data[6]),5.095238095238095)
+    assert isclose(deadlyness(data[7]),0.47619047619047616)
+    assert isclose(deadlyness(data[8]),0.5238095238095238)
 # test_fetch()
 # test_variance()
-test_replace()
-# test_query_county()
-# test_temp_variance()
-# test_growth()
-# test_deadlyness()
+# test_replace()
+test_query_county()
+test_temp_variance()
+test_growth()
+test_deadlyness()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header
