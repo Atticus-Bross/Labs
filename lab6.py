@@ -152,7 +152,7 @@ def criteria_winner(sort:list)->tuple[str,...]:
         else:
             break
     return counties
-def text_list(*items:str)->str:
+def text_list(*items:str,sep:str=',')->str:
     """text_list(*items) Gives a grammatically correct list
 
     *items: the items in the list"""
@@ -171,6 +171,24 @@ def text_list(*items:str)->str:
             else:
                 return_string=return_string+'and '+item
         return return_string
+def win_statement(sort:list,criteria:str,end:str='is')->str:
+    """win_statement(sort, criteria, end='is') Creates a statement announcing the winner(s) from a sorted list
+
+    sort: the sorted list
+    criteria: the message with which to end the statement
+    end: 'x is the y' or 'x has the y'"""
+    if end != 'is' and end != 'has':
+        raise ValueError('end must be either is or has')
+    winners:tuple=criteria_winner(sort)
+    if len(winners)==1:
+        return text_list(*winners)+' '+end+' '+criteria
+    else:
+        #covert end to plural
+        if end=='is':
+            end='are'
+        elif end=='has':
+            end='have'
+        return text_list(*winners) + ' ' + end + ' ' + criteria
 def header(text:str,level:int)->str:
     """header(text, level, file) Gives header text for a markdown file
 

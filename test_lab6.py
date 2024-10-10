@@ -117,6 +117,13 @@ def test_text_list()->None:
     assert text_list('a','b')=='a and b'
     assert text_list('a','b','c')=='a, b, and c'
     assert text_list('a','b','c','d')=='a, b, c, and d'
+def test_win_statement()->None:
+    """test_win_statement() Tests the win_statement function"""
+    assert win_statement(sorted(data, key=temp_variance),'most temperature stable') \
+        == 'Hawaii County, HI is the most temperature stable'
+    assert win_statement(sorted(data, key=growth, reverse=True)) == ('Maricopa County, AZ',)
+    assert win_statement(sorted(data, key=deadlyness)) == ('Keya Paha County, NE',)
+    assert win_statement(sorted(data, key=education, reverse=True)) == ('Falls Church City, VA',)
 # test_fetch()
 # test_variance()
 # test_replace()
