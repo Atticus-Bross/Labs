@@ -69,6 +69,11 @@ def test_youngness()->None:
     assert isclose(youngness(data[18]),0.26888371648120396)
     assert isclose(youngness(data[19]), 0.26092930302273293)
     assert isclose(youngness(data[20]), 0.2657428791377983)
+def test_age_variance()->None:
+    """test_age_variance() Tests the age_variance function"""
+    assert isclose(age_variance(data[21]),0.0001782786942683424)
+    assert isclose(age_variance(data[22]), 0.00011766529826546195)
+    assert isclose(age_variance(data[23]), 0.00020695619312116284)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -80,6 +85,7 @@ def test_youngness()->None:
 # test_portion_female()
 # test_oldness()
 # test_youngness()
+test_age_variance()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header

@@ -89,6 +89,11 @@ def youngness(county:dict)->Number:
 
     county: the county for which the youngness is to be found"""
     return query_county(county,sum,'age','0-4','5-9','10-14','15-19')
+def age_variance(county:dict)->Number:
+    """age_variance(county) Finds the age variation for a county
+
+    county: the county for which the age variation is to be found"""
+    return query_county(county,lambda x:variance(*x),None,'age')
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 
