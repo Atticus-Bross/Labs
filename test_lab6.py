@@ -104,10 +104,13 @@ def test_employment()->None:
 # test_age_variance()
 # test_employees()
 # test_raw_employment()
-test_employment()
+# test_employment()
 # test file writing functions
-# with open('files for writing/test.md','w') as mdfile:
-#test header
-#     header('test',1,mdfile)
-#     header('test', 3, mdfile)
-#     header('test', 6, mdfile)
+with open('files for writing/test.md','w') as mdfile:
+    #test header
+    # mdfile.write(header('test',1))
+    # mdfile.write(header('test',3))
+    # mdfile.write(header('test',6))
+    # write_lines(mdfile, header('test',1),header('test',2),'test'\
+    #     ,header('test',3))
+    write_lines(mdfile,'test',header('test',1),'test','test')

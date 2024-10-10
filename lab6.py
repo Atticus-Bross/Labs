@@ -115,10 +115,34 @@ def employment(county:dict)->Number:
 
     county: the county for which the employment is to be found"""
     return query_county(county,raw_employment,None,'population','industry')
-def header(text:str,level:int, file)->None:
-    """header(text, level, file) Adds a header to a markdown file
+def header(text:str,level:int)->str:
+    """header(text, level, file) Gives header text for a markdown file
 
     text: the text of the header
-    level: 1-6, 1 is the largest
-    file: the markdown file"""
-    file.write('\n'+'#'*level+' '+text+'\n')
+    level: 1-6, 1 is the largest"""
+    return '#'*level+' '+text
+def write_lines(file,*lines:str)->None:
+    """write_lines(file, *lines) Writes lines to a markdown file, handling good practices automatically
+
+    file: the markdown file
+    *lines: the lines to be written"""
+    to_write:str=''
+    last_line:str=''
+    for line in lines:
+        #check for headers
+        if line[0]=='#':
+            if last_line=='plain':
+                to_write=to_write+'\n'*2+line+'\n'*2
+            elif last_line=='header':
+                to_write=to_write+line+'\n'*2
+            elif last_line=='':
+                to_write=to_write+'\n'+line+'\n'*2
+            last_line = 'header'
+        #check for normal text
+        else:
+            if last_line=='header' or last_line=='':
+                to_write=to_write+line
+            elif last_line=='plain':
+                to_write=to_write+'<br>'+line
+            last_line='plain'
+    file.write(to_write)
