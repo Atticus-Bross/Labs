@@ -76,11 +76,10 @@ def test_age_variance()->None:
     assert isclose(age_variance(data[23]), 0.00020695619312116284)
 def test_employees()->None:
     """test_employees() Tests the age_variance function"""
-    assert employees(fetch(data[24]['industry'],'Utilities','Construction','Manufacturing'))==(4,206,652)
-    assert employees(fetch(data[25]['industry'], 'Agriculture, forestry, fishing and hunting',\
-        'Mining, quarrying, and oil and gas extraction', 'Utilities')) == (22,254,7)
-    assert employees(fetch(data[26]['industry'], 'Construction', 'Manufacturing', 'Wholesale trade')) \
-        == (58,42,137)
+    assert employees(data[24]['industry'])==(4,206,652,77,609,42,53,213,6,101,31,692,11,325,83)
+    assert employees(data[25]['industry']) == (22, 254, 7, 265, 418, 174, 921, 379, 208, 44, 165, 27, 272, 9, 424\
+        , 118, 365, 325, 4)
+    assert employees(data[26]['industry']) == (58, 42, 137, 134, 67, 50, 18, 14, 249, 58, 59)
 # test_fetch()
 # test_variance()
 # test_replace()

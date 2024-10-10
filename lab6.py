@@ -94,10 +94,11 @@ def age_variance(county:dict)->Number:
 
     county: the county for which the age variation is to be found"""
     return query_county(county,lambda x:variance(*x),None,'age')
-def employees(industries:tuple[dict,...])->tuple[Number,...]:
+def employees(industries:dict[dict[Number,...],...])->tuple[Number,...]:
     """employees(industries) Returns a list of the employees in the given industries
 
     industries: the industries to be evaluated"""
+    industries=list(industries.values())
     return_tuple:tuple=()
     for industry in industries:
         return_tuple=return_tuple+(industry['employees'],)
