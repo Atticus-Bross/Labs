@@ -58,6 +58,11 @@ def test_portion_female()->None:
     assert isclose(portion_female(data[12]),0.5154362416107383)
     assert isclose(portion_female(data[13]), 0.5059422750424448)
     assert isclose(portion_female(data[14]), 0.5105024127164348)
+def test_oldness()->None:
+    """test_oldness() Tests the oldness function"""
+    assert isclose(oldness(data[15]),0.15382452193475815)
+    assert isclose(oldness(data[16]), 0.26166568222090963)
+    assert isclose(oldness(data[17]), 0.19619293615587624)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -66,7 +71,8 @@ def test_portion_female()->None:
 # test_growth()
 # test_deadlyness()
 # test_education()
-test_portion_female()
+# test_portion_female()
+test_oldness()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
 #test header

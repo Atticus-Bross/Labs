@@ -76,6 +76,11 @@ def portion_female(county:dict)->Number:
 
     county: the county for which the female portion is to be found"""
     return query_county(county,lambda x:x[1]/(x[0]+x[1]),None,'male','female')
+def oldness(county:dict)->Number:
+    """oldness(county) Finds the portion of a county that is over 65
+
+    county: the county for which the oldness is to be found"""
+    return query_county(county,sum,'age','65-69','70-74','75-79','80-84','85+')
 def header(text:str,level:int, file)->None:
     """header(text, level, file) Adds a header to a markdown file
 
