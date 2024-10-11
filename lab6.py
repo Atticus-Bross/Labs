@@ -250,6 +250,8 @@ def header(text:str,level:int)->str:
 
     text: the text of the header
     level: 1-6, 1 is the largest"""
+    if level>6 or level<1:
+        raise ValueError('level must be between 1 and 6')
     return '#'*level+' '+text
 def table(col:int,*items:str)->str:
     """table(*items) Generates a markdown table
@@ -273,6 +275,48 @@ def table(col:int,*items:str)->str:
         header_indication=header_indication+'---|'
     rows.insert(1,header_indication)
     return '\n'.join(rows)
+def win_table(sort:list,mode:str,name:str,directory:str|None,*keys:str,extra:Sequence=())->str:
+    """win_table(sort, directory, *keys) Generates a table for the top 5 winners of a category
+
+    sort: a pre-sorted list of the candidates and there associated values
+    mode: 'max' or 'min', determines whether to choose the lowest or highest values
+    name: the name for the associated data in sort
+    directory: the directory to retrieve the additional data from, if None then the whole candidate will be searched
+    *keys: the keys of the information to be retrieved
+    extra: a sequence of any extra data to include starting with the name for that data"""
+    if mode=='max':
+        winners:list=sort[-1:-6:-1]
+    elif mode=='min':
+        winners: list = sort[0:5]
+    else:
+        winners:list=[]
+    #one for the name, extra, and comparison value
+    col:int=1+len(keys)+2
+    rows:list=[]
+    if len(extra)==0:
+        rows.extend(('Name',*keys,name))
+    else:
+        rows.extend(('Name',*keys,extra[0],name))
+    for index, winner in enumerate(winners):
+        rows.append(full_name(winner[0]))
+        if directory is None:
+            for key in keys:
+                rows.append(str(winner[0][key]))
+        else:
+            for key in keys:
+                rows.append(str(winner[0][directory][key]))
+        rows.append(str(extra[index+1]))
+        rows.append(str(winner[1]))
+    return table(col,*rows)
+def subsection(title:str,sort:list,criteria:str,mode:str,end:str='is')->tuple[str,...]:
+    """subsection(title, sort, criteria, mode, end='is') Generates the markdown lines for a complete subsection of the report
+
+    title: the title of the subsection
+    sort: a sorted list that will be used to generate the winners and table
+    criteria: the phrase to end the winner statement with
+    mode: 'max' or 'min', determines whether to use the largest or smallest sort values
+    end: 'is' or 'has', 'x is the y' or 'x has the y'"""
+    lines:tuple=(header(title,2),win_statement(sort,criteria,mode,end))
 def write_lines(file,*lines:str)->None:
     """write_lines(file, *lines) Writes lines to a markdown file, handling good practices automatically
 
@@ -287,14 +331,20 @@ def write_lines(file,*lines:str)->None:
         if line[0]=='#':
             if last_line=='plain':
                 to_write=to_write+'\n'*2+line+'\n'*2
-            elif last_line=='header':
+            elif last_line=='header' or last_line=='table':
                 to_write=to_write+line+'\n'*2
             elif last_line=='':
                 to_write=to_write+'\n'+line+'\n'*2
             last_line = 'header'
         #check for normal text
+        elif line[0]=='|':
+            if last_line=='header' or last_line=='' or last_line=='table':
+                to_write=to_write+line+'\n'*2
+            elif last_line=='plain':
+                to_write=to_write+'\n'*2+line+'\n'*2
+            last_line='table'
         else:
-            if last_line=='header' or last_line=='':
+            if last_line=='header' or last_line=='' or last_line=='table':
                 to_write=to_write+line
             elif last_line=='plain':
                 to_write=to_write+'<br>'+line

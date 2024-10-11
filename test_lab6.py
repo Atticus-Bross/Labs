@@ -191,6 +191,16 @@ def test_table_row()->None:
 # test file writing functions
 with open('files for writing/test.md','w') as mdfile:
     #test header
+    # try:
+    #     mdfile.write(header('a',7))
+    #     assert False
+    # except ValueError:
+    #     pass
+    # try:
+    #     mdfile.write(header('a',0))
+    #     assert False
+    # except ValueError:
+    #     pass
     # mdfile.write(header('test',1))
     # mdfile.write(header('test',3))
     # mdfile.write(header('test',6))
@@ -203,30 +213,39 @@ with open('files for writing/test.md','w') as mdfile:
     #     , (data[5], 5)],'Most Testable', 'max'))
     # mdfile.write(win_statement([(data[0], 1), (data[1], 1), (data[2], 1), (data[3], 4), (data[4], 5)\
     #     , (data[5], 6)],'Most Testable', 'min','has'))
-    #test table
-    try:
-        mdfile.write(table(1))
-        assert False
-    except ValueError:
-        pass
-    try:
-        mdfile.write(table(2,'a','b','c'))
-        assert False
-    except ValueError:
-        pass
-    try:
-        mdfile.write(table(2,'a','b'))
-        assert False
-    except ValueError:
-        pass
+    # #test table
+    # try:
+    #     mdfile.write(table(1))
+    #     assert False
+    # except ValueError:
+    #     pass
+    # try:
+    #     mdfile.write(table(2,'a','b','c'))
+    #     assert False
+    # except ValueError:
+    #     pass
+    # try:
+    #     mdfile.write(table(2,'a','b'))
+    #     assert False
+    # except ValueError:
+    #     pass
     # mdfile.write(table(2,'a','b','c','d'))
     # mdfile.write(table(3,'aaa','bjk','as','asd','asd','re'))
-    mdfile.write(table(2,'a','b','c','d','e','f'))
+    # mdfile.write(table(2,'a','b','c','d','e','f'))
     # try:
     #     write_lines(mdfile)
     #     assert False
     # except ValueError:
     #     pass
+    #test win_table
+    # mdfile.write(win_table([(data[0],1),(data[1],2),(data[2],3),(data[3],4),(data[4],5),(data[5],6)]
+    #     ,'max','Test Table','noaa','temp-jan','temp-apr'))
+    # mdfile.write(win_table([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5), (data[5], 6)]
+    #     , 'min', 'Test Table', None, 'fips', 'state',extra=('Test',1,2,3,4,5)))
     # write_lines(mdfile, header('test',1),header('test',2),'test'\
-    #     ,header('test',3))
-    # write_lines(mdfile,'test',header('test',1),'test','test')
+    #     ,header('test',3),table(2,'a','b','c','d'),header('test',2))
+    # write_lines(mdfile,'test',header('test',1),'test','test',table(2,'a','b','c','d')\
+    #     ,'test')
+    # write_lines(mdfile, table(2,'a','b','c','d'),header('test',5),\
+    #     table(2,'a','b','c','d'),'test',table(2,'a','b','c','d')\
+    #     ,table(2,'a','b','c','d'))
