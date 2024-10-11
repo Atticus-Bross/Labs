@@ -242,6 +242,14 @@ with open('files for writing/test.md','w') as mdfile:
     #     ,'max','Test Table','noaa','temp-jan','temp-apr'))
     # mdfile.write(win_table([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5), (data[5], 6)]
     #     , 'min', 'Test Table', None, 'fips', 'state',extra=('Test',1,2,3,4,5)))
+    #test subsection
+    # write_lines(mdfile,*subsection('Temperature Variation',temp_variance,'most temperature variation'
+    #     ,'least temperature variation','Temperature Variation','noaa','temp-jan'
+    #     ,'temp-apr','temp-jul','temp-oct',end='has'))
+    write_lines(mdfile, *subsection('Employment', employment
+        , 'highest employment', 'highest unemployment', 'Percentage Employed'
+        , 'population','2019','total-employees', end='has'))
+    #test write lines
     # write_lines(mdfile, header('test',1),header('test',2),'test'\
     #     ,header('test',3),table(2,'a','b','c','d'),header('test',2))
     # write_lines(mdfile,'test',header('test',1),'test','test',table(2,'a','b','c','d')\

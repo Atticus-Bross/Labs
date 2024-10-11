@@ -105,6 +105,12 @@ def employees(industries:dict[str:dict[str:Number,...],...])->tuple[Number,...]:
     for industry in industries:
         return_tuple=return_tuple+(industry['employees'],)
     return return_tuple
+#give information needed for later tables
+for county in data:
+    if 'industry' in county.keys():
+        county['population']['total-employees']=sum(employees(county['industry']))
+    else:
+        county['population']['total-employees'] = 0
 def raw_employment(raw_data:tuple)->Number:
     """raw_employment(raw_data) A function to be passed to a query_county function
 
@@ -116,7 +122,10 @@ def employment(county:dict)->Number:
     """employment(county) Finds the employment rate for a county
 
     county: the county for which the employment is to be found"""
-    return query_county(county,raw_employment,None,'population','industry')
+    if 'industry' in county.keys():
+        return query_county(county,raw_employment,None,'population','industry')
+    else:
+        return 0
 def capitalize(string:str)->str:
     """capitalize(string) Capitalizes the words of a string
 
@@ -275,7 +284,7 @@ def table(col:int,*items:str)->str:
         header_indication=header_indication+'---|'
     rows.insert(1,header_indication)
     return '\n'.join(rows)
-def win_table(sort:list,mode:str,name:str,directory:str|None,*keys:str,extra:Sequence=())->str:
+def win_table(sort:list,mode:str,name:str,directory:str|None,*keys,extra:Indexable=())->str:
     """win_table(sort, directory, *keys) Generates a table for the top 5 winners of a category
 
     sort: a pre-sorted list of the candidates and there associated values
@@ -291,7 +300,9 @@ def win_table(sort:list,mode:str,name:str,directory:str|None,*keys:str,extra:Seq
     else:
         winners:list=[]
     #one for the name, extra, and comparison value
-    col:int=1+len(keys)+2
+    col:int=1+len(keys)+1
+    if len(extra)>0:
+        col=col+1
     rows:list=[]
     if len(extra)==0:
         rows.extend(('Name',*keys,name))
@@ -305,18 +316,28 @@ def win_table(sort:list,mode:str,name:str,directory:str|None,*keys:str,extra:Seq
         else:
             for key in keys:
                 rows.append(str(winner[0][directory][key]))
-        rows.append(str(extra[index+1]))
+        if len(extra)>0:
+            rows.append(str(extra[index+1]))
         rows.append(str(winner[1]))
     return table(col,*rows)
-def subsection(title:str,sort:list,criteria:str,mode:str,end:str='is')->tuple[str,...]:
-    """subsection(title, sort, criteria, mode, end='is') Generates the markdown lines for a complete subsection of the report
+def subsection(title:str,f,criteria1:str,criteria2,title2:str,directory:str|None,*keys
+    ,end:str='is')->tuple[str,...]:
+    """subsection(title, f, criteria1, criteria2, title2, directory, *keys, end='is') Generates the markdown lines for a complete subsection of the report
 
     title: the title of the subsection
-    sort: a sorted list that will be used to generate the winners and table
-    criteria: the phrase to end the winner statement with
-    mode: 'max' or 'min', determines whether to use the largest or smallest sort values
+    f: the function to sort on
+    criteria 1-2: the phrases to end the winner statement with
+    titles 2: the title of the data used for the ranking of each candidate
+    directory: the directory to retrieve the additional data from, if None then the whole candidate will be searched
+    *keys: the keys of the information to be retrieved
     end: 'is' or 'has', 'x is the y' or 'x has the y'"""
-    lines:tuple=(header(title,2),win_statement(sort,criteria,mode,end))
+    title3:str=capitalize(criteria1)
+    title4:str=capitalize(criteria2)
+    sort:list=zip_map_sort(data,f)
+    return (header(title,2), header(title3,3),win_statement(sort,criteria1,'max',end)
+        ,win_table(sort,'max',title2,directory,*keys),header(title4,3)
+        ,win_statement(sort,criteria2,'min',end)
+        ,win_table(sort,'min',title2,directory,*keys))
 def write_lines(file,*lines:str)->None:
     """write_lines(file, *lines) Writes lines to a markdown file, handling good practices automatically
 
