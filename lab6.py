@@ -1,9 +1,11 @@
+from ast import Index
 from json import load
 from lab4 import average
 Number=int|float
 Sequence=str|list|tuple|dict
 #sequences that can contain numbers
 NumList=list|tuple|dict
+Indexable=str|list|tuple
 with open('datasets/counties.json', 'r') as jsonfile:
     data = load(jsonfile)
 def fetch(seq:Sequence,*indexes)->tuple:
@@ -139,6 +141,14 @@ def full_name(county:dict)->str:
 
     county: the county for which the name is to be given"""
     return capitalize(county['name'])+', '+county['state']
+def zip_map_sort(seq:Indexable,f)->list:
+    """zip_map(seq, f) Associates each value in a sequence with the value of a function of the value and sorts the result
+
+    seq: the sequence
+    f: the function"""
+    f_values:'map'=map(f,seq)
+    zipped:'zip'=zip(seq,f_values)
+    return sorted(zipped,key=lambda x:x[1])
 def criteria_winner(sort:list)->tuple[str,...]:
     """criteria_winner(f, mode) Finds the winning county(s) for a given criteria
 
@@ -152,10 +162,11 @@ def criteria_winner(sort:list)->tuple[str,...]:
         else:
             break
     return counties
-def text_list(*items:str,sep:str=',')->str:
+def text_list(*items:str,sep:str=';')->str:
     """text_list(*items) Gives a grammatically correct list
 
-    *items: the items in the list"""
+    *items: the items in the list
+    sep: the character to separate the items with"""
     if len(items)<1:
         raise ValueError('there must be at least one item')
     elif len(items)==1:
@@ -167,7 +178,7 @@ def text_list(*items:str,sep:str=',')->str:
         for index, item in enumerate(items):
             #not the last item
             if index!=len(items)-1:
-                return_string=return_string+item+', '
+                return_string=return_string+item+sep+' '
             else:
                 return_string=return_string+'and '+item
         return return_string

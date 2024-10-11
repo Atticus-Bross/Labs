@@ -100,6 +100,11 @@ def test_full_name()->None:
     assert full_name(data[27])== 'Dawes County, NE'
     assert full_name(data[100]) == 'Okanogan County, WA'
     assert full_name(data[200]) == 'Davison County, SD'
+def test_zip_map_sort()->None:
+    """test_zip_map_sort() Tests the zip_map_sort function"""
+    assert zip_map_sort('acb',lambda x:x*2)==[('a','aa'),('b','bb'),('c','cc')]
+    assert zip_map_sort((3,2,1),lambda x:x**2)==[(1,1),(2,4),(3,9)]
+    assert zip_map_sort([2],lambda x: x//2)==[(2,1),]
 def test_criteria_winner()->None:
     """test_criteria_winner() Tests the criteria_winner function"""
     assert criteria_winner(sorted(data,key=temp_variance))==('Hawaii County, HI',)
@@ -115,8 +120,9 @@ def test_text_list()->None:
         pass
     assert text_list('a')=='a'
     assert text_list('a','b')=='a and b'
-    assert text_list('a','b','c')=='a, b, and c'
-    assert text_list('a','b','c','d')=='a, b, c, and d'
+    assert text_list('a','b','c')=='a; b; and c'
+    assert text_list('a','b','c','d')=='a; b; c; and d'
+    assert text_list('a','b','c',sep=',')=='a, b, and c'
 def test_win_statement()->None:
     """test_win_statement() Tests the win_statement function"""
     assert win_statement(sorted(data, key=temp_variance),'most temperature stable') \
@@ -141,6 +147,7 @@ def test_win_statement()->None:
 # test_employment()
 # test_capitalize()
 # test_full_name()
+test_zip_map_sort()
 # test_criteria_winner()
 # test_text_list()
 # test file writing functions
