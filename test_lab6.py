@@ -156,27 +156,38 @@ def test_text_list()->None:
     assert text_list('a','b','c')=='a; b; and c'
     assert text_list('a','b','c','d')=='a; b; c; and d'
     assert text_list('a','b','c',sep=',')=='a, b, and c'
+def test_table_row()->None:
+    """test_table_row() Tests the table_row function"""
+    try:
+        assert table_row()
+        assert False
+    except ValueError:
+        pass
+    assert table_row('a')=='|a|'
+    assert table_row('a','b')=='|a|b|'
+    assert table_row('a','b','c')=='|a|b|c|'
 # test_fetch()
 # test_variance()
 # test_replace()
 # test_query_county()
-test_temp_variance()
-test_growth()
-test_deadlyness()
-test_education()
-test_portion_female()
-test_oldness()
-test_youngness()
-test_age_variance()
-test_employees()
-test_raw_employment()
-test_employment()
+# test_temp_variance()
+# test_growth()
+# test_deadlyness()
+# test_education()
+# test_portion_female()
+# test_oldness()
+# test_youngness()
+# test_age_variance()
+# test_employees()
+# test_raw_employment()
+# test_employment()
 # test_capitalize()
 # test_full_name()
 # test_zip_map_sort()
 # test_criteria_winner()
 # test_top5()
 # test_text_list()
+test_table_row()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
     #test header

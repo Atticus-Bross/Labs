@@ -217,6 +217,13 @@ def text_list(*items:str,sep:str=';')->str:
             else:
                 return_string=return_string+'and '+item
         return return_string
+def table_row(*items:str)->str:
+    """table_row(*items) Generates a row of a markdown table"""
+    if len(items)<1:
+        raise ValueError('there must be at least one item')
+    row:str='|'.join(items)
+    row='|'+row+'|'
+    return row
 def win_statement(sort:list,criteria:str,mode:str,end:str='is')->str:
     """win_statement(sort, criteria, end='is') Creates a statement announcing the winner(s) from a sorted list
 
