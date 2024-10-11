@@ -107,10 +107,20 @@ def test_zip_map_sort()->None:
     assert zip_map_sort([2],lambda x: x//2)==[(2,1),]
 def test_criteria_winner()->None:
     """test_criteria_winner() Tests the criteria_winner function"""
-    assert criteria_winner(sorted(data,key=temp_variance))==('Hawaii County, HI',)
-    assert criteria_winner(sorted(data,key=growth,reverse=True))==('Maricopa County, AZ',)
-    assert criteria_winner(sorted(data,key=deadlyness)) == ('Keya Paha County, NE',)
-    assert criteria_winner(sorted(data,key=education,reverse=True)) == ('Falls Church City, VA',)
+    try:
+        criteria_winner([],'max')
+        assert False
+    except ValueError:
+        pass
+    try:
+        criteria_winner([(3,3)],'square')
+        assert False
+    except ValueError:
+        pass
+    assert criteria_winner([(data[3],3),(data[4],5),(data[0],15)],'max')==('Cuming County, NE',)
+    assert criteria_winner([(data[1], 3), (data[0], 5), (data[2], 9)], 'min') == ('Lancaster County, NE',)
+    assert criteria_winner([(data[0],3),(data[1],3),(data[2],3)],'min')==('Cuming County, NE'\
+        ,'Lancaster County, NE','Nuckolls County, NE')
 def test_text_list()->None:
     """test_text_list() Tests the text_list function"""
     try:
@@ -147,8 +157,8 @@ def test_win_statement()->None:
 # test_employment()
 # test_capitalize()
 # test_full_name()
-test_zip_map_sort()
-# test_criteria_winner()
+# test_zip_map_sort()
+test_criteria_winner()
 # test_text_list()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
