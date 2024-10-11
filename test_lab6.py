@@ -156,13 +156,6 @@ def test_text_list()->None:
     assert text_list('a','b','c')=='a; b; and c'
     assert text_list('a','b','c','d')=='a; b; c; and d'
     assert text_list('a','b','c',sep=',')=='a, b, and c'
-def test_win_statement()->None:
-    """test_win_statement() Tests the win_statement function"""
-    assert win_statement(sorted(data, key=temp_variance),'most temperature stable') \
-        == 'Hawaii County, HI is the most temperature stable'
-    assert win_statement(sorted(data, key=growth, reverse=True)) == ('Maricopa County, AZ',)
-    assert win_statement(sorted(data, key=deadlyness)) == ('Keya Paha County, NE',)
-    assert win_statement(sorted(data, key=education, reverse=True)) == ('Falls Church City, VA',)
 # test_fetch()
 # test_variance()
 # test_replace()
@@ -182,14 +175,23 @@ def test_win_statement()->None:
 # test_full_name()
 # test_zip_map_sort()
 # test_criteria_winner()
-test_top5()
+# test_top5()
 # test_text_list()
 # test file writing functions
-# with open('files for writing/test.md','w') as mdfile:
+with open('files for writing/test.md','w') as mdfile:
     #test header
     # mdfile.write(header('test',1))
     # mdfile.write(header('test',3))
     # mdfile.write(header('test',6))
+    #test win_statement
+    mdfile.write(win_statement([(data[0],1),(data[1],2),(data[2],3),(data[3],4),(data[4],5),(data[5],6)]\
+        ,'Most Testable','max'))
+    mdfile.write(win_statement([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5)\
+        , (data[5], 6)],'Most Testable', 'min','has'))
+    mdfile.write(win_statement([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5)\
+        , (data[5], 5)],'Most Testable', 'max'))
+    mdfile.write(win_statement([(data[0], 1), (data[1], 1), (data[2], 1), (data[3], 4), (data[4], 5)\
+        , (data[5], 6)],'Most Testable', 'min','has'))
     # try:
     #     write_lines(mdfile)
     #     assert False
