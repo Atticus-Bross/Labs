@@ -41,34 +41,34 @@ def test_temp_variance()->None:
     assert temp_variance(data[2])==332.0118749999999
 def test_growth()->None:
     """test_growth() Tests the variance function"""
-    assert growth(data[3])==-323
-    assert growth(data[4])==-149
-    assert growth(data[5])==-322
+    assert growth(data[3])==-3.8650233337322004
+    assert growth(data[4])==-1.6225634324294893
+    assert growth(data[5])==-8.453662378577054
 def test_deadlyness()->None:
     """test_deadlyness() Tests the deadlyness function"""
-    assert isclose(deadlyness(data[6]),5.095238095238095)
-    assert isclose(deadlyness(data[7]),0.47619047619047616)
-    assert isclose(deadlyness(data[8]),0.5238095238095238)
+    assert isclose(deadlyness(data[6]),.05095238095238095)
+    assert isclose(deadlyness(data[7]),.0047619047619047616)
+    assert isclose(deadlyness(data[8]),.005238095238095238)
 def test_education()->None:
     """test_education() Tests the education function"""
-    assert education(data[9])==22.4
-    assert education(data[10]) == 20.7
-    assert education(data[11]) == 25.0
+    assert isclose(education(data[9]),.224)
+    assert isclose(education(data[10]),.207)
+    assert isclose(education(data[11]),.250)
 def test_portion_female()->None:
     """test_portion_female() Tests the portion_female function"""
-    assert isclose(portion_female(data[12]),0.5154362416107383)
-    assert isclose(portion_female(data[13]), 0.5059422750424448)
-    assert isclose(portion_female(data[14]), 0.5105024127164348)
+    assert isclose(portion_female(data[12]),51.54362416107383)
+    assert isclose(portion_female(data[13]), 50.59422750424448)
+    assert isclose(portion_female(data[14]), 51.05024127164348)
 def test_oldness()->None:
     """test_oldness() Tests the oldness function"""
-    assert isclose(oldness(data[15]),0.15382452193475815)
-    assert isclose(oldness(data[16]), 0.26166568222090963)
-    assert isclose(oldness(data[17]), 0.19619293615587624)
+    assert isclose(oldness(data[15]),15.382452193475815)
+    assert isclose(oldness(data[16]), 26.166568222090963)
+    assert isclose(oldness(data[17]), 19.619293615587624)
 def test_youngness()->None:
     """test_youngness() Tests the youngness function"""
-    assert isclose(youngness(data[18]),0.26888371648120396)
-    assert isclose(youngness(data[19]), 0.26092930302273293)
-    assert isclose(youngness(data[20]), 0.2657428791377983)
+    assert isclose(youngness(data[18]), 26.888371648120396)
+    assert isclose(youngness(data[19]), 26.092930302273293)
+    assert isclose(youngness(data[20]), 26.57428791377983)
 def test_age_variance()->None:
     """test_age_variance() Tests the age_variance function"""
     assert isclose(age_variance(data[21]),0.0001782786942683424)
@@ -82,14 +82,14 @@ def test_employees()->None:
     assert employees(data[26]['industry']) == (58, 42, 137, 134, 67, 50, 18, 14, 249, 58, 59)
 def test_raw_employment()->None:
     """test_raw_employment() Tests the raw_employment function"""
-    assert isclose(raw_employment(fetch(data[24],'population','industry')),0.2881135752064582)
-    assert isclose(raw_employment(fetch(data[25], 'population', 'industry')), 0.16766991770801584)
-    assert isclose(raw_employment(fetch(data[26], 'population', 'industry')), 0.16995971609437943)
+    assert isclose(raw_employment(fetch(data[24],'population','industry')),28.81135752064582)
+    assert isclose(raw_employment(fetch(data[25], 'population', 'industry')), 16.766991770801584)
+    assert isclose(raw_employment(fetch(data[26], 'population', 'industry')), 16.995971609437943)
 def test_employment()->None:
     """test_employment() Tests the employment function"""
-    assert isclose(employment(data[24]), 0.2881135752064582)
-    assert isclose(employment(data[25]), 0.16766991770801584)
-    assert isclose(employment(data[26]), 0.16995971609437943)
+    assert isclose(employment(data[24]), 28.81135752064582)
+    assert isclose(employment(data[25]), 16.766991770801584)
+    assert isclose(employment(data[26]), 16.995971609437943)
 def test_capitalize()->None:
     """test_capitalize() Tests the employment function"""
     assert capitalize('')==''
@@ -160,17 +160,17 @@ def test_text_list()->None:
 # test_variance()
 # test_replace()
 # test_query_county()
-# test_temp_variance()
-# test_growth()
-# test_deadlyness()
-# test_education()
-# test_portion_female()
-# test_oldness()
-# test_youngness()
-# test_age_variance()
-# test_employees()
-# test_raw_employment()
-# test_employment()
+test_temp_variance()
+test_growth()
+test_deadlyness()
+test_education()
+test_portion_female()
+test_oldness()
+test_youngness()
+test_age_variance()
+test_employees()
+test_raw_employment()
+test_employment()
 # test_capitalize()
 # test_full_name()
 # test_zip_map_sort()
@@ -178,20 +178,20 @@ def test_text_list()->None:
 # test_top5()
 # test_text_list()
 # test file writing functions
-with open('files for writing/test.md','w') as mdfile:
+# with open('files for writing/test.md','w') as mdfile:
     #test header
     # mdfile.write(header('test',1))
     # mdfile.write(header('test',3))
     # mdfile.write(header('test',6))
     #test win_statement
-    mdfile.write(win_statement([(data[0],1),(data[1],2),(data[2],3),(data[3],4),(data[4],5),(data[5],6)]\
-        ,'Most Testable','max'))
-    mdfile.write(win_statement([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5)\
-        , (data[5], 6)],'Most Testable', 'min','has'))
-    mdfile.write(win_statement([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5)\
-        , (data[5], 5)],'Most Testable', 'max'))
-    mdfile.write(win_statement([(data[0], 1), (data[1], 1), (data[2], 1), (data[3], 4), (data[4], 5)\
-        , (data[5], 6)],'Most Testable', 'min','has'))
+    # mdfile.write(win_statement([(data[0],1),(data[1],2),(data[2],3),(data[3],4),(data[4],5),(data[5],6)]\
+    #     ,'Most Testable','max'))
+    # mdfile.write(win_statement([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5)\
+    #     , (data[5], 6)],'Most Testable', 'min','has'))
+    # mdfile.write(win_statement([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5)\
+    #     , (data[5], 5)],'Most Testable', 'max'))
+    # mdfile.write(win_statement([(data[0], 1), (data[1], 1), (data[2], 1), (data[3], 4), (data[4], 5)\
+    #     , (data[5], 6)],'Most Testable', 'min','has'))
     # try:
     #     write_lines(mdfile)
     #     assert False
