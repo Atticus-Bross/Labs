@@ -153,29 +153,50 @@ def criteria_winner(sort:list,mode:str)->tuple[str,...]:
     """criteria_winner(sort, mode) Finds the winning county(s) for a given criteria
 
     sort: sorted list of the candidates
-    mode: max: picks the largest value min: picks the smallest values"""
+    mode: 'max': picks the largest value 'min': picks the smallest values"""
     if len(sort)<1:
         raise ValueError('sort must have at least one element')
     if mode == 'min':
         first=sort[0][1]
         start:int=0
-        end:int=len(sort)+1
         step:int=1
     elif mode == 'max':
         first=sort[-1][1]
-        start: int = len(sort)+1
-        end: int = 0
+        start: int = -1
         step:int=-1
     else:
         raise ValueError('mode must be either max or min')
     counties:tuple=()
-    for county, value in sort[slice(start,end,step)]:
+    for county, value in sort[start:None:step]:
         #the values in sort are (item, value)
         if value==first:
             counties=counties+(full_name(county),)
         else:
             break
     return counties
+def top5(sort:list,mode:str)->tuple:
+    """top5(sort, mode) Gives the top 5 for a from a list
+
+    sort: a pre-sorted list that associates each element with a value
+    mode: 'max': picks the largest value 'min': picks the smallest values"""
+    if len(sort)<1:
+        raise ValueError('sort must have at least one element')
+    if mode == 'min':
+        first=sort[0][1]
+        start:int=0
+        stop:int=5
+        step:int=1
+    elif mode == 'max':
+        first=sort[-1][1]
+        start: int = -1
+        stop:int=-6
+        step:int=-1
+    else:
+        raise ValueError('mode must be either max or min')
+    tops:tuple=()
+    for county, value in sort[start:stop:step]:
+        tops=tops+(full_name(county),)
+    return tops
 def text_list(*items:str,sep:str=';')->str:
     """text_list(*items) Gives a grammatically correct list
 

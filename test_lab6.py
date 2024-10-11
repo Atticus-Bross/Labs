@@ -121,6 +121,29 @@ def test_criteria_winner()->None:
     assert criteria_winner([(data[1], 3), (data[0], 5), (data[2], 9)], 'min') == ('Lancaster County, NE',)
     assert criteria_winner([(data[0],3),(data[1],3),(data[2],3)],'min')==('Cuming County, NE'\
         ,'Lancaster County, NE','Nuckolls County, NE')
+    assert criteria_winner([(data[0], 3), (data[1], 3), (data[2], 3)], 'max') == ('Nuckolls County, NE'\
+        ,'Lancaster County, NE','Cuming County, NE')
+def test_top5()->None:
+    """test_top5() Tests the top5 function"""
+    try:
+        top5([],'max')
+        assert False
+    except ValueError:
+        pass
+    try:
+        top5([(3,3)],'square')
+        assert False
+    except ValueError:
+        pass
+    assert top5([(data[0], 3), (data[1], 3), (data[2], 3)], 'min') == ('Cuming County, NE' \
+        , 'Lancaster County, NE','Nuckolls County, NE')
+    assert top5([(data[0], 3), (data[1], 3), (data[2], 3)], 'max') == ('Nuckolls County, NE' \
+        , 'Lancaster County, NE','Cuming County, NE')
+    assert top5([(data[0],1),(data[1],2),(data[2],3),(data[3],4),(data[4],5),(data[5],6)],'min')\
+        ==('Cuming County, NE', 'Lancaster County, NE', 'Nuckolls County, NE', 'Keith County, NE', 'Phelps County, NE')
+    assert top5([(data[0], 1), (data[1], 2), (data[2], 3), (data[3], 4), (data[4], 5), (data[5], 6)]\
+        , 'max') == ('Webster County, NE', 'Phelps County, NE', 'Keith County, NE', 'Nuckolls County, NE'\
+        , 'Lancaster County, NE')
 def test_text_list()->None:
     """test_text_list() Tests the text_list function"""
     try:
@@ -158,7 +181,8 @@ def test_win_statement()->None:
 # test_capitalize()
 # test_full_name()
 # test_zip_map_sort()
-test_criteria_winner()
+# test_criteria_winner()
+test_top5()
 # test_text_list()
 # test file writing functions
 # with open('files for writing/test.md','w') as mdfile:
