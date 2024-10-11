@@ -218,7 +218,9 @@ def text_list(*items:str,sep:str=';')->str:
                 return_string=return_string+'and '+item
         return return_string
 def table_row(*items:str)->str:
-    """table_row(*items) Generates a row of a markdown table"""
+    """table_row(*items) Generates a row of a markdown table
+
+    *items: the items of the row"""
     if len(items)<1:
         raise ValueError('there must be at least one item')
     row:str='|'.join(items)
@@ -249,6 +251,18 @@ def header(text:str,level:int)->str:
     text: the text of the header
     level: 1-6, 1 is the largest"""
     return '#'*level+' '+text
+def table(col:int,*items:str)->str:
+    """table(*items) Generates a markdown table
+
+    col: the number of columns
+    *items: the items in the table"""
+    if not len(items)%col:
+        raise ValueError('the items must fit evenly into the columns')
+    rows:list=[]
+    #calculate number of rows
+    for i in range(len(items)//col):
+        rows.append(table_row(*items[col*i:col*(i+1)]),)
+    rows.insert(1,'-'*col)
 def write_lines(file,*lines:str)->None:
     """write_lines(file, *lines) Writes lines to a markdown file, handling good practices automatically
 
