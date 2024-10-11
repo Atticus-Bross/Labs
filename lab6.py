@@ -256,13 +256,23 @@ def table(col:int,*items:str)->str:
 
     col: the number of columns
     *items: the items in the table"""
-    if not len(items)%col:
+    if len(items)%col!=0:
         raise ValueError('the items must fit evenly into the columns')
+    rows_num:int=len(items)//col
+    if rows_num<2:
+        raise ValueError('there must be at least two rows')
+    row1:list=list(items[0:col])
     rows:list=[]
     #calculate number of rows
-    for i in range(len(items)//col):
+    for i in range(rows_num):
+        #the range of indexes that correspond to rows
         rows.append(table_row(*items[col*i:col*(i+1)]),)
-    rows.insert(1,'-'*col)
+    #calculate how to add the -'s
+    header_indication:str='|'
+    for item in row1:
+        header_indication=header_indication+'---|'
+    rows.insert(1,header_indication)
+    return '\n'.join(rows)
 def write_lines(file,*lines:str)->None:
     """write_lines(file, *lines) Writes lines to a markdown file, handling good practices automatically
 

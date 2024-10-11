@@ -187,9 +187,9 @@ def test_table_row()->None:
 # test_criteria_winner()
 # test_top5()
 # test_text_list()
-test_table_row()
+# test_table_row()
 # test file writing functions
-# with open('files for writing/test.md','w') as mdfile:
+with open('files for writing/test.md','w') as mdfile:
     #test header
     # mdfile.write(header('test',1))
     # mdfile.write(header('test',3))
@@ -203,6 +203,25 @@ test_table_row()
     #     , (data[5], 5)],'Most Testable', 'max'))
     # mdfile.write(win_statement([(data[0], 1), (data[1], 1), (data[2], 1), (data[3], 4), (data[4], 5)\
     #     , (data[5], 6)],'Most Testable', 'min','has'))
+    #test table
+    try:
+        mdfile.write(table(1))
+        assert False
+    except ValueError:
+        pass
+    try:
+        mdfile.write(table(2,'a','b','c'))
+        assert False
+    except ValueError:
+        pass
+    try:
+        mdfile.write(table(2,'a','b'))
+        assert False
+    except ValueError:
+        pass
+    # mdfile.write(table(2,'a','b','c','d'))
+    # mdfile.write(table(3,'aaa','bjk','as','asd','asd','re'))
+    mdfile.write(table(2,'a','b','c','d','e','f'))
     # try:
     #     write_lines(mdfile)
     #     assert False
