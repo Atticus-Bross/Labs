@@ -63,12 +63,13 @@ def table_from_list(header:list,data:list[list])->list[str]:
 
     header: the headers
     data: the values of the table"""
-    unpacked:list|'map'=[*header,*data]
-    unpacked=map(fix,unpacked)
+    unpacked:list=[*header,*data]
+    unpacked=list(map(fix,unpacked))
     col:list=columns(unpacked,len(header))
     #type of the elements within the columns, [1] is the first element that is not a header
-    aligns:'map'=map(alignment,unpacked)
-    pass_values:'map'=map(none_str,unpacked)
+    aligns:list=list(map(alignment,unpacked))
+    # maps the lists within col
+    pass_values:list=list(map(none_str,unpacked))
     table(pass_values,aligns)
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
     """create_table(header, data)
