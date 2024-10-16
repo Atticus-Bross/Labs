@@ -25,15 +25,29 @@ def fix(value):
         return round(value,2)
     else:
         return value
+def columns(values:list,cols:int)->list[list]:
+    """columns(values, cols)
+    Breaks data into a given number of columns
+
+    values: the values to be broken up
+    cols: the number of columns"""
+    col_len:int=len(values)//cols
+    columns2:list=[]
+    for i in range(cols):
+        col:list=[]
+        for j in range(col_len):
+            col.append(values[i+j*cols])
+        columns2.append(col)
+    return columns2
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
 
     header: the headers
     data: the values of the table"""
-    unpacked:list=[*header,*data]
-    fixed:'map'=map(fix,unpacked)
-    col:list=columns(unpacked)
+    unpacked:list|'map'=[*header,*data]
+    unpacked=map(fix,unpacked)
+    col:list=columns(unpacked,len(header))
     #type of the elements within the columns, [1] is the first element that is not a header
     col_types:'map'=map(lambda x:type(x[1]),col)
     aligns:'map'=map(alignment,col_types)

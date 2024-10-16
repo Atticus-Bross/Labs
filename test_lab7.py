@@ -33,5 +33,12 @@ def test_fix()->None:
     assert fix('a')=='a'
     assert fix(8.9058)==8.91
     assert fix(2.1)==2.1
+def test_columns()->None:
+    """test_columns()
+    Tests the columns function"""
+    assert columns([1,2,3,4],2)==[[1,3],[2,4]]
+    assert columns([1,2,3,4,5,6],3)==[[1,4],[2,5],[3,6]]
+    assert columns([1,2,3,4,5,6],2)==[[1,3,5],[2,4,6]]
 test_same_len_error()
 test_fix()
+test_columns()
