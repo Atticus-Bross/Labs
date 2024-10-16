@@ -59,6 +59,26 @@ def none_str(value)->str:
         return ''
     else:
         return str(value)
+def table(values:list,aligns:list,cols:int)->list[str]:
+    """table(values, aligns, cols)
+    Creates a table from a list of values and alignments
+
+    values: a list of the values
+    aligns: the alignments for each value
+    cols: the number of columns"""
+    aligned:list=add_alignment(values,aligns)
+    cols2:list=columns(aligned,cols)
+    widths:list=list(map(min_width,cols2))
+    rows2:list=rows(aligned,len(values)//cols)
+    return_rows:list=[]
+    for row2 in rows2:
+        return_rows.append(row(row2,widths))
+    #add header formatting row
+    header_row:list=[]
+    for width in widths:
+        header_row.append('-'*width)
+    return_rows.insert(row(header_row,widths))
+    return return_rows
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
@@ -71,7 +91,7 @@ def table_from_list(header:list,data:list[list])->list[str]:
     aligns:list=list(map(alignment,unpacked))
     # maps the lists within col
     pass_values:list=list(map(none_str,unpacked))
-    return table(pass_values,aligns)
+    return table(pass_values,aligns,len(header))
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
     """create_table(header, data)
     Creates a list of strings describing the rows of a Markdown table
