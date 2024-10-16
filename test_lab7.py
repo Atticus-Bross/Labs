@@ -54,8 +54,16 @@ def test_none_str()->None:
     assert none_str(12)=='12'
     assert none_str(True)=='True'
     assert none_str('asd')=='asd'
+def test_add_alignment()->None:
+    """test_add_alignment()
+    Tests the add_alignment function"""
+    test_error(ValueError,lambda:add_alignment(['ad','bc'],['left','a']))
+    assert add_alignment(['asd','bfc','ert'],['left','left','left'])==[':asd',':bfc',':ert']
+    assert add_alignment(['abc', 'efg'], ['right', 'right']) == ['abc:','efg:']
+    assert add_alignment(['word', 'test', 'cube','some'], ['left', 'right', 'left','right']) == [':word','test:',':cube','some:']
 test_same_len_error()
 test_fix()
 test_columns()
 test_alignment()
 test_none_str()
+test_add_alignment()

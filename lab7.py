@@ -59,7 +59,22 @@ def none_str(value)->str:
         return ''
     else:
         return str(value)
-def table(values:list,aligns:list,cols:int)->list[str]:
+def add_alignment(values:list[str],aligns:list[str])->list[str]:
+    """add_alignment(values, aligns)
+    Adds proper markdown alignment to a list of strings
+    
+    values: the strings to be given alignment
+    aligns: should be made up of the strings 'left' and 'right'"""
+    aligned:list=[]
+    for index, value in enumerate(values):
+        if aligns[index]=='left':
+            aligned.append(f':{value}')
+        elif aligns[index]=='right':
+            aligned.append(f'{value}:')
+        else:
+            raise ValueError("aligns must be either 'left' or 'right'")
+    return aligned
+def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     """table(values, aligns, cols)
     Creates a table from a list of values and alignments
 
