@@ -43,11 +43,20 @@ def alignment(value)->str:
     """alignment(value)
     Determines the alignment of a value should have in a table
 
-    value: the value"""
+    value: the value to align"""
     if isinstance(value,int|float) and not isinstance(value,bool):
         return 'right'
     else:
         return 'center'
+def none_str(value)->str:
+    """non_str(value)
+    Converts the value to a string, None converts to a blank string
+
+    value: the value to convert"""
+    if value is None:
+        return ''
+    else:
+        return str(value)
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values

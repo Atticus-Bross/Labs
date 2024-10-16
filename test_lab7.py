@@ -46,7 +46,15 @@ def test_alignment()->None:
     assert alignment(2.345)=='right'
     assert alignment('test')=='center'
     assert alignment(True)=='center'
+def test_none_str()->None:
+    """test_none_str()
+    Tests the none_str function"""
+    assert none_str(None)==''
+    assert none_str(12)=='12'
+    assert none_str(True)=='True'
+    assert none_str('asd')=='asd'
 test_same_len_error()
 test_fix()
 test_columns()
 test_alignment()
+test_none_str()
