@@ -39,6 +39,14 @@ def test_columns()->None:
     assert columns([1,2,3,4],2)==[[1,3],[2,4]]
     assert columns([1,2,3,4,5,6],3)==[[1,4],[2,5],[3,6]]
     assert columns([1,2,3,4,5,6],2)==[[1,3,5],[2,4,6]]
+def test_alignment()->None:
+    """test_columns()
+    Tests the alignment function"""
+    assert alignment(2)=='right'
+    assert alignment(2.345)=='right'
+    assert alignment('test')=='center'
+    assert alignment(True)=='center'
 test_same_len_error()
 test_fix()
 test_columns()
+test_alignment()

@@ -39,6 +39,15 @@ def columns(values:list,cols:int)->list[list]:
             col.append(values[i+j*cols])
         columns2.append(col)
     return columns2
+def alignment(value)->str:
+    """alignment(value)
+    Determines the alignment of a value should have in a table
+
+    value: the value"""
+    if isinstance(value,int|float) and not isinstance(value,bool):
+        return 'right'
+    else:
+        return 'center'
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
@@ -49,11 +58,9 @@ def table_from_list(header:list,data:list[list])->list[str]:
     unpacked=map(fix,unpacked)
     col:list=columns(unpacked,len(header))
     #type of the elements within the columns, [1] is the first element that is not a header
-    col_types:'map'=map(lambda x:type(x[1]),col)
-    aligns:'map'=map(alignment,col_types)
-    widths:'map'=map(min_width,col)
+    aligns:'map'=map(alignment,unpacked)
     pass_values:'map'=map(none_str,unpacked)
-    table(pass_values,aligns,widths)
+    table(pass_values,aligns)
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
     """create_table(header, data)
     Creates a list of strings describing the rows of a Markdown table
