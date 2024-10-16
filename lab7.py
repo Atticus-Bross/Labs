@@ -16,20 +16,29 @@ def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     lengths:list=list(map(len,seq))
     if lengths.count(lengths[0])!=len(lengths):
         raise ValueError(error_txt)
+def fix(value):
+    """fix(value)
+    Reduces floats to two decimal places, all other values are ignored
+
+    value: the value"""
+    if isinstance(value,float):
+        return round(value,2)
+    else:
+        return value
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
 
     header: the headers
     data: the values of the table"""
-    fixed:'map'=map(fix,data)
-    col:list=columns(header,fixed)
-    #type of the elements within the columns
+    unpacked:list=[*header,*data]
+    fixed:'map'=map(fix,unpacked)
+    col:list=columns(unpacked)
+    #type of the elements within the columns, [1] is the first element that is not a header
     col_types:'map'=map(lambda x:type(x[1]),col)
     aligns:'map'=map(alignment,col_types)
     widths:'map'=map(min_width,col)
-    unpacked:list=extract(header,fixed)
-    pass_values:'map'=map(str,unpacked)
+    pass_values:'map'=map(none_str,unpacked)
     table(pass_values,aligns,widths)
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
     """create_table(header, data)

@@ -4,7 +4,7 @@ Module Testing the Lab 7 functions
 Completed by Atticus Bross on 2024-10-22 for DS-1043"""
 from typing import Callable
 
-from lab7 import same_len_error
+from lab7 import *
 
 
 def test_error(error_type:type,f:Callable)->None:
@@ -27,4 +27,11 @@ def test_same_len_error()->None:
     test_error(ValueError,lambda:same_len_error([[],[1]],''))
     test_error(ValueError,lambda:same_len_error([[1,2],[3,4,5]],''))
     test_error(ValueError, lambda: same_len_error([[1, 2,3,4], [3, 4, 5]], ''))
+def test_fix()->None:
+    """test_fix()
+    Tests the fix function"""
+    assert fix('a')=='a'
+    assert fix(8.9058)==8.91
+    assert fix(2.1)==2.1
 test_same_len_error()
+test_fix()
