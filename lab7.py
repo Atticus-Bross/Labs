@@ -65,12 +65,11 @@ def table_from_list(header:list,data:list[list])->list[str]:
     data: the values of the table"""
     unpacked:list=[*header,*data]
     unpacked=list(map(fix,unpacked))
-    col:list=columns(unpacked,len(header))
     #type of the elements within the columns, [1] is the first element that is not a header
     aligns:list=list(map(alignment,unpacked))
     # maps the lists within col
     pass_values:list=list(map(none_str,unpacked))
-    table(pass_values,aligns)
+    return table(pass_values,aligns)
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
     """create_table(header, data)
     Creates a list of strings describing the rows of a Markdown table
