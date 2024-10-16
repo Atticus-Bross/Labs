@@ -42,10 +42,11 @@ def test_columns()->None:
 def test_alignment()->None:
     """test_columns()
     Tests the alignment function"""
+    test_error(ValueError,lambda:alignment(True))
     assert alignment(2)=='right'
     assert alignment(2.345)=='right'
-    assert alignment('test')=='center'
-    assert alignment(True)=='center'
+    assert alignment('test')=='left'
+    assert alignment(None)=='left'
 def test_none_str()->None:
     """test_none_str()
     Tests the none_str function"""
