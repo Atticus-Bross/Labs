@@ -93,6 +93,22 @@ def rows(values:list,rows2:int)->list[list]:
     for i in range(rows2):
         return_rows.append(values[i*row_len:(i+1)*row_len])
     return return_rows
+def table_row(values:list[str],widths:list[int],aligns:list[str])->str:
+    """table_row(values, widths, aligns)
+    Creates the string for a row in a Markdown table
+
+    values: the values in the row
+    widths: the width each column is to be in the final table
+    aligns: the alignment of each element in the row"""
+    elements:list=[]
+    for index, value in enumerate(values):
+        if aligns[index]=='left':
+            elements.append(f'{value:<{widths[index]}}')
+        elif aligns[index]=='right':
+            elements.append(f'{value:>{widths[index]}}')
+        else:
+            raise ValueError("aligns must be either 'left' or 'right'")
+    return f'|{'|'.join(elements)}|\n'
 def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     """table(values, aligns, cols)
     Creates a table from a list of values and alignments
@@ -105,8 +121,9 @@ def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     widths:list=list(map(max_width,cols2))
     rows2:list=rows(aligned,len(values)//cols)
     return_rows:list=[]
-    for row2 in rows2:
-        return_rows.append(table_row(row2,widths))
+    for index, row2 in enumerate(rows2):
+        #cols is also the length of each row
+        return_rows.append(table_row(row2,widths,aligns[index*cols:(index+1)*cols]))
     #add header formatting row
     header_row:list=[]
     for width in widths:

@@ -76,6 +76,12 @@ def test_rows()->None:
     assert rows([1,2,3,4],2)==[[1,2],[3,4]]
     assert rows([1,2,3,4,5,6],3)==[[1,2],[3,4],[5,6]]
     assert rows([1,2,3,4,5,6],2)==[[1,2,3],[4,5,6]]
+def test_table_row()->None:
+    """test_table_row()
+    Tests the table_row function"""
+    assert table_row([':abc'],[7],['left'])=='|:abc   |\n'
+    assert table_row(['abc:'], [6], ['right']) == '|  abc:|\n'
+    assert table_row([':abc','efg:',':hij','lmn:'],[5,8,6,9],['left','right','left','right'])=='|:abc |    efg:|:hij  |     lmn:|\n'
 test_same_len_error()
 test_fix()
 test_columns()
@@ -84,3 +90,4 @@ test_none_str()
 test_add_alignment()
 test_max_width()
 test_rows()
+test_table_row()
