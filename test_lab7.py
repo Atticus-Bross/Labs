@@ -96,6 +96,7 @@ def test_deep_unpack()->None:
     assert deep_unpack([[None,'abc',1.2],[True,3],['ghf']])==[None,'abc',1.2,True,3,'ghf']
     assert deep_unpack([[['abc',None],[],2.34],[[],[True,3]]])==['abc',None,2.34,True,3]
     assert deep_unpack([[(1,2,3),('abc','efg')],['abc']],tuple)==[(1,2,3),('abc','efg'),'a','b','c']
+    assert deep_unpack([[(1, 2, 3), ('abc', 'efg')], ['abc']], tuple|str) == [(1, 2, 3), ('abc', 'efg'), 'abc']
 test_same_len_error()
 test_fix()
 test_columns()
@@ -116,3 +117,7 @@ with open('test.md','w') as mdfile:
         mdfile.writelines(table(['a','b','ab','bc','abc','bcd','abcd','bcde'],['left','right','right','left'],2))
     elif function_to_test=='table_from_list':
         mdfile.writelines(table_from_list(['test','tester','te'],[[None,None,None],[1,'a',1.23456],[1,'b',3.5677]]))
+        mdfile.writelines(
+            table_from_list(['test', 'tester', 'te'], [[1.2341892402, 'asdfkjls;dhfl', 334578937], [1.24332, 'a', None], [1.345, None, 3]]))
+        mdfile.writelines(
+            table_from_list(['t', 't', 't'], [ [1, 'a', 1.23456],[None, None, None], [1, 'b', 3.5677]]))

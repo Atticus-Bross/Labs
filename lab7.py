@@ -7,7 +7,7 @@ Creating Zipper Merges
 Applying a Caesar Cypher to Text
 
 Completed by Atticus Bross on 2024-10-22 for DS-1043"""
-from types import NoneType
+from types import NoneType,UnionType
 from typing import Sequence
 def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     """same_len_error(seq, error_txt)
@@ -141,7 +141,7 @@ def list_type(seq:list):
     for element in seq[1:]:
         if not isinstance(element,NoneType):
             return element
-def deep_unpack(seq:Sequence[Sequence],ignores:type=str)->list:
+def deep_unpack(seq:Sequence[Sequence],ignores:type|UnionType=str)->list:
     """deep_unpack(seq, ignores=str)
     Unpacks a sequence of sequences into a single sequence
 
