@@ -69,6 +69,13 @@ def test_max_width()->None:
     assert max_width([[1,2],[3,4],[2,3]])==2
     assert max_width([[1,2,3]])==3
     assert max_width([[1,2],[1],[1,2,3],[3,4,5]])==3
+def test_rows()->None:
+    """test_rows()
+    Tests the rows function"""
+    assert rows([1,2],1)==[[1,2]]
+    assert rows([1,2,3,4],2)==[[1,2],[3,4]]
+    assert rows([1,2,3,4,5,6],3)==[[1,2],[3,4],[5,6]]
+    assert rows([1,2,3,4,5,6],2)==[[1,2,3],[4,5,6]]
 test_same_len_error()
 test_fix()
 test_columns()
@@ -76,3 +83,4 @@ test_alignment()
 test_none_str()
 test_add_alignment()
 test_max_width()
+test_rows()

@@ -82,6 +82,17 @@ def max_width(seqs:Sequence[Sequence])->int:
     seqs: the sequence of sequences"""
     lengths:'map'=map(len,seqs)
     return max(lengths)
+def rows(values:list,rows2:int)->list[list]:
+    """rows(values, rows2)
+    Breaks data up into a given number of rows
+
+    values: the data
+    rows2: the number of rows"""
+    row_len:int=len(values)//rows2
+    return_rows:list=[]
+    for i in range(rows2):
+        return_rows.append(values[i*row_len:(i+1)*row_len])
+    return return_rows
 def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     """table(values, aligns, cols)
     Creates a table from a list of values and alignments
@@ -95,12 +106,12 @@ def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     rows2:list=rows(aligned,len(values)//cols)
     return_rows:list=[]
     for row2 in rows2:
-        return_rows.append(row(row2,widths))
+        return_rows.append(table_row(row2,widths))
     #add header formatting row
     header_row:list=[]
     for width in widths:
         header_row.append('-'*width)
-    return_rows.insert(row(header_row,widths))
+    return_rows.insert(table_row(header_row,widths))
     return return_rows
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
