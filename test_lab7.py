@@ -61,6 +61,7 @@ def test_add_alignment()->None:
     assert add_alignment(['asd','bfc','ert'],['left','left','left'])==[':asd',':bfc',':ert']
     assert add_alignment(['abc', 'efg'], ['right', 'right']) == ['abc:','efg:']
     assert add_alignment(['word', 'test', 'cube','some'], ['left', 'right', 'left','right']) == [':word','test:',':cube','some:']
+    assert add_alignment(['-','----','--','---'],['right','left','right','left'])==['-:',':----','--:',':---']
 def test_max_width()->None:
     """test_max_width()
     Tests the max_width function"""
@@ -91,3 +92,7 @@ test_add_alignment()
 test_max_width()
 test_rows()
 test_table_row()
+#create a Markdown file to test some functions
+with open('test.md','w') as mdfile:
+    for line in table(['a','a','ab','abc'],['left','right','right','left'],2):
+        mdfile.write(line)

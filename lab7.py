@@ -114,21 +114,23 @@ def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     Creates a table from a list of values and alignments
 
     values: a list of the values
-    aligns: the alignments for each value
+    aligns: the alignments for each column
     cols: the number of columns"""
-    aligned:list=add_alignment(values,aligns)
-    cols2:list=columns(aligned,cols)
-    widths:list=list(map(max_width,cols2))
-    rows2:list=rows(aligned,len(values)//cols)
+    cols2:list=columns(values,cols)
+    #the width must be at least 4 to accommodate the minimum column specification, '---:'
+    widths:list=list(map(lambda x:max(max_width(x),4),cols2))
+    rows2:list=rows(values,len(values)//cols)
     return_rows:list=[]
     for index, row2 in enumerate(rows2):
         #cols is also the length of each row
-        return_rows.append(table_row(row2,widths,aligns[index*cols:(index+1)*cols]))
+        return_rows.append(table_row(row2,widths,aligns))
     #add header formatting row
     header_row:list=[]
     for width in widths:
-        header_row.append('-'*width)
-    return_rows.insert(table_row(header_row,widths))
+        header_row.append('-'*(width-1))
+    #add the proper semicolons to the header row
+    header_row:list=add_alignment(header_row,aligns)
+    return_rows.insert(1,table_row(header_row,widths,['left','left','left','left']))
     return return_rows
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
@@ -139,8 +141,7 @@ def table_from_list(header:list,data:list[list])->list[str]:
     unpacked:list=[*header,*data]
     unpacked=list(map(fix,unpacked))
     #type of the elements within the columns, [1] is the first element that is not a header
-    aligns:list=list(map(alignment,unpacked))
-    # maps the lists within col
+    aligns:list=list(map(lambda x:alignment(x[1]),unpacked))
     pass_values:list=list(map(none_str,unpacked))
     return table(pass_values,aligns,len(header))
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
