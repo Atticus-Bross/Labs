@@ -61,9 +61,18 @@ def test_add_alignment()->None:
     assert add_alignment(['asd','bfc','ert'],['left','left','left'])==[':asd',':bfc',':ert']
     assert add_alignment(['abc', 'efg'], ['right', 'right']) == ['abc:','efg:']
     assert add_alignment(['word', 'test', 'cube','some'], ['left', 'right', 'left','right']) == [':word','test:',':cube','some:']
+def test_max_width()->None:
+    """test_max_width()
+    Tests the max_width function"""
+    assert max_width([[]])==0
+    assert max_width([[],[],[]])==0
+    assert max_width([[1,2],[3,4],[2,3]])==2
+    assert max_width([[1,2,3]])==3
+    assert max_width([[1,2],[1],[1,2,3],[3,4,5]])==3
 test_same_len_error()
 test_fix()
 test_columns()
 test_alignment()
 test_none_str()
 test_add_alignment()
+test_max_width()

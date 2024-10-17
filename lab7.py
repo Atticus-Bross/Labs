@@ -7,6 +7,7 @@ Creating Zipper Merges
 Applying a Caesar Cypher to Text
 
 Completed by Atticus Bross on 2024-10-22 for DS-1043"""
+from typing import Sequence
 def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     """same_len_error(seq, error_txt)
     Raises a ValueError if the sequences within seq are not all the same length
@@ -74,6 +75,13 @@ def add_alignment(values:list[str],aligns:list[str])->list[str]:
         else:
             raise ValueError("aligns must be either 'left' or 'right'")
     return aligned
+def max_width(seqs:Sequence[Sequence])->int:
+    """max_width(seqs)
+    Finds the largest sequence within a sequence
+
+    seqs: the sequence of sequences"""
+    lengths:'map'=map(len,seqs)
+    return max(lengths)
 def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     """table(values, aligns, cols)
     Creates a table from a list of values and alignments
@@ -83,7 +91,7 @@ def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     cols: the number of columns"""
     aligned:list=add_alignment(values,aligns)
     cols2:list=columns(aligned,cols)
-    widths:list=list(map(min_width,cols2))
+    widths:list=list(map(max_width,cols2))
     rows2:list=rows(aligned,len(values)//cols)
     return_rows:list=[]
     for row2 in rows2:
