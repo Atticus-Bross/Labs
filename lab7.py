@@ -7,6 +7,7 @@ Creating Zipper Merges
 Applying a Caesar Cypher to Text
 
 Completed by Atticus Bross on 2024-10-22 for DS-1043"""
+from types import NoneType
 from typing import Sequence
 def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     """same_len_error(seq, error_txt)
@@ -132,6 +133,14 @@ def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     header_row:list=add_alignment(header_row,aligns)
     return_rows.insert(1,table_row(header_row,widths,['left','left','left','left']))
     return return_rows
+def list_type(seq:list)->type:
+    """list_type(seq)
+    Determines the type of data in a list, ignoring the first element and None
+
+    seq: the list"""
+    for element in seq[1:]:
+        if not isinstance(element,NoneType):
+            return type(element)
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
@@ -141,7 +150,7 @@ def table_from_list(header:list,data:list[list])->list[str]:
     unpacked:list=[*header,*data]
     unpacked=list(map(fix,unpacked))
     #type of the elements within the columns, [1] is the first element that is not a header
-    aligns:list=list(map(lambda x:alignment(x[1]),unpacked))
+    aligns:list=list(map(list_type,unpacked))
     pass_values:list=list(map(none_str,unpacked))
     return table(pass_values,aligns,len(header))
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:

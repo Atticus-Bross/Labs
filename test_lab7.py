@@ -83,6 +83,14 @@ def test_table_row()->None:
     assert table_row([':abc'],[7],['left'])=='|:abc   |\n'
     assert table_row(['abc:'], [6], ['right']) == '|  abc:|\n'
     assert table_row([':abc','efg:',':hij','lmn:'],[5,8,6,9],['left','right','left','right'])=='|:abc |    efg:|:hij  |     lmn:|\n'
+def test_list_type()->None:
+    """test_list_type()
+    Tests the list_type function"""
+    assert list_type([1,2,3,4,5])==int
+    assert list_type([1.2,3.4,5.6])==float
+    assert list_type(['a','b','c'])==str
+    assert list_type(['test',1,2,3,4])==int
+    assert list_type(['a',None,None,None,1.2])==float
 test_same_len_error()
 test_fix()
 test_columns()
@@ -92,6 +100,7 @@ test_add_alignment()
 test_max_width()
 test_rows()
 test_table_row()
+test_list_type()
 #create a Markdown file to test some functions
 with open('test.md','w') as mdfile:
     for line in table(['a','a','ab','abc'],['left','right','right','left'],2):
