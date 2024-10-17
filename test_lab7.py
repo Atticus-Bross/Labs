@@ -103,5 +103,6 @@ test_table_row()
 test_list_type()
 #create a Markdown file to test some functions
 with open('test.md','w') as mdfile:
-    for line in table(['a','a','ab','abc'],['left','right','right','left'],2):
-        mdfile.write(line)
+    mdfile.writelines(table(['a','a','ab','abc'],['left','right'],2))
+    mdfile.writelines(table(['a','ab','abc','abcd','abcde','abcdef','as','asd','asdf'],['right','left','left'],3))
+    mdfile.writelines(table(['a','b','ab','bc','abc','bcd','abcd','bcde'],['left','right','right','left'],2))

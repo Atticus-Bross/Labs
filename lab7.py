@@ -151,6 +151,7 @@ def table_from_list(header:list,data:list[list])->list[str]:
     unpacked=list(map(fix,unpacked))
     #type of the elements within the columns, [1] is the first element that is not a header
     aligns:list=list(map(list_type,unpacked))
+    aligns=list(map(alignment,aligns))
     pass_values:list=list(map(none_str,unpacked))
     return table(pass_values,aligns,len(header))
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
