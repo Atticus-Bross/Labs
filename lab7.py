@@ -43,15 +43,15 @@ def columns(values:list,cols:int)->list[list]:
     return columns2
 def alignment(value)->str:
     """alignment(value)
-    Determines the alignment of a value should have in a table
+    Determines the alignment a value should have in a table
 
     value: the value to align"""
     if isinstance(value,int|float) and not isinstance(value,bool):
         return 'right'
-    elif isinstance(value,str|None):
+    elif isinstance(value,str):
         return 'left'
     else:
-        raise ValueError('value must be either int, float, str, or None')
+        raise ValueError('value must be either int, float, or str')
 def none_str(value)->str:
     """non_str(value)
     Converts the value to a string, None converts to a blank string
@@ -133,24 +133,41 @@ def table(values:list[str],aligns:list[str],cols:int)->list[str]:
     header_row:list=add_alignment(header_row,aligns)
     return_rows.insert(1,table_row(header_row,widths,['left','left','left','left']))
     return return_rows
-def list_type(seq:list)->type:
+def list_type(seq:list):
     """list_type(seq)
-    Determines the type of data in a list, ignoring the first element and None
+    Returns the second value in a list that is not None
 
     seq: the list"""
     for element in seq[1:]:
         if not isinstance(element,NoneType):
-            return type(element)
+            return element
+def deep_unpack(seq:Sequence[Sequence],ignores:type=str)->list:
+    """deep_unpack(seq, ignores=str)
+    Unpacks a sequence of sequences into a single sequence
+
+    seq: the sequence
+    ignores: the types of sequences to ignore"""
+    unpacked:list=[]
+    for element in seq:
+        if isinstance(element,Sequence) and not isinstance(element,ignores):
+            #this is to avoid the infinite recursion that occurs because a string contains a string which contains a string, etc.
+            if isinstance(element,str) and len(element)==1:
+                unpacked.append(element)
+            else:
+                unpacked.extend(deep_unpack(element,ignores))
+        else:
+            unpacked.append(element)
+    return unpacked
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
 
     header: the headers
     data: the values of the table"""
-    unpacked:list=[*header,*data]
+    unpacked:list=[*header,*deep_unpack(data)]
     unpacked=list(map(fix,unpacked))
-    #type of the elements within the columns, [1] is the first element that is not a header
-    aligns:list=list(map(list_type,unpacked))
+    cols:list=columns(unpacked,len(header))
+    aligns:list=list(map(list_type,cols))
     aligns=list(map(alignment,aligns))
     pass_values:list=list(map(none_str,unpacked))
     return table(pass_values,aligns,len(header))

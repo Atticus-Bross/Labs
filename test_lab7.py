@@ -46,7 +46,6 @@ def test_alignment()->None:
     assert alignment(2)=='right'
     assert alignment(2.345)=='right'
     assert alignment('test')=='left'
-    assert alignment(None)=='left'
 def test_none_str()->None:
     """test_none_str()
     Tests the none_str function"""
@@ -86,11 +85,17 @@ def test_table_row()->None:
 def test_list_type()->None:
     """test_list_type()
     Tests the list_type function"""
-    assert list_type([1,2,3,4,5])==int
-    assert list_type([1.2,3.4,5.6])==float
-    assert list_type(['a','b','c'])==str
-    assert list_type(['test',1,2,3,4])==int
-    assert list_type(['a',None,None,None,1.2])==float
+    assert list_type([1,2,3,4,5])==2
+    assert list_type([1.2,3.4,5.6])==3.4
+    assert list_type(['a','b','c'])=='b'
+    assert list_type(['test',1,2,3,4])==1
+    assert list_type(['a',None,None,None,1.2])==1.2
+def test_deep_unpack()->None:
+    """test_deep_unpack()
+    Tests the deep_unpack function"""
+    assert deep_unpack([[None,'abc',1.2],[True,3],['ghf']])==[None,'abc',1.2,True,3,'ghf']
+    assert deep_unpack([[['abc',None],[],2.34],[[],[True,3]]])==['abc',None,2.34,True,3]
+    assert deep_unpack([[(1,2,3),('abc','efg')],['abc']],tuple)==[(1,2,3),('abc','efg'),'a','b','c']
 test_same_len_error()
 test_fix()
 test_columns()
@@ -101,8 +106,13 @@ test_max_width()
 test_rows()
 test_table_row()
 test_list_type()
+test_deep_unpack()
 #create a Markdown file to test some functions
+function_to_test:str='table_from_list'
 with open('test.md','w') as mdfile:
-    mdfile.writelines(table(['a','a','ab','abc'],['left','right'],2))
-    mdfile.writelines(table(['a','ab','abc','abcd','abcde','abcdef','as','asd','asdf'],['right','left','left'],3))
-    mdfile.writelines(table(['a','b','ab','bc','abc','bcd','abcd','bcde'],['left','right','right','left'],2))
+    if function_to_test=='table':
+        mdfile.writelines(table(['a','a','ab','abc'],['left','right'],2))
+        mdfile.writelines(table(['a','ab','abc','abcd','abcde','abcdef','as','asd','asdf'],['right','left','left'],3))
+        mdfile.writelines(table(['a','b','ab','bc','abc','bcd','abcd','bcde'],['left','right','right','left'],2))
+    elif function_to_test=='table_from_list':
+        mdfile.writelines(table_from_list(['test','tester','te'],[[None,None,None],[1,'a',1.23456],[1,'b',3.5677]]))
