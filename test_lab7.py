@@ -117,7 +117,7 @@ test_list_type()
 test_deep_unpack()
 test_align()
 #create a Markdown file to test some functions
-function_to_test:str='table_from_list'
+function_to_test:str='table_from_list_dict'
 with open('test.md','w') as mdfile:
     if function_to_test=='table':
         mdfile.writelines(table(['a','a','ab','abc'],['left','right'],2))
@@ -129,3 +129,7 @@ with open('test.md','w') as mdfile:
             table_from_list([True, 'tester', 'te'], [[1.2341892402, 'asdfkjls;dhfl', 334578937], [1.24332, 'a', None], [1.345, None, 3]]))
         mdfile.writelines(
             table_from_list(['t', 't', 't','boolsbools'], [ [1, 'a', 1.23456,False],[None, None, None,None], [1, 'b', 3.5677,True]]))
+    elif function_to_test=='table_from_list_dict':
+        mdfile.writelines(table_from_list_dict([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}]))
+        mdfile.writelines(table_from_list_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':'asd'}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':'fgh'}]))
+        mdfile.writelines(table_from_list_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':15651615615}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':0}]))
