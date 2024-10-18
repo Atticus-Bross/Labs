@@ -98,6 +98,12 @@ def test_deep_unpack()->None:
     assert deep_unpack([[['abc',None],[],2.34],[[],[True,3]]])==['abc',None,2.34,True,3]
     assert deep_unpack([[(1,2,3),('abc','efg')],['abc']],tuple)==[(1,2,3),('abc','efg'),'a','b','c']
     assert deep_unpack([[(1, 2, 3), ('abc', 'efg')], ['abc']], tuple|str) == [(1, 2, 3), ('abc', 'efg'), 'abc']
+def test_align()->None:
+    """test_align()
+    Tests the align function"""
+    assert align([['asdf',1,2,3],])==['right']
+    assert align([['asdf','as','bc'],['sdf',None,3.4]])==['left','right']
+    assert align([['asdf',None,None,None,1]])==['right']
 test_same_len_error()
 test_fix()
 test_columns()
@@ -109,6 +115,7 @@ test_rows()
 test_table_row()
 test_list_type()
 test_deep_unpack()
+test_align()
 #create a Markdown file to test some functions
 function_to_test:str='table_from_list'
 with open('test.md','w') as mdfile:

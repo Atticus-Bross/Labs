@@ -158,6 +158,14 @@ def deep_unpack(seq:Sequence[Sequence],ignores:type|UnionType=str)->list:
         else:
             unpacked.append(element)
     return unpacked
+def align(cols:list[list])->list[str]:
+    """align(cols)
+    Determines the alignment for a list of columns
+
+    cols: the columns (also lists)"""
+    aligns: list = list(map(list_type, cols))
+    aligns = list(map(alignment, aligns))
+    return aligns
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
@@ -171,9 +179,23 @@ def table_from_list(header:list,data:list[list])->list[str]:
     aligns=list(map(alignment,aligns))
     pass_values:list=list(map(none_str,unpacked))
     return table(pass_values,aligns,len(header))
-def table_from_dict(header:list|dict[Any:str],data:list[dict]):
+def table_from_list_dict(header:list,data:list[dict])->list[str]:
+    """table_from_list_dict(header, data)
+    Generates a Markdown table for a header and data
+
+    header: a list of valid keys for data
+    data: the list of dictionaries representing the rows"""
+    cols:list=[]
+    for key in header:
+        col:list=[key,]
+        for row in data:
+            col.append(row.setdefault(key))
+        cols.append(col)
+    aligns: list = list(map(list_type, cols))
+    aligns = list(map(alignment, aligns))
+def table_from_dict(header:list|dict[Any:str],data:list[dict])->list[str]:
     """table_from_dict(header, data)
-    Generates a table from a list of dictionaries
+    Generates a Markdown table from a list of dictionaries
 
     header: either a list of keys for data or a dictionary that shares keys with data
     data: the list of dictionaries"""
