@@ -200,7 +200,7 @@ def table_from_dict(header:list|dict[Any:str],data:list[dict])->list[str]:
     aligns:list=align(cols)
     unpacked=list(map(none_str,unpacked))
     return table(unpacked,aligns,len(header))
-def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
+def create_table(header:list|dict,data:list[list|dict])->list[str]:
     """create_table(header, data)
     Creates a list of strings describing the rows of a Markdown table
 
