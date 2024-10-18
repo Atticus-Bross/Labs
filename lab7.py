@@ -167,6 +167,18 @@ def align(cols:list[list])->list[str]:
     aligns: list = list(map(list_type, cols))
     aligns = list(map(alignment, aligns))
     return aligns
+def table_data(data:list,col:int)->tuple[list[str],list[str],int]:
+    """table_data(data, col)
+    Creates the data to pass to the table function
+
+    data: the data extracted from some sequence
+    col: the number of columns"""
+    unpacked: list = data.copy()
+    unpacked = list(map(fix, unpacked))
+    cols: list = columns(unpacked, col)
+    aligns: list = align(cols)
+    pass_values: list = list(map(none_str, unpacked))
+    return pass_values,aligns,col
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
@@ -228,10 +240,7 @@ def remove_cols(row:str,col:int)->str:
 
     row: the row, represented as a string
     col: the number of columns to remove"""
-    values:list=row.split('|')
-    values.remove('\n')
-    values.remove('')
-    values=list(map(lambda x:f'|{x}',values))
+    values:list=prepare_row(row)
     for _ in range(col):
         values.pop()
     return f'{''.join(values)}...'
@@ -247,11 +256,7 @@ def view_table(header:list|dict,data:list[list|dict],max_width:int=get_terminal_
     #create_table ensures all rows are the same length
     if len(print_table[0])>max_width:
         current_width:int=len(print_table[0])
-        values:list=print_table[0].split('|')
-        #remove the '' and '\n' at the end
-        values.remove('\n')
-        values.pop()
-        values = list(map(lambda x: f'|{x}', values))
+        values:list=prepare_row(print_table[0])
         removed:int=0
         #current_width represents the length of a string of the form '|value|value' the plus three accounts for the need '...'
         while current_width+3>max_width:

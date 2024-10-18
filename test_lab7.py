@@ -126,6 +126,13 @@ def test_remove_cols()->None:
     assert remove_cols('|a|\n',1)=='...'
     assert remove_cols('|a|b|c|\n',1)=='|a|b...'
     assert remove_cols('|a|b|c|d|\n',2)=='|a|b...'
+def test_table_data()->None:
+    """test_table_data
+    Tests the table_data function"""
+    assert table_data(['Test','tester',1,'a',None,'b'],2)==(['Test','tester','1','a','','b'],['right','left'],2)
+    assert table_data(['Test', 'tester', 1.234, True, 1.3751, False], 2) == (
+    ['Test', 'tester', '1.23', 'True', '1.38', 'False'], ['right', 'left'], 2)
+    assert table_data(['test',1,2,3,4],1)==(['test','1','2','3','4'],['right',],1)
 test_same_len_error()
 test_fix()
 test_columns()
@@ -140,10 +147,11 @@ test_deep_unpack()
 test_align()
 test_table_from_list()
 test_table_from_dict()
+test_table_data()
 test_prepare_row()
 test_remove_cols()
 #create a Markdown file to test some functions
-function_to_test:str='create_table'
+function_to_test:str='table_from_dict'
 with open('test.md','w') as mdfile:
     if function_to_test=='table':
         mdfile.writelines(table(['a','a','ab','abc'],['left','right'],2))
@@ -155,7 +163,7 @@ with open('test.md','w') as mdfile:
             table_from_list([True, 'tester', 'te'], [[1.2341892402, 'asdfkjls;dhfl', 334578937], [1.24332, 'a', None], [1.345, None, 3]]))
         mdfile.writelines(
             table_from_list(['t', 't', 't','boolsbools'], [ [1, 'a', 1.23456,False],[None, None, None,None], [1, 'b', 3.5677,True]]))
-    elif function_to_test=='table_from_list_dict':
+    elif function_to_test=='table_from_dict':
         mdfile.writelines(table_from_dict([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}]))
         mdfile.writelines(table_from_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':'asd'}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':'fgh'}]))
         mdfile.writelines(table_from_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':15651615615}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':0}]))
