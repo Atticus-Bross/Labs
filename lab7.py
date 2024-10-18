@@ -48,10 +48,10 @@ def alignment(value)->str:
     value: the value to align"""
     if isinstance(value,int|float) and not isinstance(value,bool):
         return 'right'
-    elif isinstance(value,str):
+    elif isinstance(value,str|bool):
         return 'left'
     else:
-        raise ValueError('value must be either int, float, or str')
+        raise ValueError('value must be either int, float, bool, or str')
 def none_str(value)->str:
     """non_str(value)
     Converts the value to a string, None converts to a blank string
