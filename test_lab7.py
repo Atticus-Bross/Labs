@@ -130,6 +130,9 @@ with open('test.md','w') as mdfile:
         mdfile.writelines(
             table_from_list(['t', 't', 't','boolsbools'], [ [1, 'a', 1.23456,False],[None, None, None,None], [1, 'b', 3.5677,True]]))
     elif function_to_test=='table_from_list_dict':
-        mdfile.writelines(table_from_list_dict([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}]))
-        mdfile.writelines(table_from_list_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':'asd'}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':'fgh'}]))
-        mdfile.writelines(table_from_list_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':15651615615}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':0}]))
+        mdfile.writelines(table_from_dict([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}]))
+        mdfile.writelines(table_from_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':'asd'}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':'fgh'}]))
+        mdfile.writelines(table_from_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':15651615615}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':0}]))
+        mdfile.writelines(table_from_dict({1:'Biiiiiig',True:'test','a':'square',2.2:'ccc'},[{'a':34,True:'asd',2.2:False,1:2.34534}]))
+        mdfile.writelines(table_from_dict({1: 'Biiiiiig', True: 'test', 'a': 'square', 2.2: 'ccc'},
+                                          [{'a': 34, True: 'asd', 2.2: False, 1: 2.34534},{2.2:True,}]))
