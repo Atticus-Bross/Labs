@@ -113,6 +113,13 @@ def test_table_from_dict()->None:
     """test_table_from_dict
     Tests the errors for the table_from_dict function"""
     test_error(ValueError,lambda:table_from_dict(('test','tes'),[{'test':0,'tes':1}]))
+def test_remove_cols()->None:
+    """test_remove_cols
+    Tests the remove_cols function"""
+    assert remove_cols('|a|b|c|\n',3)=='...'
+    assert remove_cols('|a|\n',1)=='...'
+    assert remove_cols('|a|b|c|\n',1)=='|a|b...'
+    assert remove_cols('|a|b|c|d|\n',2)=='|a|b...'
 test_same_len_error()
 test_fix()
 test_columns()
@@ -127,6 +134,7 @@ test_deep_unpack()
 test_align()
 test_table_from_list()
 test_table_from_dict()
+test_remove_cols()
 #create a Markdown file to test some functions
 function_to_test:str='create_table'
 with open('test.md','w') as mdfile:

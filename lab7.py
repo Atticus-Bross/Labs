@@ -212,6 +212,29 @@ def create_table(header:list|dict,data:list[list|dict])->list[str]:
         return table_from_list(header,data)
     elif data_type==dict:
         return table_from_dict(header,data)
+def prepare_row(row:str)->list[str]:
+    """prepare_row(row)
+    Prepares a row to have some of its columns removed
+
+    row: the row"""
+    values: list = row.split('|')
+    values.remove('\n')
+    values.remove('')
+    values = list(map(lambda x: f'|{x}', values))
+    return values
+def remove_cols(row:str,col:int)->str:
+    """remove_cols(row, col)
+    Removes a specified number of columns from a Markdown table row
+
+    row: the row, represented as a string
+    col: the number of columns to remove"""
+    values:list=row.split('|')
+    values.remove('\n')
+    values.remove('')
+    values=list(map(lambda x:f'|{x}',values))
+    for _ in range(col):
+        values.pop()
+    return f'{''.join(values)}...'
 def view_table(header:list|dict,data:list[list|dict],max_width:int=get_terminal_size().columns,file:IO|None=None)->None:
     """view_table(header, data, max_width=os.get_terminal_size(), file=None)
     Pretty prints a table to a stream
