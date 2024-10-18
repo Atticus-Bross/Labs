@@ -178,20 +178,6 @@ def table_from_list(header:list,data:list[list])->list[str]:
     aligns:list=align(cols)
     pass_values:list=list(map(none_str,unpacked))
     return table(pass_values,aligns,len(header))
-def table_from_list_dict(header:list,data:list[dict])->list[str]:
-    """table_from_list_dict(header, data)
-    Generates a Markdown table for a header and data
-
-    header: a list of valid keys for data
-    data: the list of dictionaries representing the rows"""
-    unpacked:list=header.copy()
-    for row in data:
-        for key in header:
-            unpacked.append(row.setdefault(key))
-    cols:list=columns(unpacked,len(header))
-    aligns:list=align(cols)
-    unpacked=list(map(none_str,unpacked))
-    return table(unpacked,aligns,len(header))
 def table_from_dict(header:list|dict[Any:str],data:list[dict])->list[str]:
     """table_from_dict(header, data)
     Generates a Markdown table from a list of dictionaries
@@ -199,11 +185,18 @@ def table_from_dict(header:list|dict[Any:str],data:list[dict])->list[str]:
     header: either a list of keys for data or a dictionary that shares keys with data
     data: the list of dictionaries"""
     if isinstance(header,list):
-        return table_from_list_dict(header,data)
+        unpacked:list=header.copy()
     elif isinstance(header,dict):
-        return table_from_dict_dict(header,data)
+        unpacked:list=list(header.values())
     else:
         raise ValueError('header must be a list or dictionary')
+    for row in data:
+        for key in header:
+            unpacked.append(row.setdefault(key))
+    cols:list=columns(unpacked,len(header))
+    aligns:list=align(cols)
+    unpacked=list(map(none_str,unpacked))
+    return table(unpacked,aligns,len(header))
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
     """create_table(header, data)
     Creates a list of strings describing the rows of a Markdown table
