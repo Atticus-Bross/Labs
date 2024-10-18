@@ -172,6 +172,9 @@ def table_from_list(header:list,data:list[list])->list[str]:
 
     header: the headers
     data: the values of the table"""
+    same_len_error(data,'all rows must be the same length')
+    if len(header)!=len(data[0]):
+        raise ValueError('there must be as many headers as there are columns')
     unpacked:list=[*header,*deep_unpack(data)]
     unpacked=list(map(fix,unpacked))
     cols:list=columns(unpacked,len(header))
@@ -203,11 +206,7 @@ def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
 
     header: a list of headers
     data: a list of the data values"""
-    same_len_error(data,'all rows must be the same length')
     data_type:type=type(data[0])
-    #whether all the sequence in data are the same length has already been checked
-    if data_type==list and len(header)!=len(data[0]):
-        raise ValueError('there must be as many headers as there are columns')
     if data_type==list:
         return table_from_list(header,data)
     elif data_type==dict:

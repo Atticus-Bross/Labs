@@ -104,6 +104,15 @@ def test_align()->None:
     assert align([['asdf',1,2,3],])==['right']
     assert align([['asdf','as','bc'],['sdf',None,3.4]])==['left','right']
     assert align([['asdf',None,None,None,1]])==['right']
+def test_table_from_list()->None:
+    """test_table_from_list
+    Tests the errors for the table_from_list function"""
+    test_error(ValueError,lambda:table_from_list(['test','test'],[[1,2],[2,3,5]]))
+    test_error(ValueError,lambda:table_from_list(['test','test'],[[1,2,3],[4,5,6]]))
+def test_table_from_dict()->None:
+    """test_table_from_dict
+    Tests the errors for the table_from_dict function"""
+    test_error(ValueError,lambda:table_from_dict(('test','tes'),[{'test':0,'tes':1}]))
 test_same_len_error()
 test_fix()
 test_columns()
@@ -116,6 +125,8 @@ test_table_row()
 test_list_type()
 test_deep_unpack()
 test_align()
+test_table_from_list()
+test_table_from_dict()
 #create a Markdown file to test some functions
 function_to_test:str='table_from_list_dict'
 with open('test.md','w') as mdfile:
