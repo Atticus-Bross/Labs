@@ -119,6 +119,6 @@ with open('test.md','w') as mdfile:
     elif function_to_test=='table_from_list':
         mdfile.writelines(table_from_list(['test','tester','te'],[[None,None,None],[1,'a',1.23456],[1,'b',3.5677]]))
         mdfile.writelines(
-            table_from_list(['test', 'tester', 'te'], [[1.2341892402, 'asdfkjls;dhfl', 334578937], [1.24332, 'a', None], [1.345, None, 3]]))
+            table_from_list([True, 'tester', 'te'], [[1.2341892402, 'asdfkjls;dhfl', 334578937], [1.24332, 'a', None], [1.345, None, 3]]))
         mdfile.writelines(
-            table_from_list(['t', 't', 't'], [ [1, 'a', 1.23456],[None, None, None], [1, 'b', 3.5677]]))
+            table_from_list(['t', 't', 't','boolsbools'], [ [1, 'a', 1.23456,False],[None, None, None,None], [1, 'b', 3.5677,True]]))

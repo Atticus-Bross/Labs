@@ -8,7 +8,7 @@ Applying a Caesar Cypher to Text
 
 Completed by Atticus Bross on 2024-10-22 for DS-1043"""
 from types import NoneType,UnionType
-from typing import Sequence
+from typing import Sequence,Any,Iterable
 def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     """same_len_error(seq, error_txt)
     Raises a ValueError if the sequences within seq are not all the same length
@@ -171,6 +171,18 @@ def table_from_list(header:list,data:list[list])->list[str]:
     aligns=list(map(alignment,aligns))
     pass_values:list=list(map(none_str,unpacked))
     return table(pass_values,aligns,len(header))
+def table_from_dict(header:list|dict[Any:str],data:list[dict]):
+    """table_from_dict(header, data)
+    Generates a table from a list of dictionaries
+
+    header: either a list of keys for data or a dictionary that shares keys with data
+    data: the list of dictionaries"""
+    if isinstance(header,list):
+        table_from_list_dict(header,data)
+    elif isinstance(header,dict):
+        table_from_dict_dict(header,data)
+    else:
+        raise ValueError('header must be a list or dictionary')
 def create_table(header:list|dict,data:list[list]|list[dict])->list[str]:
     """create_table(header, data)
     Creates a list of strings describing the rows of a Markdown table
