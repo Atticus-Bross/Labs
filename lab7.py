@@ -8,7 +8,8 @@ Applying a Caesar Cypher to Text
 
 Completed by Atticus Bross on 2024-10-22 for DS-1043"""
 from types import NoneType,UnionType
-from typing import Sequence,Any,Iterable
+from typing import Sequence,Any,IO
+from shutil import get_terminal_size
 def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     """same_len_error(seq, error_txt)
     Raises a ValueError if the sequences within seq are not all the same length
@@ -211,3 +212,33 @@ def create_table(header:list|dict,data:list[list|dict])->list[str]:
         return table_from_list(header,data)
     elif data_type==dict:
         return table_from_dict(header,data)
+def view_table(header:list|dict,data:list[list|dict],max_width:int=get_terminal_size().columns,file:IO|None=None)->None:
+    """view_table(header, data, max_width=os.get_terminal_size(), file=None)
+    Pretty prints a table to a stream
+
+    header: the headers of the table
+    data: the data in the table
+    max_width: the maximum width of the table, default is the width of the terminal
+    file: the stream to print to"""
+    print_table:list=create_table(header,data)
+    #create_table ensures all rows are the same length
+    if len(print_table[0])>max_width:
+        current_width:int=len(print_table[0])
+        values:list=print_table[0].split('|')
+        #remove the '' and '\n' at the end
+        values.remove('\n')
+        values.pop()
+        values = list(map(lambda x: f'|{x}', values))
+        removed:int=0
+        #current_width represents the length of a string of the form '|value|value' the plus three accounts for the need '...'
+        while current_width+3>max_width:
+            values.pop()
+            removed=removed+1
+            current_width=len(''.join(values))
+        rows2:list=[f'{''.join(values)}...',]
+        for row in print_table[1:]:
+            rows2.append(remove_cols(row,removed))
+        print(*rows2,sep='\n',file=file)
+    else:
+        print(*print_table,file=file)
+
