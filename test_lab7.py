@@ -3,7 +3,7 @@ Module Testing the Lab 7 functions
 
 Completed by Atticus Bross on 2024-10-22 for DS-1043"""
 from typing import Callable
-
+import io
 from lab7 import *
 
 
@@ -105,12 +105,12 @@ def test_align()->None:
     assert align([['asdf','as','bc'],['sdf',None,3.4]])==['left','right']
     assert align([['asdf',None,None,None,1]])==['right']
 def test_table_from_list()->None:
-    """test_table_from_list
+    """test_table_from_list()
     Tests the errors for the table_from_list function"""
     test_error(ValueError,lambda:table_from_list(['test','test'],[[1,2],[2,3,5]]))
     test_error(ValueError,lambda:table_from_list(['test','test'],[[1,2,3],[4,5,6]]))
 def test_table_from_dict()->None:
-    """test_table_from_dict
+    """test_table_from_dict()
     Tests the errors for the table_from_dict function"""
     test_error(ValueError,lambda:table_from_dict(('test','tes'),[{'test':0,'tes':1}]))
 def test_prepare_row()->None:
@@ -120,19 +120,45 @@ def test_prepare_row()->None:
     assert prepare_row('|a|\n')==['|a',]
     assert prepare_row('|a|b|c|\n')==['|a','|b','|c']
 def test_remove_cols()->None:
-    """test_remove_cols
+    """test_remove_cols()
     Tests the remove_cols function"""
     assert remove_cols('|a|b|c|\n',3)=='...'
     assert remove_cols('|a|\n',1)=='...'
     assert remove_cols('|a|b|c|\n',1)=='|a|b...'
     assert remove_cols('|a|b|c|d|\n',2)=='|a|b...'
 def test_table_data()->None:
-    """test_table_data
+    """test_table_data()
     Tests the table_data function"""
     assert table_data(['Test','tester',1,'a',None,'b'],2)==(['Test','tester','1','a','','b'],['right','left'],2)
     assert table_data(['Test', 'tester', 1.234, True, 1.3751, False], 2) == (
     ['Test', 'tester', '1.23', 'True', '1.38', 'False'], ['right', 'left'], 2)
     assert table_data(['test',1,2,3,4],1)==(['test','1','2','3','4'],['right',],1)
+def test_view_table()->None:
+    """test_view_table()
+    Tests the table_data function"""
+    view_table([0, True, 2.3433, 'abcde'], [{0: 10}, {True: 14}, {2.3433: 15, 'abcde': 4}], 80)
+    view_table([0, True, 2.3433, 'abcde'], [{0: 10}, {True: 14}, {2.3433: 15, 'abcde': 4}], 15)
+    view_table({10: 'Biiiiiig', True: 'test', 'a': 'square', 2.2: 'ccc'},
+               [{'a': 34, True: 'asd', 2.2: False, 10: 2.34534},],25)
+    with io.StringIO() as test_output:
+        view_table([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}],80,test_output)
+        assert test_output.getvalue()=="""|   0|True|2.34|abcde|
+|---:|---:|---:|----:|
+|  10|    |    |     |
+|    |  14|    |     |
+|    |    |  15|    4|\n"""
+    with io.StringIO() as test_output:
+        view_table([0, True, 2.3433, 'abcde'], [{0: 10}, {True: 14}, {2.3433: 15, 'abcde': 4}], 15, test_output)
+        assert test_output.getvalue() == """|   0|True...
+|---:|---:...
+|  10|    ...
+|    |  14...
+|    |    ...\n"""
+    with io.StringIO() as test_output:
+        view_table({10:'Biiiiiig',True:'test','a':'square',2.2:'ccc'},[{'a':34,True:'asd',2.2:False,10:2.34534}],20,test_output)
+        assert test_output.getvalue()=="""|Biiiiiig|test...
+|-------:|:---...
+|    2.35|asd ...\n"""
 test_same_len_error()
 test_fix()
 test_columns()
@@ -150,8 +176,9 @@ test_table_from_dict()
 test_table_data()
 test_prepare_row()
 test_remove_cols()
+test_view_table()
 #create a Markdown file to test some functions
-function_to_test:str='table_from_list'
+function_to_test:str='table_from_dict'
 with open('test.md','w') as mdfile:
     if function_to_test=='table':
         mdfile.writelines(table(['a','a','ab','abc'],['left','right'],2))
@@ -167,9 +194,9 @@ with open('test.md','w') as mdfile:
         mdfile.writelines(table_from_dict([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}]))
         mdfile.writelines(table_from_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':'asd'}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':'fgh'}]))
         mdfile.writelines(table_from_dict([0, True, 2.3433, 'abcde'], [{2.3433:8,'abcde':15651615615}, {0:True,True:2.345}, {0:False,True:23.345,2.3433:5,'abcde':0}]))
-        mdfile.writelines(table_from_dict({1:'Biiiiiig',True:'test','a':'square',2.2:'ccc'},[{'a':34,True:'asd',2.2:False,1:2.34534}]))
-        mdfile.writelines(table_from_dict({1: 'Biiiiiig', True: 'test', 'a': 'square', 2.2: 'ccc'},
-                                          [{'a': 34, True: 'asd', 2.2: False, 1: 2.34534},{2.2:True,}]))
+        mdfile.writelines(table_from_dict({10:'Biiiiiig',True:'test','a':'square',2.2:'ccc'},[{'a':34,True:'asd',2.2:False,10:2.34534}]))
+        mdfile.writelines(table_from_dict({10: 'Biiiiiig', True: 'test', 'a': 'square', 2.2: 'ccc'},
+                                          [{'a': 34, True: 'asd', 2.2: False, 10: 2.34534},{2.2:True,}]))
     elif function_to_test=='create_table':
         mdfile.writelines(create_table([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}]))
         mdfile.writelines(

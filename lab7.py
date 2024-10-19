@@ -261,5 +261,5 @@ def view_table(header:list|dict,data:list[list|dict],max_width:int=get_terminal_
             rows2.append(remove_cols(row,removed))
         print(*rows2,sep='\n',file=file)
     else:
-        print(*print_table,file=file)
+        print(*print_table,sep='',file=file,end='')
 
