@@ -10,6 +10,7 @@ Completed by Atticus Bross on 2024-10-22 for DS-1043"""
 from types import NoneType,UnionType
 from typing import Sequence,Any,IO
 from shutil import get_terminal_size
+from string import ascii_lowercase,ascii_uppercase
 def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     """same_len_error(seq, error_txt)
     Raises a ValueError if the sequences within seq are not all the same length
@@ -269,4 +270,22 @@ def merge_sorted_lists(*lists:list)->list:
     *lists: the lists to be merged"""
     shortest:int=min(map(len,lists))
     return [list2[i] for i in range(shortest) for list2 in lists]
+def caesar(plaintext:str,rotation:int=13)->str:
+    """caesar(plaintext, rotation=13)
+    Applies a caesar cypher to text
 
+    plaintext: the text to be cyphered
+    rotation: how much to rotate the alphabet by"""
+    cipher:dict={}
+    #modulo allows the operation to loop back around to the start of the list
+    for index, letter in enumerate(ascii_lowercase):
+        cipher[letter]=ascii_lowercase[(index+rotation)%len(ascii_lowercase)]
+    for index, letter in enumerate(ascii_uppercase):
+        cipher[letter]=ascii_uppercase[(index+rotation)%len(ascii_uppercase)]
+    ciphered:str=''
+    for character in plaintext:
+        if character in cipher.keys():
+            ciphered=ciphered+cipher[character]
+        else:
+            ciphered=ciphered+character
+    return ciphered

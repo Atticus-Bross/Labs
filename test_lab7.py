@@ -168,6 +168,14 @@ def test_merge_sorted_lists()->None:
     assert merge_sorted_lists([1,2,3,4])==[1,2,3,4]
     assert merge_sorted_lists([1,],[1,2,3],[1,2,3,5])==[1,1,1]
     assert merge_sorted_lists([1,2],[3,4,5,6])==[1,3,2,4]
+def test_caesar()->None:
+    """test_caesar()
+    Tests the caesar function"""
+    assert caesar(ascii_lowercase+ascii_uppercase)=='nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM'
+    assert caesar(ascii_lowercase+ascii_uppercase,13)=='nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM'
+    assert caesar('tesr',1)=='ufts'
+    assert caesar('Testing Caesar',5)=='Yjxynsl Hfjxfw'
+    assert caesar('bA%yU^&R4t',25)=='aZ%xT^&Q4s'
 test_same_len_error()
 test_fix()
 test_columns()
@@ -187,6 +195,7 @@ test_prepare_row()
 test_remove_cols()
 test_view_table()
 test_merge_sorted_lists()
+test_caesar()
 #create a Markdown file to test some functions
 function_to_test:str='table_from_dict'
 with open('test.md','w') as mdfile:
