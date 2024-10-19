@@ -151,7 +151,7 @@ test_table_data()
 test_prepare_row()
 test_remove_cols()
 #create a Markdown file to test some functions
-function_to_test:str='table_from_dict'
+function_to_test:str='table_from_list'
 with open('test.md','w') as mdfile:
     if function_to_test=='table':
         mdfile.writelines(table(['a','a','ab','abc'],['left','right'],2))

@@ -189,11 +189,7 @@ def table_from_list(header:list,data:list[list])->list[str]:
     if len(header)!=len(data[0]):
         raise ValueError('there must be as many headers as there are columns')
     unpacked:list=[*header,*deep_unpack(data)]
-    unpacked=list(map(fix,unpacked))
-    cols:list=columns(unpacked,len(header))
-    aligns:list=align(cols)
-    pass_values:list=list(map(none_str,unpacked))
-    return table(pass_values,aligns,len(header))
+    return table(*table_data(unpacked,len(header)))
 def table_from_dict(header:list|dict[Any:str],data:list[dict])->list[str]:
     """table_from_dict(header, data)
     Generates a Markdown table from a list of dictionaries
@@ -209,10 +205,7 @@ def table_from_dict(header:list|dict[Any:str],data:list[dict])->list[str]:
     for row in data:
         for key in header:
             unpacked.append(row.setdefault(key))
-    cols:list=columns(unpacked,len(header))
-    aligns:list=align(cols)
-    unpacked=list(map(none_str,unpacked))
-    return table(unpacked,aligns,len(header))
+    return table(*table_data(unpacked,len(header)))
 def create_table(header:list|dict,data:list[list|dict])->list[str]:
     """create_table(header, data)
     Creates a list of strings describing the rows of a Markdown table
