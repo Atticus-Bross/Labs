@@ -262,4 +262,11 @@ def view_table(header:list|dict,data:list[list|dict],max_width:int=get_terminal_
         print(*rows2,sep='\n',file=file)
     else:
         print(*print_table,sep='',file=file,end='')
+def merge_sorted_lists(*lists:list)->list:
+    """merge_sorted_lists(*lists)
+    Merges presorted lists
+
+    *lists: the lists to be merged"""
+    shortest:int=min(map(len,lists))
+    return [list2[i] for i in range(shortest) for list2 in lists]
 

@@ -136,10 +136,12 @@ def test_table_data()->None:
 def test_view_table()->None:
     """test_view_table()
     Tests the table_data function"""
-    view_table([0, True, 2.3433, 'abcde'], [{0: 10}, {True: 14}, {2.3433: 15, 'abcde': 4}], 80)
-    view_table([0, True, 2.3433, 'abcde'], [{0: 10}, {True: 14}, {2.3433: 15, 'abcde': 4}], 15)
-    view_table({10: 'Biiiiiig', True: 'test', 'a': 'square', 2.2: 'ccc'},
-               [{'a': 34, True: 'asd', 2.2: False, 10: 2.34534},],25)
+    with io.StringIO() as test_output:
+        view_table({10: 'Biiiiiig', True: 'test', 'a': 'square', 2.2: 'ccc'},
+                   [{'a': 34, True: 'asd', 2.2: False, 10: 2.34534}, ], 25,test_output)
+        assert test_output.getvalue()=="""|Biiiiiig|test|square...
+|-------:|:---|-----:...
+|    2.35|asd |    34...\n"""
     with io.StringIO() as test_output:
         view_table([0,True,2.3433,'abcde'],[{0:10},{True:14},{2.3433:15,'abcde':4}],80,test_output)
         assert test_output.getvalue()=="""|   0|True|2.34|abcde|
@@ -159,6 +161,13 @@ def test_view_table()->None:
         assert test_output.getvalue()=="""|Biiiiiig|test...
 |-------:|:---...
 |    2.35|asd ...\n"""
+def test_merge_sorted_lists()->None:
+    """test_merge_sorted_lists()
+    Tests the merge_sorted_lists function"""
+    assert merge_sorted_lists([1,2,3],[4,5,6],[7,8,9])==[1,4,7,2,5,8,3,6,9]
+    assert merge_sorted_lists([1,2,3,4])==[1,2,3,4]
+    assert merge_sorted_lists([1,],[1,2,3],[1,2,3,5])==[1,1,1]
+    assert merge_sorted_lists([1,2],[3,4,5,6])==[1,3,2,4]
 test_same_len_error()
 test_fix()
 test_columns()
@@ -177,6 +186,7 @@ test_table_data()
 test_prepare_row()
 test_remove_cols()
 test_view_table()
+test_merge_sorted_lists()
 #create a Markdown file to test some functions
 function_to_test:str='table_from_dict'
 with open('test.md','w') as mdfile:
