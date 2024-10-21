@@ -11,6 +11,7 @@ from types import NoneType,UnionType
 from typing import Sequence,Any,IO
 from shutil import get_terminal_size
 from string import ascii_lowercase,ascii_uppercase
+from random import choice
 def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     """same_len_error(seq, error_txt)
     Raises a ValueError if the sequences within seq are not all the same length
@@ -261,7 +262,7 @@ def view_table(header:list|dict,data:list[list|dict],max_width:int=get_terminal_
         current_width:int=len(print_table[0])
         values:list=prepare_row(print_table[0])
         removed:int=0
-        #current_width represents the length of a string of the form '|value|value' the plus three accounts for the need '...'
+        #current_width represents the length of a string of the form '|value|value' the plus three accounts for the needed '...'
         while current_width+3>max_width:
             values.pop()
             removed=removed+1
@@ -272,13 +273,43 @@ def view_table(header:list|dict,data:list[list|dict],max_width:int=get_terminal_
         print(*rows2,sep='\n',file=file)
     else:
         print(*print_table,sep='',file=file,end='')
+def ins_sort(list2:list)->list:
+    """ins_sort(list2)
+    Sorts a list by insertion sort
+
+    list2: the list to be sorted"""
+    before:list=[]
+    same:list=[]
+    after:list=[]
+    insert_key=choice(list2)
+    if isinstance(insert_key,str):
+        insert_key=insert_key.upper()
+    for value in list2:
+        if isinstance(value,str):
+            compare:str=value.upper()
+        else:
+            compare=value
+        if compare<insert_key:
+            before.append(value)
+        elif compare>insert_key:
+            after.append(value)
+        else:
+            same.append(value)
+    if len(before)>1:
+        before=ins_sort(before)
+    if len(after)>1:
+        after=ins_sort(after)
+    return [*before,*same,*after]
 def merge_sorted_lists(*lists:list)->list:
     """merge_sorted_lists(*lists)
     Merges presorted lists
 
     *lists: the lists to be merged"""
-    shortest:int=min(map(len,lists))
-    return [list2[i] for i in range(shortest) for list2 in lists]
+    merged:list=[]
+    for list2 in lists:
+        merged.extend(list2)
+    merged=ins_sort(merged)
+    return merged
 def caesar(plaintext:str,rotation:int=13)->str:
     """caesar(plaintext, rotation=13)
     Applies a caesar cypher to text

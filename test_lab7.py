@@ -164,13 +164,18 @@ def test_view_table()->None:
         assert test_output.getvalue()=="""|Biiiiiig|test...
 |-------:|:---...
 |    2.35|asd ...\n"""
+def test_ins_sort()->None:
+    """test_ins_sort()
+    Tests the ins_sort function"""
+    assert ins_sort([2,7,5,6,4,3,8,9,1])==[1,2,3,4,5,6,7,8,9]
+    assert ins_sort([1.1,2.2,3.3,4.4,0.2,1.3,3.7,1.7,])==[0.2,1.1,1.3,1.7,2.2,3.3,3.7,4.4]
+    assert ins_sort(['11','a','K','v','B','m'])==['11','a','B','K','m','v']
 def test_merge_sorted_lists()->None:
     """test_merge_sorted_lists()
     Tests the merge_sorted_lists function"""
-    assert merge_sorted_lists([1,2,3],[4,5,6],[7,8,9])==[1,4,7,2,5,8,3,6,9]
     assert merge_sorted_lists([1,2,3,4])==[1,2,3,4]
-    assert merge_sorted_lists([1,],[1,2,3],[1,2,3,5])==[1,1,1]
-    assert merge_sorted_lists([1,2],[3,4,5,6])==[1,3,2,4]
+    assert merge_sorted_lists([1.1,2.2,3.3,4.4],[0.2,1.3,3.7],[1.7,])==[0.2,1.1,1.3,1.7,2.2,3.3,3.7,4.4]
+    assert merge_sorted_lists(['11','a','K','v'],['B','m'])==['11','a','B','K','m','v']
 def test_caesar()->None:
     """test_caesar()
     Tests the caesar function"""
@@ -197,6 +202,7 @@ test_table_data()
 test_prepare_row()
 test_remove_cols()
 test_view_table()
+test_ins_sort()
 test_merge_sorted_lists()
 test_caesar()
 #create a Markdown file to test some functions
