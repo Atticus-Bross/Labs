@@ -31,8 +31,11 @@ def test_fix()->None:
     """test_fix()
     Tests the fix function"""
     assert fix('a')=='a'
-    assert fix(8.9058)==8.91
-    assert fix(2.1)==2.1
+    assert fix(8.9058)=='8.91'
+    assert fix(2.1)=='2.10'
+    assert fix(10000000)=='1.000000e+07'
+    assert fix(None)==''
+    assert fix(222223.1767891)=='2.222232e+05'
 def test_columns()->None:
     """test_columns()
     Tests the columns function"""

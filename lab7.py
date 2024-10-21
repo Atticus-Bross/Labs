@@ -20,15 +20,25 @@ def same_len_error(seq:list[list]|list[dict],error_txt:str)->None:
     lengths:list=list(map(len,seq))
     if lengths.count(lengths[0])!=len(lengths):
         raise ValueError(error_txt)
-def fix(value):
+def fix(value)->str:
     """fix(value)
-    Reduces floats to two decimal places, all other values are ignored
+    Fixes a value to appear properly in a table
 
     value: the value"""
-    if isinstance(value,float):
-        return round(value,2)
+    if isinstance(value,NoneType):
+        return ''
+    elif isinstance(value,str|bool):
+        return f'{value}'
+    elif isinstance(value,int) and len(str(value))>7:
+        return f'{float(value):e}'
+    elif isinstance(value,float):
+        rounded:str=f'{value:.2f}'
+        if len(rounded)>7:
+            return f'{value:e}'
+        else:
+            return  rounded
     else:
-        return value
+        return f'{value}'
 def columns(values:list,cols:int)->list[list]:
     """columns(values, cols)
     Breaks data into a given number of columns
@@ -176,10 +186,9 @@ def table_data(data:list,col:int)->tuple[list[str],list[str],int]:
     col: the number of columns"""
     unpacked: list = data.copy()
     unpacked = list(map(fix, unpacked))
-    cols: list = columns(unpacked, col)
+    cols: list = columns(data, col)
     aligns: list = align(cols)
-    pass_values: list = list(map(none_str, unpacked))
-    return pass_values,aligns,col
+    return unpacked,aligns,col
 def table_from_list(header:list,data:list[list])->list[str]:
     """table_from_list(header, data)
     Creates a table from a header and data that are lists of values
