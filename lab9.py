@@ -26,7 +26,8 @@ def build_index(options: list[str]) -> dict[str, list[str]]:
     """Creates an n-gram index from options.
     The n-gram index will be a dictionary with n-grams as keys, and lists of corrosponding options as values."""
     index = defaultdict(list)
-    # [TODO] Add code here to build up the index, using add_to_index
+    for option in options:
+        add_to_index(option,index)
     return index
 
 
