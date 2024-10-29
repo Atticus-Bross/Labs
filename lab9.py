@@ -20,7 +20,9 @@ def ngrams(word: str) -> list[str]:
 
 def add_to_index(option: str, index: dict[str, list[str]]) -> None:
     """Adds a valid option to the n-gram index."""
-    index[option]=ngrams(option)
+    grams:list=ngrams(option)
+    for gram in grams:
+        index[gram].append(option)
 
 def build_index(options: list[str]) -> dict[str, list[str]]:
     """Creates an n-gram index from options.
