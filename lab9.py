@@ -13,16 +13,14 @@ _FUDGE = 1 # comp returns all matches with length >= longest match - fudge
 def ngrams(word: str) -> list[str]:
     """Returns a list of n-grams of word for all relevant n, in descending order of n."""
     grams:list=[]
-    for length in range(1,len(word)+1):
+    for length in range(len(word),0,-1):
         for start in range(0,len(word)-length+1):
             grams.append(word[start:start+length])
     return grams
 
 def add_to_index(option: str, index: dict[str, list[str]]) -> None:
     """Adds a valid option to the n-gram index."""
-    # [TODO] Add code here to add a word to the index
-    pass
-
+    index[option]=ngrams(option)
 
 def build_index(options: list[str]) -> dict[str, list[str]]:
     """Creates an n-gram index from options.

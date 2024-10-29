@@ -7,7 +7,18 @@ from lab9 import *
 def test_ngrams()->None:
     """test_ngrams()
     Tests the ngrams function"""
-    assert ngrams('as')==['a','s','as']
-    assert ngrams('the')==['t','h','e','th','he','the']
+    assert ngrams('as')==['as','a','s']
+    assert ngrams('the')==['the','th','he','t','h','e']
     assert ngrams('a')==['a']
+def test_add_to_index()->None:
+    """test_add_to_index()
+    Tests the add_to_index function"""
+    test:dict={}
+    add_to_index('as',test)
+    assert test=={'as':['as','a','s']}
+    add_to_index('the', test)
+    assert test=={'as':['as','a','s'],'the':['the','th','he','t','h','e']}
+    add_to_index('a', test)
+    assert test=={'as':['as','a','s'],'the':['the','th','he','t','h','e'],'a':['a']}
 test_ngrams()
+test_add_to_index()
