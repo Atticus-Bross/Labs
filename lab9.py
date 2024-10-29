@@ -37,7 +37,12 @@ def fuzzy_pick(query: str, index: dict) -> dict[str,str]:
     """Returns suggestions for valid options based on the query string.
     Suggestions will take the form of a dictionary with suggestions as keys and longest matching ngram as the value"""
     suggestions = {}
-    # [TODO] Add code here to create a dictionary of suggestions
+    grams:list=ngrams(query)
+    for gram in grams:
+        if gram in index.keys():
+            for match in index[gram]:
+                if match not in suggestions.keys():
+                    suggestions[match]=gram
     return suggestions
 
 

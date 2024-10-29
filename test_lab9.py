@@ -24,6 +24,12 @@ def test_build_index()->None:
     assert build_index(['a'])=={'a':['a']}
     assert build_index(['as','tas'])=={'a':['as','tas'],'s':['as','tas'],'as':['as','tas'],'t':['tas'],'ta':['tas'],'tas':['tas']}
     assert build_index(['a','as','tas'])=={'a':['a','as','tas'],'s':['as','tas'],'as':['as','tas'],'t':['tas'],'ta':['tas'],'tas':['tas']}
+def test_fuzzy_pick()->None:
+    """test_fuzzy_pick()
+    Tests the fuzzy_pick function"""
+    assert fuzzy_pick('the',{'a':['a','as','tas'],'s':['as','tas'],'as':['as','tas'],'t':['tas'],'ta':['tas'],'tas':['tas']})=={'tas':'t'}
+    assert fuzzy_pick('sa',{'a':['a','as','tas'],'s':['as','tas'],'as':['as','tas'],'t':['tas'],'ta':['tas'],'tas':['tas']})=={'as':'s','tas':'s','a':'a'}
 test_ngrams()
 test_add_to_index()
 test_build_index()
+test_fuzzy_pick()
