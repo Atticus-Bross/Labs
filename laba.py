@@ -36,8 +36,8 @@ def save_state(filename: str, links: list[str], data2: dict[str, dict]) -> None:
 
 # [TODO] Load links left to visit and collected data from a JSON file
 def load_state(filename: str) -> tuple[list[str], dict[str, dict]]:
-    pass
-
+    with open(filename,'r') as jsonfile:
+        return tuple(json.load(jsonfile))
 
 # [TODO] Write all data to a CSV file
 def write_spreadsheet(filename: str, data: dict[str, dict]) -> None:
