@@ -1,7 +1,8 @@
 """ Lab A: Web Scraping
 
 Crawls the website http://books.toscrape.com and creates a spreadsheet of books.
-"""
+
+Completed by Atticus Bross on 2024-11-12 for DS-1043"""
 import time
 import random
 import requests
@@ -28,8 +29,9 @@ def get(url: str) -> requests.Response:
 
 
 # [TODO] Save links left to visit and the data extracted to a JSON file
-def save_state(filename: str, links: list[str], data: dict[str, dict]) -> None:
-    pass
+def save_state(filename: str, links: list[str], data2: dict[str, dict]) -> None:
+    with open(filename,'w') as jsonfile:
+        json.dump((links,data2),jsonfile)
 
 
 # [TODO] Load links left to visit and collected data from a JSON file
