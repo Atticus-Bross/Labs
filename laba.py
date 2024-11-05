@@ -40,7 +40,7 @@ def load_state(filename: str) -> tuple[list[str], dict[str, dict]]:
         return tuple(json.load(jsonfile)) #type: ignore
 
 # [TODO] Write all data to a CSV file
-def write_spreadsheet(filename: str, data: dict[str, dict]) -> None:
+def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     pass
 
 
@@ -48,10 +48,13 @@ if __name__ == '__main__':
     # [TODO] Load the state file or start fresh if it cannot be read
     to_visit: list = ['/index.html']
     data: dict[str, dict] = {}
+    try:
+        to_visit, data = load_state(STATE_FILENAME)
+    except FileExistsError:
+        pass
     # Main Loop
     while len(to_visit) > 0:
         try:
-            pass
             # [TODO] Process files from to_visit
             #        This requires:
             #        - Popping a link from the list
@@ -66,6 +69,12 @@ if __name__ == '__main__':
             #            to create the full url for a link
             #          - Check to see if this full url is already in data
             #          - If not, append to to_visit
+            link:str=to_visit[0]
+            file:requests.Response=get(link)
+            if not file.ok:
+                continue
+            to_visit.pop(0)
+            text:str=file.text
         except KeyboardInterrupt:
             save_state(STATE_FILENAME, to_visit, data)
             is_finished = False
