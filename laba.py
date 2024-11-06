@@ -69,12 +69,9 @@ if __name__ == '__main__':
             #            to create the full url for a link
             #          - Check to see if this full url is already in data
             #          - If not, append to to_visit
-            link:str=to_visit[0]
-            file:requests.Response=get(link)
-            if not file.ok:
-                continue
-            to_visit.pop(0)
-            text:str=file.text
+            text:str = handle_link(to_vist)
+            data:dict = extract_data(text)
+            update(to_visit)
         except KeyboardInterrupt:
             save_state(STATE_FILENAME, to_visit, data)
             is_finished = False
