@@ -29,13 +29,21 @@ def get(url: str) -> requests.Response:
 
 
 # [TODO] Save links left to visit and the data extracted to a JSON file
-def save_state(filename: str, links: list[str], data2: dict[str, dict]) -> None:
+def save_state(filename: str, links: list[str], data2: dict[str, dict])-> None:
+    """Saves links and data to a file
+
+    filename: the name of the file
+    links: a list of the links left to visit
+    data: the data that has already been extracted"""
     with open(filename,'w') as jsonfile:
         json.dump((links,data2),jsonfile)
 
 
 # [TODO] Load links left to visit and collected data from a JSON file
 def load_state(filename: str) -> tuple[list[str], dict[str, dict]]:
+    """Loads links and data from a file
+
+    filename: the name of the file"""
     with open(filename,'r') as jsonfile:
         return tuple(json.load(jsonfile)) #type: ignore
 
@@ -69,9 +77,10 @@ if __name__ == '__main__':
             #            to create the full url for a link
             #          - Check to see if this full url is already in data
             #          - If not, append to to_visit
-            text:str = handle_link(to_vist)
-            data:dict = extract_data(text)
-            update(to_visit)
+            link:str, text:str = handle_link(to_vist)
+            sub_data:dict = extract_data(text)
+            data[link]=sub_data
+            update(to_visit, text, data, link)
         except KeyboardInterrupt:
             save_state(STATE_FILENAME, to_visit, data)
             is_finished = False
