@@ -14,8 +14,8 @@ from bs4 import BeautifulSoup as Soup
 # User Agent from Chrome Browser on Win 10/11
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'}
 
-DEFAULT_SLEEP = 3.0 # These may need tuning
-SIGMA = 1.0
+DEFAULT_SLEEP = 1.0 # These may need tuning
+SIGMA = 0.33
 
 DOMAIN = 'http://books.toscrape.com' # Ideally, these would be
 STATE_FILENAME = 'state.json'        # read in from a configuration
@@ -46,7 +46,20 @@ def load_state(filename: str) -> tuple[list[str], dict[str, dict]]:
     filename: the name of the file"""
     with open(filename,'r') as jsonfile:
         return tuple(json.load(jsonfile)) #type: ignore
+def handle_link(links:list[str],timeout:int=60)->tuple[str,str]:
+    """Handles loading the next link from to_visit
 
+    links: the to_visit list
+    timeout: the amount of time the function tries to do the download before raising a timeout error"""
+    link2:str=links.pop()
+    response:requests.Response=get(link2)
+    #try until the download succeeds or a timeout occurs
+    start:float = time.time()
+    while not response.ok:
+        response: requests.Response = get(link2)
+        if time.time()-start>timeout:
+            raise TimeoutError
+    return link2,response.text
 # [TODO] Write all data to a CSV file
 def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     pass
@@ -54,7 +67,7 @@ def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
 
 if __name__ == '__main__':
     # [TODO] Load the state file or start fresh if it cannot be read
-    to_visit: list = ['/index.html']
+    to_visit: list = [urljoin(DOMAIN,'/index.html')]
     data: dict[str, dict] = {}
     try:
         to_visit, data = load_state(STATE_FILENAME)
@@ -77,7 +90,7 @@ if __name__ == '__main__':
             #            to create the full url for a link
             #          - Check to see if this full url is already in data
             #          - If not, append to to_visit
-            link:str, text:str = handle_link(to_vist)
+            link, text = handle_link(to_visit)
             sub_data:dict = extract_data(text)
             data[link]=sub_data
             update(to_visit, text, data, link)
