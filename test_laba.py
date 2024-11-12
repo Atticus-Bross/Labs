@@ -3,8 +3,10 @@
 Module testing the Lab A functions
 
 Completed by Atticus Bross on 2024-11-12 for DS-1043"""
-from laba import *
 from typing import Callable
+
+from laba import *
+
 START:str = urljoin(DOMAIN, '/index.html')
 EXAMPLE1:str = get(START).text
 EXAMPLE2:str = get('https://books.toscrape.com/catalogue/category/books/travel_2/index.html').text
@@ -52,8 +54,16 @@ def test_handle_link()->None:
     assert handle_link([START])==(START, Soup(EXAMPLE1,'html.parser'))
     assert handle_link([START,'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'])==('https://books.toscrape.com/catalogue/category/books/travel_2/index.html',Soup(EXAMPLE2,'html.parser'))
     assert handle_link(['https://books.toscrape.com/catalogue/category/books/travel_2/index.html',START])==(START,Soup(EXAMPLE1,'html.parser'))
+
+
+def test_rows() -> None:
+    """test_rows()
+    Tests the rows function"""
+    assert rows([1, 2], 1) == [[1, 2]]
+    assert rows([1, 2, 3, 4], 2) == [[1, 2], [3, 4]]
+    assert rows([1, 2, 3, 4, 5, 6], 3) == [[1, 2], [3, 4], [5, 6]]
+    assert rows([1, 2, 3, 4, 5, 6], 2) == [[1, 2, 3], [4, 5, 6]]
 # test_save_state()
 # test_load_state()
 # test_handle_link()
-s = Soup(get('https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html').text,'html.parser')
-print(s.find('table'))
+test_rows()

@@ -3,14 +3,14 @@
 Crawls the website http://books.toscrape.com and creates a spreadsheet of books.
 
 Completed by Atticus Bross on 2024-11-12 for DS-1043"""
-import time
-import random
-import requests
 import json
-import csv
-from urllib.parse import urljoin
-from bs4 import BeautifulSoup as Soup,element
+import random
+import time
 from typing import Any
+from urllib.parse import urljoin
+
+import requests
+from bs4 import BeautifulSoup as Soup, element
 
 # User Agent from Chrome Browser on Win 10/11
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'}
@@ -61,11 +61,24 @@ def handle_link(links:list[str],timeout:int=60)->tuple[str,Soup]:
         if time.time()-start>timeout:
             raise TimeoutError
     return link2,Soup(response.text,'html.parser')
+
+
+def rows(values: list, rows2: int) -> list[list]:
+    """rows(values, rows2)
+    Breaks data up into a given number of rows
+
+    values: the data
+    rows2: the number of rows"""
+    row_len: int = len(values) // rows2
+    return_rows: list = []
+    for i in range(rows2):
+        return_rows.append(values[i * row_len:(i + 1) * row_len])
+    return return_rows
 def extract_data(raw_text:Soup)->dict[str,Any]:
     """Extracts the required data from a raw_text, this will be an empty dictionary if the data is not present
 
     raw_text: the text containing the data"""
-    if not is_book(raw_text):
+    if raw_text.find(string='Product Description') is None:
         return {}
     title:str = raw_text.find('li',class_='active').string
     category:str = raw_text.find_all('a')[3].string
