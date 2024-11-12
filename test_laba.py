@@ -6,6 +6,8 @@ Completed by Atticus Bross on 2024-11-12 for DS-1043"""
 from laba import *
 from typing import Callable
 START:str = urljoin(DOMAIN, '/index.html')
+EXAMPLE1:str = get(START).text
+EXAMPLE2:str = get('https://books.toscrape.com/catalogue/category/books/travel_2/index.html').text
 def test_error(error_type: type, f: Callable) -> None:
     """test_error()
     Tests if a function gives the correct error
@@ -47,9 +49,9 @@ def test_handle_link()->None:
     """test_handle_link()
     Tests the handle_link function"""
     test_error(TimeoutError,lambda:handle_link([urljoin(START,'/asd')],1))
-    assert handle_link([START])==(START, get(START).text)
-    assert handle_link([START,'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'])==('https://books.toscrape.com/catalogue/category/books/travel_2/index.html',get('https://books.toscrape.com/catalogue/category/books/travel_2/index.html').text)
-    assert handle_link(['https://books.toscrape.com/catalogue/category/books/travel_2/index.html',START])==(START,get(START).text)
+    assert handle_link([START])==(START, Soup(EXAMPLE1,'html.parser'))
+    assert handle_link([START,'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'])==('https://books.toscrape.com/catalogue/category/books/travel_2/index.html',Soup(EXAMPLE2,'html.parser'))
+    assert handle_link(['https://books.toscrape.com/catalogue/category/books/travel_2/index.html',START])==(START,Soup(EXAMPLE1,'html.parser'))
 test_save_state()
 test_load_state()
 test_handle_link()

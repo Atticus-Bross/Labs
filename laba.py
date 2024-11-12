@@ -10,6 +10,7 @@ import json
 import csv
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup as Soup
+from typing import Any
 
 # User Agent from Chrome Browser on Win 10/11
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'}
@@ -46,7 +47,7 @@ def load_state(filename: str) -> tuple[list[str], dict[str, dict]]:
     filename: the name of the file"""
     with open(filename,'r') as jsonfile:
         return tuple(json.load(jsonfile)) #type: ignore
-def handle_link(links:list[str],timeout:int=60)->tuple[str,str]:
+def handle_link(links:list[str],timeout:int=60)->tuple[str,Soup]:
     """Handles loading the next link from to_visit
 
     links: the to_visit list
@@ -59,7 +60,11 @@ def handle_link(links:list[str],timeout:int=60)->tuple[str,str]:
         response: requests.Response = get(link2)
         if time.time()-start>timeout:
             raise TimeoutError
-    return link2,response.text
+    return link2,Soup(response.text,'html.parser')
+def extract_data(raw_text:str)->dict[str,Any]:
+    """Extracts the required data from a raw_text, this will be an empty dictionary if the data is not present
+
+    raw_text: the text containing the data"""
 # [TODO] Write all data to a CSV file
 def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     pass
@@ -71,7 +76,7 @@ if __name__ == '__main__':
     data: dict[str, dict] = {}
     try:
         to_visit, data = load_state(STATE_FILENAME)
-    except FileExistsError:
+    except FileNotFoundError|ValueError:
         pass
     # Main Loop
     while len(to_visit) > 0:
