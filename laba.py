@@ -9,7 +9,7 @@ import requests
 import json
 import csv
 from urllib.parse import urljoin
-from bs4 import BeautifulSoup as Soup
+from bs4 import BeautifulSoup as Soup,element
 from typing import Any
 
 # User Agent from Chrome Browser on Win 10/11
@@ -61,10 +61,18 @@ def handle_link(links:list[str],timeout:int=60)->tuple[str,Soup]:
         if time.time()-start>timeout:
             raise TimeoutError
     return link2,Soup(response.text,'html.parser')
-def extract_data(raw_text:str)->dict[str,Any]:
+def extract_data(raw_text:Soup)->dict[str,Any]:
     """Extracts the required data from a raw_text, this will be an empty dictionary if the data is not present
 
     raw_text: the text containing the data"""
+    if not is_book(raw_text):
+        return {}
+    title:str = raw_text.find('li',class_='active').string
+    category:str = raw_text.find_all('a')[3].string
+    raw_data:dict[str,Any]={'Title':title,'Category':category}
+    table:element.Tag=raw_text.find('table')
+    raw_data.update({header:value for header, value in extract_table(table)})
+    return raw_data
 # [TODO] Write all data to a CSV file
 def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     pass
@@ -95,10 +103,10 @@ if __name__ == '__main__':
             #            to create the full url for a link
             #          - Check to see if this full url is already in data
             #          - If not, append to to_visit
-            link, text = handle_link(to_visit)
-            sub_data:dict = extract_data(text)
+            link, soup = handle_link(to_visit)
+            sub_data:dict = extract_data(soup)
             data[link]=sub_data
-            update(to_visit, text, data, link)
+            update(to_visit, soup, data, link)
         except KeyboardInterrupt:
             save_state(STATE_FILENAME, to_visit, data)
             is_finished = False
