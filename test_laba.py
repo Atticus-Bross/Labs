@@ -11,8 +11,7 @@ START:str = urljoin(DOMAIN, '/index.html')
 EXAMPLE1:str = get(START).text
 EXAMPLE2:str = get('https://books.toscrape.com/catalogue/category/books/travel_2/index.html').text
 def test_error(error_type: type, f: Callable) -> None:
-    """test_error()
-    Tests if a function gives the correct error
+    """Tests if a function gives the correct error
 
     error_type: the type of error expected
     f: the function, should be specified as lambda: f(desired parameters)"""
@@ -22,8 +21,7 @@ def test_error(error_type: type, f: Callable) -> None:
     except error_type:
         pass
 def test_save_state()->None:
-    """test_save_state()
-    Tests the save_state function"""
+    """Tests the save_state function"""
     save_state('test.json',['abc','efg'],{'a':{},'b':{}})
     with open('test.json','r') as jsonfile:
         assert json.load(jsonfile) == [['abc','efg'],{'a':{},'b':{}}]
@@ -37,8 +35,7 @@ def test_save_state()->None:
     with open('test.json', 'r') as jsonfile:
         assert json.load(jsonfile) == [['abc', 'efg'], {'a': {'1':2,'3':4}, 'b': {},'c':{'1':2}}]
 def test_load_state()->None:
-    """test_save_state()
-    Tests the save_state function"""
+    """Tests the save_state function"""
     save_state('test.json',['abc','efg'],{'a':{},'b':{}})
     assert load_state('test.json') == (['abc','efg'],{'a':{},'b':{}})
     save_state('test.json', ['abc'], {'a': {}})
@@ -48,8 +45,7 @@ def test_load_state()->None:
     save_state('test.json', ['abc', 'efg'], {'a': {1:2,3:4}, 'b': {},'c':{1:2}})
     assert load_state('test.json') == (['abc', 'efg'], {'a': {'1':2,'3':4}, 'b': {},'c':{'1':2}})
 def test_handle_link()->None:
-    """test_handle_link()
-    Tests the handle_link function"""
+    """Tests the handle_link function"""
     test_error(TimeoutError,lambda:handle_link([urljoin(START,'/asd')],1))
     assert handle_link([START])==(START, Soup(EXAMPLE1,'html.parser'))
     assert handle_link([START,'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'])==('https://books.toscrape.com/catalogue/category/books/travel_2/index.html',Soup(EXAMPLE2,'html.parser'))
@@ -57,8 +53,7 @@ def test_handle_link()->None:
 
 
 def test_rows() -> None:
-    """test_rows()
-    Tests the rows function"""
+    """Tests the rows function"""
     assert rows([1, 2], 1) == [[1, 2]]
     assert rows([1, 2, 3, 4], 2) == [[1, 2], [3, 4]]
     assert rows([1, 2, 3, 4, 5, 6], 3) == [[1, 2], [3, 4], [5, 6]]

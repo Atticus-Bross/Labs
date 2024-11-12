@@ -64,8 +64,7 @@ def handle_link(links:list[str],timeout:int=60)->tuple[str,Soup]:
 
 
 def rows(values: list, rows2: int) -> list[list]:
-    """rows(values, rows2)
-    Breaks data up into a given number of rows
+    """Breaks data up into a given number of rows
 
     values: the data
     rows2: the number of rows"""
