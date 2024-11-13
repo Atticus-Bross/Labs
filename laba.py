@@ -79,7 +79,7 @@ def extract_table(table: element.Tag) -> list[list[str]]:
     """Extracts the data from an element.Tag table
 
     table: the raw table"""
-    values: list[str] = [value.string for value in table.find_all(['th', 'td'])]
+    values: list[str] = [''.join(value.string.split('Â')) for value in table.find_all(['th', 'td'])]
     return rows(values, 7)
 def extract_data(raw_text:Soup)->dict[str,Any]:
     """Extracts the required data from a raw_text, this will be an empty dictionary if the data is not present
