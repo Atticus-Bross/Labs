@@ -80,8 +80,26 @@ def test_extract_table() -> None:
     assert extract_table(TABLE5)[3] == ['Price (incl. tax)', '£30.52']
 
 
+def test_extract_data() -> None:
+    """Tests the extract_data function"""
+    test3: dict = extract_data(SOUP3)
+    assert test3['Title'] == 'The Secret Garden'
+    assert test3['Category'] == 'Classics'
+    assert test3['UPC'] == 'abbb492978ff656d'
+    test4: dict = extract_data(SOUP4)
+    assert test4['Title'] == 'The Torch Is Passed: A Harding Family Story'
+    assert test4['Category'] == 'Add a comment'
+    assert test4['Availability'] == 'In stock (16 available)'
+    test5: dict = extract_data(SOUP5)
+    assert test5[
+               'Title'] == 'Foolproof Preserving: A Guide to Small Batch Jams, Jellies, Pickles, Condiments, and More: A Foolproof Guide to Making Small Batch Jams, Jellies, Pickles, Condiments, and More'
+    assert test5['Category'] == 'Food and Drink'
+    assert test5['Price (incl. tax)'] == '£30.52'
+    assert len(test3) == len(test4) == len(test5) == 9
+    assert test3.keys() == test4.keys() == test5.keys()
 test_save_state()
 test_load_state()
 test_handle_link()
 test_rows()
 test_extract_table()
+test_extract_data()
