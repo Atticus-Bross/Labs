@@ -7,6 +7,7 @@ import json
 import random
 import time
 from typing import Any
+from typing import Iterable
 from urllib.parse import urljoin
 
 import requests
@@ -93,6 +94,24 @@ def extract_data(raw_text:Soup)->dict[str,Any]:
     table:element.Tag=raw_text.find('table')
     raw_data.update({header:value for header, value in extract_table(table)})
     return raw_data
+
+
+def update(link2: str, to_visit2: list[str], data2: dict[str, dict[str, Any]], raw_text: Soup) -> None:
+    """Updates to_visit with the new links
+
+    link2: the URL of the current webpage
+    to_visit2: the list of links to visit
+    data2: the data already collected
+    raw_text: a soup object of the data from the webpage"""
+    links: Iterable[str | element.Tag] = raw_text.find_all('a')
+    # extract the actual link from the element.Tag objects
+    links = map(lambda x: x['href'], links)
+    # filter out the internal links
+    links = filter(lambda x: not x.startswith('#'), links)
+    links = map(lambda x: urljoin(link2, x), links)
+    visited: Iterable = data2.keys()
+    links = filter(lambda x: x not in to_visit2 and x not in visited, links)
+    to_visit2.extend(links)
 # [TODO] Write all data to a CSV file
 def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     pass
@@ -126,7 +145,7 @@ if __name__ == '__main__':
             link, soup = handle_link(to_visit)
             sub_data:dict = extract_data(soup)
             data[link]=sub_data
-            update(to_visit, soup, data, link)
+            update(link, to_visit, data, soup)
         except KeyboardInterrupt:
             save_state(STATE_FILENAME, to_visit, data)
             is_finished = False
