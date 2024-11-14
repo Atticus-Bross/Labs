@@ -353,6 +353,32 @@ def test_update() -> None:
          'http://books.toscrape.com/catalogue/set-me-free_988/index.html',
          'http://books.toscrape.com/catalogue/category/books/thriller_37/index.html',
          'http://books.toscrape.com/catalogue/rip-it-up-and-start-again_986/index.html'])
+
+
+def test_write_spreadsheet() -> None:
+    """Tests the write_spreadsheet function"""
+    dict1: dict[str, Any] = {head: num for head, num in zip(TABLE_HEADERS, [str(_) for _ in range(9)])}
+    dict2: dict[str, Any] = {head: num for head, num in zip(TABLE_HEADERS, list('abcdefghi'))}
+    dict3: dict[str, Any] = {head: num for head, num in zip(TABLE_HEADERS,
+                                                            ['True', 'True', 'True', 'True', 'False', 'False', 'False',
+                                                             'True', 'False'])}
+    test_error(ValueError, lambda: write_spreadsheet('test.csv', {}))
+    write_spreadsheet('test.csv', {'a': dict1})
+    with open('test.csv', 'r', newline='') as csvfile:
+        reader: csv.DictReader = csv.DictReader(csvfile)
+        assert list(reader) == [dict1]
+    write_spreadsheet('test.csv', {'a': dict1, 'b': dict2})
+    with open('test.csv', 'r', newline='') as csvfile:
+        reader: csv.DictReader = csv.DictReader(csvfile)
+        assert list(reader) == [dict1, dict2]
+    write_spreadsheet('test.csv', {'http://test/tester': dict1, 'http://test/12345': dict2})
+    with open('test.csv', 'r', newline='') as csvfile:
+        reader: csv.DictReader = csv.DictReader(csvfile)
+        assert list(reader) == [dict1, dict2]
+    write_spreadsheet('test.csv', {'a': dict3, 'b': dict2, 'c': dict1})
+    with open('test.csv', 'r', newline='') as csvfile:
+        reader: csv.DictReader = csv.DictReader(csvfile)
+        assert list(reader) == [dict3, dict2, dict1]
 test_save_state()
 test_load_state()
 test_handle_link()
@@ -360,3 +386,4 @@ test_rows()
 test_extract_table()
 test_extract_data()
 test_update()
+test_write_spreadsheet()

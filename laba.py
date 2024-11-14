@@ -3,6 +3,7 @@
 Crawls the website http://books.toscrape.com and creates a spreadsheet of books.
 
 Completed by Atticus Bross on 2024-11-12 for DS-1043"""
+import csv
 import json
 import random
 import time
@@ -22,6 +23,8 @@ SIGMA = 0.33
 DOMAIN = 'http://books.toscrape.com' # Ideally, these would be
 STATE_FILENAME = 'state.json'        # read in from a configuration
 OUTPUT_FILENAME = 'books.csv'        # or commandline, but this is fine
+TABLE_HEADERS: list = ['Title', 'Category', 'UPC', 'Product Type', 'Price (excl. tax)', 'Price (incl. tax)', 'Tax',
+                       'Availability', 'Number of reviews']
 
 
 def get(url: str) -> requests.Response:
@@ -114,8 +117,13 @@ def update(link2: str, to_visit2: list[str], data2: dict[str, dict[str, Any]], r
     to_visit2.extend(links)
 # [TODO] Write all data to a CSV file
 def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
-    pass
-
+    """Writes the data to a csv file"""
+    if len(data2) < 1:
+        raise ValueError('There must be at least one datapoint.')
+    with open(filename, 'w') as csvfile:
+        writer: csv.DictWriter = csv.DictWriter(csvfile, TABLE_HEADERS)
+        writer.writeheader()
+        writer.writerows(data2.values())
 
 if __name__ == '__main__':
     # [TODO] Load the state file or start fresh if it cannot be read
