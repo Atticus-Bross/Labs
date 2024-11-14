@@ -7,8 +7,7 @@ import csv
 import json
 import random
 import time
-from typing import Any
-from typing import Iterable
+from typing import Any, Iterable
 from urllib.parse import urljoin
 
 import requests
@@ -32,12 +31,11 @@ def constrain(variable: int | float, min2: int | float, max2: int | float) -> in
     return max(min(variable, max2), min2)
 def get(url: str) -> requests.Response:
     """Waits a random amount of time, then send a GET request"""
-    # the min function prevents negative sleep times
+    # the constrain function keeps sleep times within reason
     time.sleep(constrain(random.gauss(DEFAULT_SLEEP, SIGMA), 0.1, 2))
     return requests.get(url, headers=HEADERS)
 
 
-# [TODO] Save links left to visit and the data extracted to a JSON file
 def save_state(filename: str, links: list[str], data2: dict[str, dict])-> None:
     """Saves links and data to a file
 
@@ -48,7 +46,6 @@ def save_state(filename: str, links: list[str], data2: dict[str, dict])-> None:
         json.dump((links,data2),jsonfile)
 
 
-# [TODO] Load links left to visit and collected data from a JSON file
 def load_state(filename: str) -> tuple[list[str], dict[str, dict]]:
     """Loads links and data from a file
 
@@ -119,7 +116,6 @@ def update(link2: str, to_visit2: list[str], data2: dict[str, dict[str, Any]], r
     visited: Iterable = data2.keys()
     links = filter(lambda x: x not in to_visit2 and x not in visited, links)
     to_visit2.extend(links)
-# [TODO] Write all data to a CSV file
 def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     """Writes the data to a csv file"""
     if len(data2) < 1:
@@ -131,30 +127,17 @@ def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
         writer.writerows(to_write)
 
 if __name__ == '__main__':
-    # [TODO] Load the state file or start fresh if it cannot be read
     to_visit: list = [urljoin(DOMAIN,'/index.html')]
     data: dict[str, dict] = {}
     try:
         to_visit, data = load_state(STATE_FILENAME)
+    # the FileNotFoundError is for when there is no state file
+    # the ValueError is for when the state file is blank
     except (FileNotFoundError, ValueError):
         pass
     # Main Loop
     while len(to_visit) > 0:
         try:
-            # [TODO] Process files from to_visit
-            #        This requires:
-            #        - Popping a link from the list
-            #        - Checking to see if it has already been processed
-            #        - Downloading the file the link points to
-            #          - Link should not be removed from to_visit if it
-            #            cannot be downloaded
-            #        - Add the current file to data, using the url as the
-            #          key, and a dictionary containing book data if present
-            #        - Extract links from the HTML
-            #          - Use urljoin(full_url_of_current_doc, link_ref)
-            #            to create the full url for a link
-            #          - Check to see if this full url is already in data
-            #          - If not, append to to_visit
             link, soup = handle_link(to_visit)
             sub_data:dict = extract_data(soup)
             data[link]=sub_data
