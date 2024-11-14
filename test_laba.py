@@ -374,23 +374,23 @@ def test_write_spreadsheet() -> None:
                                                              'True', 'False'])}
     test_error(ValueError, lambda: write_spreadsheet('test.csv', {}))
     write_spreadsheet('test.csv', {'a': dict1})
-    with open('test.csv', 'r', newline='') as csvfile:
+    with open('test.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader: csv.DictReader = csv.DictReader(csvfile)
         assert list(reader) == [dict1]
     write_spreadsheet('test.csv', {'a': dict1, 'b': dict2})
-    with open('test.csv', 'r', newline='') as csvfile:
+    with open('test.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader: csv.DictReader = csv.DictReader(csvfile)
         assert list(reader) == [dict1, dict2]
     write_spreadsheet('test.csv', {'http://test/tester': dict1, 'http://test/12345': dict2})
-    with open('test.csv', 'r', newline='') as csvfile:
+    with open('test.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader: csv.DictReader = csv.DictReader(csvfile)
         assert list(reader) == [dict1, dict2]
     write_spreadsheet('test.csv', {'a': dict3, 'b': dict2, 'c': dict1})
-    with open('test.csv', 'r', newline='') as csvfile:
+    with open('test.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader: csv.DictReader = csv.DictReader(csvfile)
         assert list(reader) == [dict3, dict2, dict1]
     write_spreadsheet('test.csv', {'a': {}, 'b': dict2, 'c': dict1})
-    with open('test.csv', 'r', newline='') as csvfile:
+    with open('test.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader: csv.DictReader = csv.DictReader(csvfile)
         assert list(reader) == [dict2, dict1]
 

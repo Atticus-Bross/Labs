@@ -125,7 +125,7 @@ def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     if len(data2) < 1:
         raise ValueError('There must be at least one datapoint.')
     to_write: list = [data3 for data3 in data2.values() if len(data3) > 0]
-    with open(filename, 'w') as csvfile:
+    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
         writer: csv.DictWriter = csv.DictWriter(csvfile, TABLE_HEADERS)
         writer.writeheader()
         writer.writerows(to_write)
