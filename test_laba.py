@@ -32,6 +32,16 @@ def test_error(error_type: type, f: Callable) -> None:
         assert False
     except error_type:
         pass
+
+
+def test_constrain() -> None:
+    """Tests the constrain function"""
+    assert constrain(10, 1, 20) == 10
+    assert constrain(10.0, 1.0, 20.0) == 10
+    assert constrain(-2, -3, -1) == -2
+    assert constrain(3, -1, 5) == 3
+    assert constrain(-1, 1, 10) == 1
+    assert constrain(12, 1, 10) == 10
 def test_save_state()->None:
     """Tests the save_state function"""
     save_state('test.json',['abc','efg'],{'a':{},'b':{}})
@@ -383,6 +393,9 @@ def test_write_spreadsheet() -> None:
     with open('test.csv', 'r', newline='') as csvfile:
         reader: csv.DictReader = csv.DictReader(csvfile)
         assert list(reader) == [dict2, dict1]
+
+
+test_constrain()
 test_save_state()
 test_load_state()
 test_handle_link()

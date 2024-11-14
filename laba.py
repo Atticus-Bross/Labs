@@ -27,9 +27,13 @@ TABLE_HEADERS: list = ['Title', 'Category', 'UPC', 'Product Type', 'Price (excl.
                        'Availability', 'Number of reviews']
 
 
+def constrain(variable: int | float, min2: int | float, max2: int | float) -> int | float:
+    """Constrains a variable to be within a minimum and maximum value"""
+    return max(min(variable, max2), min2)
 def get(url: str) -> requests.Response:
     """Waits a random amount of time, then send a GET request"""
-    time.sleep(random.gauss(DEFAULT_SLEEP, SIGMA))
+    # the min function prevents negative sleep times
+    time.sleep(constrain(random.gauss(DEFAULT_SLEEP, SIGMA), 0.1, 2))
     return requests.get(url, headers=HEADERS)
 
 
