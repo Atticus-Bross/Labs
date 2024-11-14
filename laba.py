@@ -120,10 +120,11 @@ def write_spreadsheet(filename: str, data2: dict[str, dict]) -> None:
     """Writes the data to a csv file"""
     if len(data2) < 1:
         raise ValueError('There must be at least one datapoint.')
+    to_write: list = [data3 for data3 in data2.values() if len(data3) > 0]
     with open(filename, 'w') as csvfile:
         writer: csv.DictWriter = csv.DictWriter(csvfile, TABLE_HEADERS)
         writer.writeheader()
-        writer.writerows(data2.values())
+        writer.writerows(to_write)
 
 if __name__ == '__main__':
     # [TODO] Load the state file or start fresh if it cannot be read
@@ -131,7 +132,7 @@ if __name__ == '__main__':
     data: dict[str, dict] = {}
     try:
         to_visit, data = load_state(STATE_FILENAME)
-    except FileNotFoundError|ValueError:
+    except (FileNotFoundError, ValueError):
         pass
     # Main Loop
     while len(to_visit) > 0:

@@ -379,6 +379,10 @@ def test_write_spreadsheet() -> None:
     with open('test.csv', 'r', newline='') as csvfile:
         reader: csv.DictReader = csv.DictReader(csvfile)
         assert list(reader) == [dict3, dict2, dict1]
+    write_spreadsheet('test.csv', {'a': {}, 'b': dict2, 'c': dict1})
+    with open('test.csv', 'r', newline='') as csvfile:
+        reader: csv.DictReader = csv.DictReader(csvfile)
+        assert list(reader) == [dict2, dict1]
 test_save_state()
 test_load_state()
 test_handle_link()
