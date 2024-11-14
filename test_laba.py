@@ -3,13 +3,14 @@
 Module testing the Lab A functions
 
 Completed by Atticus Bross on 2024-11-12 for DS-1043"""
+
 from typing import Callable
 
 from laba import *
 
-START:str = urljoin(DOMAIN, '/index.html')
-EXAMPLE1:str = get(START).text
-EXAMPLE2:str = get('https://books.toscrape.com/catalogue/category/books/travel_2/index.html').text
+START: str = urljoin(DOMAIN, '/index.html')
+EXAMPLE1: str = get(START).text
+EXAMPLE2: str = get('https://books.toscrape.com/catalogue/category/books/travel_2/index.html').text
 EXAMPLE3: str = get('https://books.toscrape.com/catalogue/the-secret-garden_413/index.html').text
 EXAMPLE4: str = get(
     'https://books.toscrape.com/catalogue/the-torch-is-passed-a-harding-family-story_945/index.html').text
@@ -22,6 +23,8 @@ SOUP5: Soup = Soup(EXAMPLE5, 'html.parser')
 TABLE3: element.Tag = SOUP3.find('table')
 TABLE4: element.Tag = SOUP4.find('table')
 TABLE5: element.Tag = SOUP5.find('table')
+
+
 def test_error(error_type: type, f: Callable) -> None:
     """Tests if a function gives the correct error
 
@@ -42,36 +45,44 @@ def test_constrain() -> None:
     assert constrain(3, -1, 5) == 3
     assert constrain(-1, 1, 10) == 1
     assert constrain(12, 1, 10) == 10
-def test_save_state()->None:
+
+
+def test_save_state() -> None:
     """Tests the save_state function"""
-    save_state('test.json',['abc','efg'],{'a':{},'b':{}})
-    with open('test.json','r') as jsonfile:
-        assert json.load(jsonfile) == [['abc','efg'],{'a':{},'b':{}}]
+    save_state('test.json', ['abc', 'efg'], {'a': {}, 'b': {}})
+    with open('test.json', 'r') as jsonfile:
+        assert json.load(jsonfile) == [['abc', 'efg'], {'a': {}, 'b': {}}]
     save_state('test.json', ['abc'], {'a': {}})
     with open('test.json', 'r') as jsonfile:
         assert json.load(jsonfile) == [['abc'], {'a': {}}]
     save_state('test.json', [], {})
     with open('test.json', 'r') as jsonfile:
         assert json.load(jsonfile) == [[], {}]
-    save_state('test.json', ['abc', 'efg'], {'a': {1:2,3:4}, 'b': {},'c':{1:2}})
+    save_state('test.json', ['abc', 'efg'], {'a': {1: 2, 3: 4}, 'b': {}, 'c': {1: 2}})
     with open('test.json', 'r') as jsonfile:
-        assert json.load(jsonfile) == [['abc', 'efg'], {'a': {'1':2,'3':4}, 'b': {},'c':{'1':2}}]
-def test_load_state()->None:
+        assert json.load(jsonfile) == [['abc', 'efg'], {'a': {'1': 2, '3': 4}, 'b': {}, 'c': {'1': 2}}]
+
+
+def test_load_state() -> None:
     """Tests the save_state function"""
-    save_state('test.json',['abc','efg'],{'a':{},'b':{}})
-    assert load_state('test.json') == (['abc','efg'],{'a':{},'b':{}})
+    save_state('test.json', ['abc', 'efg'], {'a': {}, 'b': {}})
+    assert load_state('test.json') == (['abc', 'efg'], {'a': {}, 'b': {}})
     save_state('test.json', ['abc'], {'a': {}})
     assert load_state('test.json') == (['abc'], {'a': {}})
     save_state('test.json', [], {})
     assert load_state('test.json') == ([], {})
-    save_state('test.json', ['abc', 'efg'], {'a': {1:2,3:4}, 'b': {},'c':{1:2}})
-    assert load_state('test.json') == (['abc', 'efg'], {'a': {'1':2,'3':4}, 'b': {},'c':{'1':2}})
-def test_handle_link()->None:
+    save_state('test.json', ['abc', 'efg'], {'a': {1: 2, 3: 4}, 'b': {}, 'c': {1: 2}})
+    assert load_state('test.json') == (['abc', 'efg'], {'a': {'1': 2, '3': 4}, 'b': {}, 'c': {'1': 2}})
+
+
+def test_handle_link() -> None:
     """Tests the handle_link function"""
-    test_error(TimeoutError,lambda:handle_link([urljoin(START,'/asd')],1))
-    assert handle_link([START])==(START, Soup(EXAMPLE1,'html.parser'))
-    assert handle_link([START,'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'])==('https://books.toscrape.com/catalogue/category/books/travel_2/index.html',Soup(EXAMPLE2,'html.parser'))
-    assert handle_link(['https://books.toscrape.com/catalogue/category/books/travel_2/index.html',START])==(START,Soup(EXAMPLE1,'html.parser'))
+    test_error(TimeoutError, lambda: handle_link([urljoin(START, '/asd')], 1))
+    assert handle_link([START]) == (START, Soup(EXAMPLE1, 'html.parser'))
+    assert handle_link([START, 'https://books.toscrape.com/catalogue/category/books/travel_2/index.html']) == (
+        'https://books.toscrape.com/catalogue/category/books/travel_2/index.html', Soup(EXAMPLE2, 'html.parser'))
+    assert handle_link(['https://books.toscrape.com/catalogue/category/books/travel_2/index.html', START]) == (
+        START, Soup(EXAMPLE1, 'html.parser'))
 
 
 def test_rows() -> None:
