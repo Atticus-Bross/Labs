@@ -41,18 +41,3 @@ class Node:
                 self._right.insert(value)
         elif value :
             self._quantity = self._quantity + 1
-
-
-import random
-random.seed()
-
-root = None
-
-for item in {random.randint(0,100) for _ in range(20)}:
-    if root is None:
-        root = Node(item)
-    else:
-        root.insert(item)
-
-print(root)
-
