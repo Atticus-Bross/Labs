@@ -64,3 +64,33 @@ def bubble_sort(data: list, reverse: bool = False) -> list:
         if sort_list1 == sort_list2:
             return sort_list2
         sort_list1 = sort_list2.copy()
+
+
+def merge_sort(data: list, reverse=False) -> list:
+    """Uses merge sort to sort a list
+
+    list: the list to be sorted
+    reverse: the list is sorted from least to greatest if reverse is False and from greatest to least if reverse is true"""
+    if len(data) < 2:
+        return data.copy()
+    compare: str = ''
+    if reverse:
+        compare = '>'
+    elif not reverse:
+        compare = '<'
+    # midpoint is the middle index + 1
+    midpoint: int = ((len(data) + 1) // 2)
+    part1: list = data[:midpoint]
+    part2: list = data[midpoint:]
+    sort1: list = merge_sort(part1, reverse)
+    sort2: list = merge_sort(part2, reverse)
+    position: int = 0
+    for value in sort1:
+        try:
+            while not eval(f'value {compare} sort2[position]'):
+                position = position + 1
+            sort2.insert(position, value)
+            position = position + 1
+        except IndexError:
+            sort2.append(value)
+    return sort2
