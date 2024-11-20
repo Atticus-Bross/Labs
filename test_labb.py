@@ -65,6 +65,19 @@ def test_merge_sort() -> None:
         assert merge_sort(test_list) == [0.0, 1.0, 2.0, 3.0, 4.0]
 
 
+def test_recursive_bisect() -> None:
+    """Tests the recursive_bisect function"""
+    for _ in range(5):
+        assert recursive_bisect([], randint(1, 5), 0, True) == -1
+    assert recursive_bisect([4], 4, 0, True) == 0
+    assert recursive_bisect([1, 2, 3, 4, 5, 6], 2, 0, False) == 1
+    assert recursive_bisect([1, 2, 3], 2, 0, False) == 1
+    assert recursive_bisect([6, 5, 4, 3, 2, 1], 2, 0, True) == 4
+    assert recursive_bisect([1, 2, 3, 4], 2, 0, False) == 1
+    assert recursive_bisect([1, 2, 3, 4], 3, 0, False) == 2
+    for _ in range(5):
+        assert recursive_bisect([1, 2, 3, 4, 5], randint(6, 10), 0, False) == -1
+    assert recursive_bisect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 5, 0, False) == 4
 def test_bisect_search() -> None:
     """Tests the bisect_search function"""
     for _ in range(5):
@@ -82,4 +95,4 @@ test_compare_symbol()
 test_bubble_sort()
 test_halves()
 test_merge_sort()
-test_bisect_search()
+test_recursive_bisect()

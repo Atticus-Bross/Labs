@@ -105,6 +105,39 @@ def merge_sort(data: list, reverse=False) -> list:
     return sort2
 
 
+def recursive_bisect(sorted_data: list, value, start_index: int, isreversed: bool) -> int:
+    """The function that preforms the recursive part of bisect_search, this is so the user does not specify parameters
+    that should only be used during recursion when calling bisect_search
+    
+    sorted_data: the sorted data, this is given either by the user or as a slice of a larger list given by a higher
+        level of recursion
+    value: the value to search for
+    start_index: the starting index of the slice of the original list
+    isreversed: whether the data is sorted in reversed order"""
+    if len(sorted_data) == 0:
+        return -1
+    elif len(sorted_data) == 1:
+        if sorted_data[0] == value:
+            return start_index
+        else:
+            return -1
+    start, end = halves(sorted_data)
+    # this is so the type hint system understands that start and end are lists
+    assert isinstance(start, list) and isinstance(end, list)
+    recursive_start_index: int = (len(sorted_data) + 1) // 2
+    if isreversed:
+        compare1: str = '>='
+        compare2: str = '<='
+    else:
+        compare2: str = '>='
+        compare1: str = '<='
+    if eval(f'value {compare1} start[-1]'):
+        return recursive_bisect(start, value, start_index, isreversed)
+    elif eval(f'value {compare2} end[0]'):
+        return recursive_bisect(end, value, start_index + recursive_start_index, isreversed)
+    else:
+        return -1
+
 def bisect_search(sorted_data: list, value) -> int:
     """Searches a list of presorted data and gives the index of the value, or -1 if the value is not present
 
