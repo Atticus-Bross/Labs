@@ -43,6 +43,15 @@ class Node:
             self._quantity = self._quantity + 1
 
 
+def compare_symbol(isreversed: bool) -> str:
+    """Determines the comparison symbol to use based on whether the sequence is reversed
+    
+    isreversed: whether the sequence is reversed"""
+    if isreversed:
+        compare = '>'
+    else:
+        compare = '<'
+    return compare
 def bubble_sort(data: list, reverse: bool = False) -> list:
     """Sorts a list by swapping out of order pairs
 
