@@ -94,3 +94,30 @@ def merge_sort(data: list, reverse=False) -> list:
         except IndexError:
             sort2.append(value)
     return sort2
+
+
+def bisect_search(sorted_data: list, value) -> int:
+    """Searches a list of presorted data and gives the index of the value, or -1 if the value is not present
+
+    sorted_data: the data to search
+    value: the value to search for"""
+    if len(sorted_data) == 0:
+        return -1
+    elif len(sorted_data) == 1:
+        return 0
+    isreversed: bool = sorted_data[0] > sorted_data[1]
+    start, end = halves(sorted_data)
+    if isreversed:
+        if value >= start[-1]:
+            return bisect_search(start, value)
+        elif value <= end[0]:
+            return bisect_search(end, value)
+        else:
+            return -1
+    elif not isreversed:
+        if value <= start[-1]:
+            return bisect_search(start, value)
+        elif value >= end[0]:
+            return bisect_search(end, value)
+        else:
+            return -1
