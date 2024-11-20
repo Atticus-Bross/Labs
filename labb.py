@@ -145,23 +145,5 @@ def bisect_search(sorted_data: list, value) -> int:
     value: the value to search for"""
     if len(sorted_data) == 0:
         return -1
-    elif len(sorted_data) == 1:
-        return 0
-    isreversed: bool = sorted_data[0] > sorted_data[1]
-    start, end = halves(sorted_data)
-    # this is so the type hint system understands that start and end are lists
-    assert isinstance(start, list) and isinstance(end, list)
-    if isreversed:
-        if value >= start[-1]:
-            return bisect_search(start, value)
-        elif value <= end[0]:
-            return bisect_search(end, value)
-        else:
-            return -1
-    elif not isreversed:
-        if value <= start[-1]:
-            return bisect_search(start, value)
-        elif value >= end[0]:
-            return bisect_search(end, value)
-        else:
-            return -1
+    isreversed: bool = sorted_data[0] > sorted_data[-1]
+    return recursive_bisect(sorted_data, value, 0, isreversed)
