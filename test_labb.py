@@ -3,7 +3,7 @@
 Module Testing the Lab B functions
 
 Completed by Atticus Bross on 2024-11-22"""
-from random import shuffle
+from random import shuffle, randint
 from string import ascii_lowercase
 
 from labb import *
@@ -65,7 +65,21 @@ def test_merge_sort() -> None:
         assert merge_sort(test_list) == [0.0, 1.0, 2.0, 3.0, 4.0]
 
 
+def test_bisect_search() -> None:
+    """Tests the bisect_search function"""
+    for _ in range(5):
+        assert bisect_search([], randint(1, 5)) == -1
+    assert bisect_search([4], 4) == 0
+    assert bisect_search([1, 2, 3, 4, 5, 6], 2) == 1
+    assert bisect_search([1, 2, 3], 2) == 1
+    assert bisect_search([6, 5, 4, 3, 2, 1], 2) == 4
+    assert bisect_search([1, 2, 3, 4], 2) == 1
+    assert bisect_search([1, 2, 3, 4], 3) == 2
+    for _ in range(5):
+        assert bisect_search([randint(1, 5) for _ in range(7)], randint(6, 10)) == -1
+
 test_compare_symbol()
 test_bubble_sort()
 test_halves()
 test_merge_sort()
+test_bisect_search()
