@@ -30,6 +30,9 @@ class Node:
         return self._value >= other
 
     def insert(self, value) -> None:
+        """Inserts a value into the node network
+
+        value: the value"""
         if value < self:
             if self._left is None:
                 self._left = Node(value, self)
@@ -53,7 +56,14 @@ class Tree:
             for value in iterable[1:]:
                 self._root.insert(value)
 
+    def insert(self, value) -> None:
+        """Inserts a value into the tree
 
+        value: the value to insert"""
+        if hasattr(self, '_root'):
+            self._root.insert(value)
+        else:
+            self._root = Node(value)
 def compare_symbol(isreversed: bool) -> str:
     """Determines the comparison symbol to use based on whether the sequence is reversed
     

@@ -14,19 +14,34 @@ def test_tree() -> None:
     test_tree2: Tree = Tree()
     assert hasattr(test_tree2, '_root') is False
     test_tree2 = Tree([1])
-    assert test_tree2._root._value == 1
+    assert test_tree2._root == 1
     assert test_tree2._root._left is None
     assert test_tree2._root._right is None
     test_tree2 = Tree([1, 2])
-    assert test_tree2._root._value == 1
+    assert test_tree2._root == 1
     assert test_tree2._root._left is None
     assert test_tree2._root._right is not None
-    assert test_tree2._root._right._value == 2
+    assert test_tree2._root._right == 2
     test_tree2 = Tree([2, 1, 3])
-    assert test_tree2._root._value == 2
+    assert test_tree2._root == 2
     assert test_tree2._root._left is not None
-    assert test_tree2._root._left._value == 1
-    assert test_tree2._root._right._value == 3
+    assert test_tree2._root._left == 1
+    assert test_tree2._root._right == 3
+
+
+def test_tree_insert() -> None:
+    """Tests the insert method of the Tree class"""
+    test_tree2: Tree = Tree()
+    test_tree2.insert(5)
+    assert test_tree2._root == 5
+    test_tree2.insert(3)
+    assert test_tree2._root._left == 3
+    test_tree2.insert(8)
+    assert test_tree2._root._right == 8
+    test_tree2.insert(3)
+    assert test_tree2._root._left._quantity == 2
+    test_tree2.insert(6)
+    assert test_tree2._root._right._left == 6
 def test_compare_symbol() -> None:
     """Tests the compare_symbol function"""
     assert compare_symbol(True) == '>='
@@ -118,6 +133,7 @@ def test_bisect_search() -> None:
 
 
 test_tree()
+test_tree_insert()
 test_compare_symbol()
 test_bubble_sort()
 test_halves()
