@@ -1,34 +1,35 @@
-from typing import Sequence
+from typing import Sequence, Self
 class Node:
+    """A node for use in a binary search tree"""
 
-    def __init__(self, value, parent=None):
-        self._parent = parent
-        self._left = None
-        self._right = None
+    def __init__(self, value, parent: Self | None = None) -> None:
+        self._parent: Self = parent
+        self._left: None | Self = None
+        self._right: None | Self = None
         self._value = value
-        self._quantity = 1
+        self._quantity: int = 1
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         if self._left is None and self._right is None:
             return f'{self._value}'
         return f'{self._value} ({self._left}, {self._right})'
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self._value == other
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         return self._value > other
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         return self._value < other
 
-    def __le__(self, other):
+    def __le__(self, other) -> bool:
         return self._value <= other
 
-    def __ge__(self, other):
+    def __ge__(self, other) -> bool:
         return self._value >= other
 
-    def insert(self, value):
+    def insert(self, value) -> None:
         if value < self:
             if self._left is None:
                 self._left = Node(value, self)
@@ -41,6 +42,16 @@ class Node:
                 self._right.insert(value)
         elif value :
             self._quantity = self._quantity + 1
+
+
+class Tree:
+    """A binary search tree"""
+
+    def __init__(self, iterable: Sequence = ()) -> None:
+        if len(iterable) > 0:
+            self._root: Node = Node(iterable[0])
+            for value in iterable[1:]:
+                self._root.insert(value)
 
 
 def compare_symbol(isreversed: bool) -> str:

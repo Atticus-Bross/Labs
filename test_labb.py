@@ -9,6 +9,24 @@ from string import ascii_lowercase
 from labb import *
 
 
+def test_tree() -> None:
+    """Tests the initialization of the Tree class"""
+    test_tree2: Tree = Tree()
+    assert hasattr(test_tree2, '_root') is False
+    test_tree2 = Tree([1])
+    assert test_tree2._root._value == 1
+    assert test_tree2._root._left is None
+    assert test_tree2._root._right is None
+    test_tree2 = Tree([1, 2])
+    assert test_tree2._root._value == 1
+    assert test_tree2._root._left is None
+    assert test_tree2._root._right is not None
+    assert test_tree2._root._right._value == 2
+    test_tree2 = Tree([2, 1, 3])
+    assert test_tree2._root._value == 2
+    assert test_tree2._root._left is not None
+    assert test_tree2._root._left._value == 1
+    assert test_tree2._root._right._value == 3
 def test_compare_symbol() -> None:
     """Tests the compare_symbol function"""
     assert compare_symbol(True) == '>='
@@ -98,6 +116,8 @@ def test_bisect_search() -> None:
     for _ in range(5):
         assert bisect_search([randint(1, 5) for _ in range(7)], randint(6, 10)) == -1
 
+
+test_tree()
 test_compare_symbol()
 test_bubble_sort()
 test_halves()
