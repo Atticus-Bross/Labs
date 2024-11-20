@@ -48,9 +48,9 @@ def compare_symbol(isreversed: bool) -> str:
     
     isreversed: whether the sequence is reversed"""
     if isreversed:
-        compare = '>'
+        compare = '>='
     else:
-        compare = '<'
+        compare = '<='
     return compare
 def bubble_sort(data: list, reverse: bool = False) -> list:
     """Sorts a list by swapping out of order pairs

@@ -11,8 +11,8 @@ from labb import *
 
 def test_compare_symbol() -> None:
     """Tests the compare_symbol function"""
-    assert compare_symbol(True) == '>'
-    assert compare_symbol(False) == '<'
+    assert compare_symbol(True) == '>='
+    assert compare_symbol(False) == '<='
 def test_bubble_sort() -> None:
     """Tests the bubble_sort function"""
     assert bubble_sort([]) == []
@@ -33,6 +33,10 @@ def test_bubble_sort() -> None:
     for _ in range(5):
         shuffle(test_list)
         assert bubble_sort(test_list) == [0.0, 1.0, 2.0, 3.0, 4.0]
+    test_list = [1, 1, 1, 2, 2, 3, 3, 3, 3]
+    for _ in range(5):
+        shuffle(test_list)
+        assert bubble_sort(test_list) == [1, 1, 1, 2, 2, 3, 3, 3, 3]
 
 
 def test_halves() -> None:
@@ -63,7 +67,10 @@ def test_merge_sort() -> None:
     for _ in range(5):
         shuffle(test_list)
         assert merge_sort(test_list) == [0.0, 1.0, 2.0, 3.0, 4.0]
-
+    test_list = [1, 1, 1, 2, 2, 3, 3, 3, 3]
+    for _ in range(5):
+        shuffle(test_list)
+        assert merge_sort(test_list) == [1, 1, 1, 2, 2, 3, 3, 3, 3]
 
 def test_recursive_bisect() -> None:
     """Tests the recursive_bisect function"""
