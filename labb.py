@@ -75,8 +75,14 @@ def bubble_sort(data: list, reverse: bool = False) -> list:
         sort_list1 = sort_list2.copy()
 
 
-def halves(seq: Sequence) -> list[list]:
-    """"""
+def halves(seq: Sequence) -> list[Sequence]:
+    """Splits a sequence in half
+    
+    seq: the sequence"""
+    midpoint: int = ((len(seq) + 1) // 2)
+    part1: Sequence = seq[:midpoint]
+    part2: Sequence = seq[midpoint:]
+    return [part1, part2]
 def merge_sort(data: list, reverse=False) -> list:
     """Uses merge sort to sort a list
 
@@ -118,6 +124,8 @@ def bisect_search(sorted_data: list, value) -> int:
         return 0
     isreversed: bool = sorted_data[0] > sorted_data[1]
     start, end = halves(sorted_data)
+    # this is so the type hint system understands that start and end are lists
+    assert isinstance(start, list) and isinstance(end, list)
     if isreversed:
         if value >= start[-1]:
             return bisect_search(start, value)

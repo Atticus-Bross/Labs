@@ -10,7 +10,7 @@ from labb import *
 
 
 def test_compare_symbol() -> None:
-    """Tests the bubble_sort function"""
+    """Tests the compare_symbol function"""
     assert compare_symbol(True) == '>'
     assert compare_symbol(False) == '<'
 def test_bubble_sort() -> None:
@@ -35,6 +35,14 @@ def test_bubble_sort() -> None:
         assert bubble_sort(test_list) == [0.0, 1.0, 2.0, 3.0, 4.0]
 
 
+def test_halves() -> None:
+    """Tests the halves function"""
+    assert halves([]) == [[], []]
+    assert halves([1]) == [[1], []]
+    assert halves([1, 2]) == [[1], [2]]
+    assert halves((1, 2)) == [(1,), (2,)]
+    assert halves([3, 4, 1, 2]) == [[3, 4], [1, 2]]
+    assert halves([6, 8, 3]) == [[6, 8], [3]]
 def test_merge_sort() -> None:
     """Tests the merge_sort function"""
     assert merge_sort([]) == []
@@ -59,4 +67,5 @@ def test_merge_sort() -> None:
 
 test_compare_symbol()
 test_bubble_sort()
+test_halves()
 test_merge_sort()
