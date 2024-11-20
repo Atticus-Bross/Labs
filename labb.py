@@ -1,4 +1,4 @@
-
+from typing import Sequence
 class Node:
 
     def __init__(self, value, parent=None):
@@ -75,6 +75,8 @@ def bubble_sort(data: list, reverse: bool = False) -> list:
         sort_list1 = sort_list2.copy()
 
 
+def halves(seq: Sequence) -> list[list]:
+    """"""
 def merge_sort(data: list, reverse=False) -> list:
     """Uses merge sort to sort a list
 
