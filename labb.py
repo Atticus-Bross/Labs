@@ -57,11 +57,7 @@ def bubble_sort(data: list, reverse: bool = False) -> list:
 
     data: the list to be sorted
     reverse: the list is sorted from least to greatest if reverse is False and from greatest to least if reverse is true"""
-    compare: str = ''
-    if reverse:
-        compare = '>'
-    elif not reverse:
-        compare = '<'
+    compare: str = compare_symbol(reverse)
     sort_list1: list = data.copy()
     sort_list2: list = data.copy()
     while True:
@@ -90,15 +86,11 @@ def merge_sort(data: list, reverse=False) -> list:
     reverse: the list is sorted from least to greatest if reverse is False and from greatest to least if reverse is true"""
     if len(data) < 2:
         return data.copy()
-    compare: str = ''
-    if reverse:
-        compare = '>'
-    elif not reverse:
-        compare = '<'
+    compare: str = compare_symbol(reverse)
     # midpoint is the middle index + 1
-    midpoint: int = ((len(data) + 1) // 2)
-    part1: list = data[:midpoint]
-    part2: list = data[midpoint:]
+    part1, part2 = halves(data)
+    # this is so the type hint system understands that parts 1 and 2 are lists
+    assert isinstance(part1, list) and isinstance(part2, list)
     sort1: list = merge_sort(part1, reverse)
     sort2: list = merge_sort(part2, reverse)
     position: int = 0
