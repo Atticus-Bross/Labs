@@ -9,6 +9,22 @@ from string import ascii_lowercase
 from labb import *
 
 
+def test_node_iter() -> None:
+    """Tests the iteration of the Node class"""
+    test_node: Node = Node(5)
+    assert [value for value in test_node] == [5]
+    test_node.insert(5)
+    assert [value for value in test_node] == [5, 5]
+    test_node.insert(3)
+    assert [value for value in test_node] == [3, 5, 5]
+    test_node.insert(2)
+    assert [value for value in test_node] == [2, 3, 5, 5]
+    test_node.insert(4)
+    assert [value for value in test_node] == [2, 3, 4, 5, 5]
+    test_node.insert(6)
+    assert [value for value in test_node] == [2, 3, 4, 5, 5, 6]
+    test_node.insert(6)
+    assert [value for value in test_node] == [2, 3, 4, 5, 5, 6, 6]
 def test_tree() -> None:
     """Tests the initialization of the Tree class"""
     test_tree2: Tree = Tree()
@@ -132,6 +148,7 @@ def test_bisect_search() -> None:
         assert bisect_search([randint(1, 5) for _ in range(7)], randint(6, 10)) == -1
 
 
+test_node_iter()
 test_tree()
 test_tree_insert()
 test_compare_symbol()
