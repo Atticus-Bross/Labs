@@ -54,6 +54,13 @@ class Node:
         if self._right is not None:
             yield from self._right.__iter__()
 
+    def __reversed__(self):
+        if self._right is not None:
+            yield from self._right.__reversed__()
+        for _ in range(self._quantity):
+            yield self._value
+        if self._left is not None:
+            yield from self._left.__reversed__()
 class Tree:
     """A binary search tree"""
 
