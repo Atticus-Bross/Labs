@@ -61,6 +61,15 @@ class Node:
             yield self._value
         if self._left is not None:
             yield from self._left.__reversed__()
+
+    def __contains__(self, item) -> bool:
+        if self == item:
+            return True
+        elif self._left is not None and item < self:
+            return self._left.__contains__(item)
+        elif self._right is not None and item > self:
+            return self._right.__contains__(item)
+        return False
 class Tree:
     """A binary search tree"""
 

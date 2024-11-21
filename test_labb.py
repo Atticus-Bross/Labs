@@ -43,6 +43,19 @@ def test_node_reverse() -> None:
     assert [value for value in reversed(test_node)] == [6, 5, 5, 4, 3, 2]
     test_node.insert(6)
     assert [value for value in reversed(test_node)] == [6, 6, 5, 5, 4, 3, 2]
+
+
+def test_node_contains() -> None:
+    """Tests the contains functionality of the Node class"""
+    test_node: Node = Node(5)
+    assert 5 in test_node
+    assert 3 not in test_node
+    test_node.insert(3)
+    assert 3 in test_node
+    assert 4 not in test_node
+    test_node.insert(8)
+    assert 8 in test_node
+    assert 9 not in test_node
 def test_tree() -> None:
     """Tests the initialization of the Tree class"""
     test_tree2: Tree = Tree()
@@ -208,6 +221,7 @@ def test_bisect_search() -> None:
 
 test_node_iter()
 test_node_reverse()
+test_node_contains()
 test_tree()
 test_tree_insert()
 test_tree_iter()
