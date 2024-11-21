@@ -95,6 +95,11 @@ class Tree:
     def __reversed__(self):
         if hasattr(self, '_root'):
             yield from self._root.__reversed__()
+
+    def __contains__(self, item) -> bool:
+        if hasattr(self, '_root'):
+            return item in self._root
+        return False
 def compare_symbol(isreversed: bool) -> str:
     """Determines the comparison symbol to use based on whether the sequence is reversed
     
