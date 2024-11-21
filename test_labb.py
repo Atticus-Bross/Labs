@@ -81,6 +81,7 @@ def test_tree_insert() -> None:
 def test_tree_iter():
     """Tests iteration for the Tree class"""
     test_tree2: Tree = Tree()
+    assert [value for value in test_tree2] == []
     test_tree2.insert(5)
     assert [value for value in test_tree2] == [5]
     test_tree2.insert(5)
@@ -100,6 +101,7 @@ def test_tree_iter():
 def test_tree_reverse() -> None:
     """Tests the reversion of the Tree class"""
     test_tree2: Tree = Tree()
+    assert [value for value in reversed(test_tree2)] == []
     test_tree2.insert(5)
     assert [value for value in reversed(test_tree2)] == [5]
     test_tree2.insert(5)
