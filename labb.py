@@ -64,6 +64,9 @@ class Tree:
             self._root.insert(value)
         else:
             self._root = Node(value)
+
+    def __iter__(self):
+        yield from self._root.traverse()
 def compare_symbol(isreversed: bool) -> str:
     """Determines the comparison symbol to use based on whether the sequence is reversed
     
