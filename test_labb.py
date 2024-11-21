@@ -145,6 +145,17 @@ def test_tree_contains() -> None:
     test_tree2.insert(8)
     assert 8 in test_tree2
     assert 9 not in test_tree2
+
+
+def test_tree_str() -> None:
+    """Tests the str functionality of the Tree class"""
+    test_tree2: Tree = Tree()
+    assert str(test_tree2) == 'empty'
+    for _ in range(5):
+        test_tree2 = Tree()
+        for _ in range(randint(1, 20)):
+            test_tree2.insert(randint(1, 20))
+        assert str(test_tree2) == str(test_tree2._root)
 def test_compare_symbol() -> None:
     """Tests the compare_symbol function"""
     assert compare_symbol(True) == '>='
@@ -243,6 +254,7 @@ test_tree_insert()
 test_tree_iter()
 test_tree_reverse()
 test_tree_contains()
+test_tree_str()
 test_compare_symbol()
 test_bubble_sort()
 test_halves()
