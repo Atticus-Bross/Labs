@@ -46,6 +46,13 @@ class Node:
         elif value :
             self._quantity = self._quantity + 1
 
+    def __iter__(self):
+        if self._left is not None:
+            yield from self._left.__iter__()
+        for _ in range(self._quantity):
+            yield self._value
+        if self._right is not None:
+            yield from self._right.__iter__()
 
 class Tree:
     """A binary search tree"""
@@ -66,7 +73,7 @@ class Tree:
             self._root = Node(value)
 
     def __iter__(self):
-        yield from self._root.traverse()
+        yield from self._root.__iter__()
 def compare_symbol(isreversed: bool) -> str:
     """Determines the comparison symbol to use based on whether the sequence is reversed
     
