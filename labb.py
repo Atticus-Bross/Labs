@@ -81,6 +81,9 @@ class Tree:
 
     def __iter__(self):
         yield from self._root.__iter__()
+
+    def __reversed__(self):
+        yield from self._root.__reversed__()
 def compare_symbol(isreversed: bool) -> str:
     """Determines the comparison symbol to use based on whether the sequence is reversed
     

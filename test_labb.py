@@ -95,6 +95,25 @@ def test_tree_iter():
     assert [value for value in test_tree2] == [2, 3, 4, 5, 5, 6]
     test_tree2.insert(6)
     assert [value for value in test_tree2] == [2, 3, 4, 5, 5, 6, 6]
+
+
+def test_tree_reverse() -> None:
+    """Tests the reversion of the Tree class"""
+    test_tree2: Tree = Tree()
+    test_tree2.insert(5)
+    assert [value for value in reversed(test_tree2)] == [5]
+    test_tree2.insert(5)
+    assert [value for value in reversed(test_tree2)] == [5, 5]
+    test_tree2.insert(3)
+    assert [value for value in reversed(test_tree2)] == [5, 5, 3]
+    test_tree2.insert(2)
+    assert [value for value in reversed(test_tree2)] == [5, 5, 3, 2]
+    test_tree2.insert(4)
+    assert [value for value in reversed(test_tree2)] == [5, 5, 4, 3, 2]
+    test_tree2.insert(6)
+    assert [value for value in reversed(test_tree2)] == [6, 5, 5, 4, 3, 2]
+    test_tree2.insert(6)
+    assert [value for value in reversed(test_tree2)] == [6, 6, 5, 5, 4, 3, 2]
 def test_compare_symbol() -> None:
     """Tests the compare_symbol function"""
     assert compare_symbol(True) == '>='
@@ -190,6 +209,7 @@ test_node_reverse()
 test_tree()
 test_tree_insert()
 test_tree_iter()
+test_tree_reverse()
 test_compare_symbol()
 test_bubble_sort()
 test_halves()
